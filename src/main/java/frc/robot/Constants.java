@@ -51,6 +51,9 @@ public final class Constants {
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
+    //Drive base radius in meters. Distance from robot center to furthest module
+    public static final double driveBaseRadius = 0;    //GET VALUE
+
     // SPARK MAX CAN IDs
     public static final int kFrontRightDrivingCanId = 10;
     public static final int kFrontLeftDrivingCanId = 20;
