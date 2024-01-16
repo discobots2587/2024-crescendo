@@ -18,10 +18,13 @@ import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SerialPort.*;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.utils.SwerveUtils;
@@ -51,6 +54,9 @@ public class DriveSubsystem extends SubsystemBase {
 
   // The gyro sensor
   private final AHRS m_gyro = new AHRS(Port.kMXP);
+
+  // Field
+  private Field2d field = new Field2d();
 
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
@@ -99,6 +105,9 @@ public class DriveSubsystem extends SubsystemBase {
                 },
                 this // Reference to this subsystem to set requirements
         );
+
+        PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
+        SmartDashboard.putData("Field", field);
   }
 
   @Override
@@ -261,6 +270,7 @@ public class DriveSubsystem extends SubsystemBase {
     states[1] = m_frontRight.getState();
     states[2] = m_rearLeft.getState();
     states[3] = m_rearRight.getState();
+
     return states;
   }
 

@@ -1,0 +1,37 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 1.9,
+      "y": 4.50867207012588
+    },
+    "rotation": 0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "scorePreload"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "collectTopNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "score"
+          }
+        }
+      ]
+    }
+  },
+  "folder": null,
+  "choreoAuto": false
+}
