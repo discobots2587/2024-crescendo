@@ -22,7 +22,6 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.SerialPort.*;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
@@ -100,7 +99,7 @@ public class DriveSubsystem extends SubsystemBase {
 
                     var alliance = DriverStation.getAlliance();
                     if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
+                        return alliance.get() == DriverStation.Alliance.Red; //Red (blue??)
                     }
                     return false;
                 },
