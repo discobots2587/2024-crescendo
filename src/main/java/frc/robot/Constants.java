@@ -25,6 +25,15 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+  public final Mode currentMode = Mode.REAL;
+
+  public enum Mode {
+    REAL,
+    SIM,
+    REPLAY
+  }
+
   //Field sim
   public final Field2d m_field = new Field2d();
 
