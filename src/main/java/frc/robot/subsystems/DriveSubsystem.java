@@ -14,6 +14,8 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.util.WPIUtilJNI;
 
+import org.littletonrobotics.junction.AutoLogOutput;
+
 import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -131,6 +133,7 @@ public class DriveSubsystem extends SubsystemBase {
    *
    * @return The pose.
    */
+  @AutoLogOutput(key = "Odometry/Robot")
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
   }
@@ -267,6 +270,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(desiredStates[3]);
   }
 
+  @AutoLogOutput(key = "SwerveStates/Measured")
   public SwerveModuleState[] getModuleStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
     states[0] = m_frontLeft.getState();
@@ -275,6 +279,16 @@ public class DriveSubsystem extends SubsystemBase {
     states[3] = m_rearRight.getState();
 
     return states;
+  }
+
+  @AutoLogOutput(key = "SwerveStates/Desired")
+  public SwerveModuleState[] getDesiredStates() {
+    SwerveModuleState[] desiredStates = new SwerveModuleState[4];
+    desiredStates[0] = m_frontLeft.getDesired();
+    desiredStates[1] = m_frontRight.getDesired();
+    desiredStates[2] = m_rearLeft.getDesired();
+    desiredStates[3] = m_rearRight.getDesired();
+    return desiredStates;
   }
 
   /** Resets the drive encoders to currently read a position of 0. */
