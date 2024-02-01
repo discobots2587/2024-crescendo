@@ -40,10 +40,10 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-    m_robotDrive = new DriveSubsystem(new MAXModuleIO(), 
-                                      new MAXModuleIO(), 
-                                      new MAXModuleIO(), 
-                                      new MAXModuleIO());
+    m_robotDrive = new DriveSubsystem(new MAXModuleIO(0), //FrontLeft
+                                      new MAXModuleIO(1), //FrontRight
+                                      new MAXModuleIO(2), //RearLeft
+                                      new MAXModuleIO(3)); //RearRight
 
     // Configure the button bindings
     configureButtonBindings();

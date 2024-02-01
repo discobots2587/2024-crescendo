@@ -12,16 +12,22 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
+
+import org.littletonrobotics.junction.Logger;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants.ModuleConstants;
 
 public class MAXSwerveModule {
-  private final CANSparkMax m_drivingSparkMax;
-  private final CANSparkMax m_turningSparkMax;
 
   private final ModuleIO m_Io;
+  private final ModuleIOInputsAutoLogged m_inputs = new ModuleIOInputsAutoLogged();
+  private final int m_index;
+
+  private final CANSparkMax m_drivingSparkMax;
+  private final CANSparkMax m_turningSparkMax;
 
   private final RelativeEncoder m_drivingEncoder;
   private final AbsoluteEncoder m_turningEncoder;
@@ -38,8 +44,9 @@ public class MAXSwerveModule {
    * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
    * Encoder.
    */
-  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, ModuleIO io) {
+  public MAXSwerveModule(int id, int drivingCANId, int turningCANId, double chassisAngularOffset, ModuleIO io) {
     m_Io = io;
+    m_index = id;
 
     m_drivingSparkMax = new CANSparkMax(drivingCANId, MotorType.kBrushless);
     m_turningSparkMax = new CANSparkMax(turningCANId, MotorType.kBrushless);
@@ -112,6 +119,11 @@ public class MAXSwerveModule {
     m_chassisAngularOffset = chassisAngularOffset;
     m_desiredState.angle = new Rotation2d(m_turningEncoder.getPosition());
     m_drivingEncoder.setPosition(0);
+  }
+
+  public void periodic() {
+    m_Io.updateInputs(m_inputs);
+    Logger.processInputs("Drive/Module" + Integer.toString(m_index), m_inputs);
   }
 
   /**

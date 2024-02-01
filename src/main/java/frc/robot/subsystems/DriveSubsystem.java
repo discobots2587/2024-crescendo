@@ -62,21 +62,25 @@ public class DriveSubsystem extends SubsystemBase {
 
     //Configure Modules
     m_frontLeft = new MAXSwerveModule(
+      0,
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset,
       frontLeftIo);
     m_frontRight = new MAXSwerveModule(
+      1,
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset,
       frontRightIo);
     m_rearLeft = new MAXSwerveModule(
+      2,
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset,
       rearLeftIo);
     m_rearRight = new MAXSwerveModule(
+      3,
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset,
@@ -125,6 +129,12 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    m_frontLeft.periodic();
+    m_frontRight.periodic();
+    m_rearLeft.periodic();
+    m_rearRight.periodic();
+
     // Update the odometry in the periodic block
     m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle()),
