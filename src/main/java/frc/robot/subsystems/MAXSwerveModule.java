@@ -119,9 +119,6 @@ public class MAXSwerveModule {
     return new SwerveModuleState( m_inputs.driveVelocity, m_inputs.turnAbsolutePosition );
   }
 
-  public SwerveModuleState getDesired() {
-    return m_desiredState;
-  }
 
   /**
    * Returns the current position of the module.
