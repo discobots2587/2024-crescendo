@@ -14,6 +14,8 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+
 import org.littletonrobotics.junction.AutoLog;
 
 public interface ModuleIO {
@@ -45,4 +47,8 @@ public interface ModuleIO {
 
   /** Enable or disable brake mode on the turn motor. */
   public default void setTurnBrakeMode(boolean enable) {}
+
+  public default void resetDriveEncoder(){}
+
+  public default void setReference(SwerveModuleState reference){}
 }

@@ -61,30 +61,10 @@ public class DriveSubsystem extends SubsystemBase {
   public DriveSubsystem(ModuleIO frontLeftIo, ModuleIO frontRightIo, ModuleIO rearLeftIo, ModuleIO rearRightIo) {
 
     //Configure Modules
-    m_frontLeft = new MAXSwerveModule(
-      0,
-      DriveConstants.kFrontLeftDrivingCanId,
-      DriveConstants.kFrontLeftTurningCanId,
-      DriveConstants.kFrontLeftChassisAngularOffset,
-      frontLeftIo);
-    m_frontRight = new MAXSwerveModule(
-      1,
-      DriveConstants.kFrontRightDrivingCanId,
-      DriveConstants.kFrontRightTurningCanId,
-      DriveConstants.kFrontRightChassisAngularOffset,
-      frontRightIo);
-    m_rearLeft = new MAXSwerveModule(
-      2,
-      DriveConstants.kRearLeftDrivingCanId,
-      DriveConstants.kRearLeftTurningCanId,
-      DriveConstants.kBackLeftChassisAngularOffset,
-      rearLeftIo);
-    m_rearRight = new MAXSwerveModule(
-      3,
-      DriveConstants.kRearRightDrivingCanId,
-      DriveConstants.kRearRightTurningCanId,
-      DriveConstants.kBackRightChassisAngularOffset,
-      rearRightIo);
+    m_frontLeft = new MAXSwerveModule(0, frontLeftIo);
+    m_frontRight = new MAXSwerveModule(1, frontRightIo);
+    m_rearLeft = new MAXSwerveModule(2, rearLeftIo);
+    m_rearRight = new MAXSwerveModule(3, rearRightIo);
 
     m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
@@ -314,10 +294,10 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Resets the drive encoders to currently read a position of 0. */
   public void resetEncoders() {
-    m_frontLeft.resetEncoders();
-    m_rearLeft.resetEncoders();
-    m_frontRight.resetEncoders();
-    m_rearRight.resetEncoders();
+    m_frontLeft.resetDriveEncoder();
+    m_rearLeft.resetDriveEncoder();
+    m_frontRight.resetDriveEncoder();
+    m_rearRight.resetDriveEncoder();
   }
 
   /** Zeroes the heading of the robot. */
