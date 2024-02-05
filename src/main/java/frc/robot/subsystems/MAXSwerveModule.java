@@ -137,14 +137,20 @@ public class MAXSwerveModule {
    * @param desiredState Desired state with speed and angle.
    */
   public void setDesiredState(SwerveModuleState desiredState) {
-    // Optimize the reference state to avoid spinning further than 90 degrees.
-    SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(desiredState,
-        m_inputs.turnAbsolutePosition);
 
     // Command driving and turning SPARKS MAX towards their respective setpoints.
-    m_Io.setReference(optimizedDesiredState);
+    m_Io.setReference(desiredState);
 
     m_desiredState = desiredState;
+  }
+
+  /**
+   * Optimizes the desired state for the module to avoid spinning further than 90 degrees.
+   * 
+   * @param desiredState
+   */
+  public SwerveModuleState getOptimizedState(SwerveModuleState desiredState) {
+    return SwerveModuleState.optimize(desiredState, m_inputs.turnAbsolutePosition);  
   }
 
   /** Zeroes all the SwerveModule encoders. */
