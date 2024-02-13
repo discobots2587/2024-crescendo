@@ -17,7 +17,6 @@ import edu.wpi.first.util.WPIUtilJNI;
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
-import com.kauailabs.navx.frc.AHRS;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
@@ -28,7 +27,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.AutoConstants;
-import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.Constants.DriveConstants;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -41,7 +39,8 @@ public class DriveSubsystem extends SubsystemBase {
   private final MAXSwerveModule m_rearRight;
 
   // The gyro sensor
-  private final AHRS m_gyro = new AHRS(Port.kMXP);
+  private final GyroIO gyroIo;
+  private final GyroIOInputsAutoLogged g_inputs = new GyroIOInputsAutoLogged();
 
   // Field
   private Field2d field = new Field2d();
@@ -59,7 +58,7 @@ public class DriveSubsystem extends SubsystemBase {
   SwerveDriveOdometry m_odometry;
 
   /** Creates a new DriveSubsystem. */
-  public DriveSubsystem(ModuleIO frontLeftIo, ModuleIO frontRightIo, ModuleIO rearLeftIo, ModuleIO rearRightIo) {
+  public DriveSubsystem(GyroIO gyroIo , ModuleIO frontLeftIo, ModuleIO frontRightIo, ModuleIO rearLeftIo, ModuleIO rearRightIo) {
 
     //Configure Modules
     m_frontLeft = new MAXSwerveModule(0, frontLeftIo);
@@ -67,9 +66,11 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearLeft = new MAXSwerveModule(2, rearLeftIo);
     m_rearRight = new MAXSwerveModule(3, rearRightIo);
 
+    this.gyroIo = gyroIo;
+
     m_odometry = new SwerveDriveOdometry(
       DriveConstants.kDriveKinematics,
-      Rotation2d.fromDegrees(m_gyro.getAngle()),
+      g_inputs.heading,
       new SwerveModulePosition[] {
           m_frontLeft.getPosition(),
           m_frontRight.getPosition(),
@@ -110,6 +111,8 @@ public class DriveSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
+    gyroIo.updateInputs(g_inputs);
+    Logger.processInputs("Drive/Gyro", g_inputs);
 
     m_frontLeft.periodic();
     m_frontRight.periodic();
@@ -118,7 +121,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     // Update the odometry in the periodic block
     m_odometry.update(
-        Rotation2d.fromDegrees(m_gyro.getAngle()),
+        g_inputs.heading,
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -127,7 +130,6 @@ public class DriveSubsystem extends SubsystemBase {
         });
     
     field.setRobotPose(getPose());
-    SmartDashboard.putData("Heading", m_gyro);
   }
 
   /**
@@ -147,7 +149,7 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public void resetOdometry(Pose2d pose) {
     m_odometry.resetPosition(
-        Rotation2d.fromDegrees(m_gyro.getAngle()),
+        g_inputs.heading,
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
@@ -238,7 +240,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     var swerveModuleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(
         fieldRelative
-            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(360.0-m_gyro.getAngle()))
+            ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, g_inputs.heading)
             : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
     setModuleStates(swerveModuleStates);
   }
@@ -297,7 +299,7 @@ public class DriveSubsystem extends SubsystemBase {
 
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
-    m_gyro.reset();
+    gyroIo.reset();
   }
 
   /**
@@ -306,7 +308,7 @@ public class DriveSubsystem extends SubsystemBase {
    * @return the robot's heading in degrees, from -180 to 180
    */
   public double getHeading() {
-    return m_gyro.getYaw(); //Rotation2d.fromDegrees(m_gyro.getAngle()).getDegrees();
+    return g_inputs.heading.getDegrees();
   }
 
   /**
@@ -315,6 +317,6 @@ public class DriveSubsystem extends SubsystemBase {
    * @return The turn rate of the robot, in degrees per second
    */
   public double getTurnRate() {
-    return m_gyro.getRate() * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+    return g_inputs.yawVelocity * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
 }

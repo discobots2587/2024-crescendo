@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.MAXModuleIO;
+import frc.robot.subsystems.NavXIO;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -40,7 +41,8 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-    m_robotDrive = new DriveSubsystem(new MAXModuleIO(0), //FrontLeft
+    m_robotDrive = new DriveSubsystem(new NavXIO(),
+                                      new MAXModuleIO(0), //FrontLeft
                                       new MAXModuleIO(1), //FrontRight
                                       new MAXModuleIO(2), //RearLeft
                                       new MAXModuleIO(3)); //RearRight
