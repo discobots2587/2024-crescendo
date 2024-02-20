@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 
 /*
@@ -31,7 +33,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive;
 
   //Auto chooser
-  private final SendableChooser<Command> autoChooser;
+  private final LoggedDashboardChooser<Command> autoChooser;
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -51,8 +53,8 @@ public class RobotContainer {
     configureButtonBindings();
 
     //Auto chooser
-    autoChooser = AutoBuilder.buildAutoChooser(); // Default auto will be Commands.none()
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    autoChooser = new LoggedDashboardChooser<>("Auto Chooser", AutoBuilder.buildAutoChooser()); // Default auto will be Commands.none()
+
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -96,6 +98,6 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // PathPlannerPath path = PathPlannerPath.fromPathFile("driveStraight");
 
-    return autoChooser.getSelected();
+    return autoChooser.get();
   }
 }
