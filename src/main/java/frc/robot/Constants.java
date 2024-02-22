@@ -167,6 +167,27 @@ public final class Constants {
     
   }
 
+
+  public static final class FlywheelConstants
+  {
+    public static final int kMasterID = 99; //TUNE
+    public static final int kSlaveID = 99; //TUNE
+
+    public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
+    public static final int kMotorCurrentLimit = 20;//20 amps TUNE
+    
+    public static final double kTurningEncoderVelocityFactor = 60.0; // degrees per second
+
+
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -1;
+    public static final double kVelocityMaxOutput = 1;
+  }
+
+
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.1;
