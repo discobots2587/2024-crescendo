@@ -4,46 +4,46 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
-import com.revrobotics.AbsoluteEncoder;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PivotConstants;
 
-public class Pivot {
+public class Pivot extends SubsystemBase{
     private final CANSparkMax MasterSpark;
-    private final CANSparkMax SlaveSpark;
+    // private final CANSparkMax SlaveSpark;
 
     private final AbsoluteEncoder absEncoder;
 
     private final SparkPIDController pivotPID;
 
     private double angleOffset; // This is the initial value of the arm. This shoukld be aiming upwards at about 60 degrees.
-    private double m_desiredAngle;
 
-    public Pivot(int masterID, int slaveID, double offset)
+    public Pivot(int masterID, double offset)
     {
         MasterSpark = new CANSparkMax(masterID, MotorType.kBrushless);
-        SlaveSpark = new CANSparkMax(slaveID, MotorType.kBrushless);
+        // SlaveSpark = new CANSparkMax(slaveID, MotorType.kBrushless);
 
         angleOffset = offset;
-        m_desiredAngle = offset;
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
         MasterSpark.restoreFactoryDefaults();
-        SlaveSpark.restoreFactoryDefaults();
+        // SlaveSpark.restoreFactoryDefaults();
 
         
         // Setup encoders and PID controller for the pivot sparkmax.
         absEncoder = MasterSpark.getAbsoluteEncoder(Type.kDutyCycle);
         pivotPID = MasterSpark.getPIDController();
         pivotPID.setFeedbackDevice(absEncoder);
+        // pivotPID.
 
-        // Apply position and velocity conversion factors for the turning encoder. We
-        // want these in radians and radians per second to use with WPILib's swerve
-        // APIs.
+        // Apply position and velocity conversion factors for the turning encoder.
         absEncoder.setPositionConversionFactor(PivotConstants.kTurningEncoderPositionFactor);
         absEncoder.setVelocityConversionFactor(PivotConstants.kTurningEncoderVelocityFactor);
 
@@ -56,20 +56,20 @@ public class Pivot {
         pivotPID.setFF(PivotConstants.kFF);
         pivotPID.setOutputRange(PivotConstants.kTurningMinOutput, PivotConstants.kTurningMaxOutput);
         
-        SlaveSpark.setIdleMode(PivotConstants.kPivotIdleMode);
+        // SlaveSpark.setIdleMode(PivotConstants.kPivotIdleMode);
         MasterSpark.setIdleMode(PivotConstants.kPivotIdleMode);
 
         MasterSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
-        SlaveSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
+        // SlaveSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
 
 
-        SlaveSpark.setInverted(true);
-        SlaveSpark.follow(MasterSpark);
+        // SlaveSpark.setInverted(true);
+        // SlaveSpark.follow(MasterSpark);
 
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
         // operation, it will maintain the above configurations.
         MasterSpark.burnFlash();
-        SlaveSpark.burnFlash();
+        // SlaveSpark.burnFlash();
     }
 
     public double getRawPosition()
@@ -77,28 +77,22 @@ public class Pivot {
         return absEncoder.getPosition(); // returns in degrees
     }
 
-    public double getPointing()
+    public double getAiming()
     {
-        return getRawPosition() - angleOffset; // returns in degrees
+        return getRawPosition() - angleOffset; // returms in degrees
     }
 
-    public double getDesiredState()
+    public void setDesiredAngle(double desiredAngle)
     {
-        return m_desiredAngle;
-    }
+        double turnPose = desiredAngle - angleOffset;
 
-
-    /**
-     * Sets the desired state for the module.
-     *
-     * @param desiredState Desired state with speed and angle.
-     */
-    public void setDesiredAngle(double desiredAngle) {
-        double turnPose = desiredAngle;
-
-        // Command driving and turning SPARKS MAX towards their respective setpoints.
+        SmartDashboard.putNumber("Target Position", turnPose); 
         pivotPID.setReference(turnPose, CANSparkMax.ControlType.kPosition);
+    }
 
-        m_desiredAngle = desiredAngle;
+    @Override
+    public void periodic()
+    {
+        SmartDashboard.putNumber("Aiming Position", getAiming()); // log the aiming position of the arm.
     }
 }
