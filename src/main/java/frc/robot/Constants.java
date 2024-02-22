@@ -132,6 +132,41 @@ public final class Constants {
     public static final int kTurningMotorCurrentLimit = 20; //20 // amps
   }
 
+  public static final class IntakeConstants
+  {
+    public static final int kIntakeCanID = 99;//TUNE
+
+
+    public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
+    public static final int kIntakeMotorCurrentLimit = 50;//50 amps
+    
+    public static final double kIntakeSpeed = 0.75; // TUNE
+    public static final double kOuttakeSpeed = -1; // TUNE
+  }
+
+  public static final class PivotConstants
+  {
+    public static final int kMasterID = 99; //TUNE
+    public static final int kSlaveID = 99; //TUNE
+
+    public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
+    public static final int kMotorCurrentLimit = 20;//20 amps TUNE
+
+    public static final double kStartingAngle = 60;//60 degrees
+    
+    public static final double kTurningEncoderPositionFactor = (360); // degrees
+    public static final double kTurningEncoderVelocityFactor = (360) / 60.0; // degrees per second
+
+
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kTurningMinOutput = -1;
+    public static final double kTurningMaxOutput = 1;
+    
+  }
+
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.1;
