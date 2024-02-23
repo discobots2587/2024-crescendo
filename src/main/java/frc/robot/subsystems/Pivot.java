@@ -22,7 +22,7 @@ public class Pivot extends SubsystemBase{
 
     private final SparkPIDController pivotPID;
 
-    private double angleOffset; // This is the initial value of the arm. This shoukld be aiming upwards at about 60 degrees.
+    private final double angleOffset; // This is the initial value of the arm. This shoukld be aiming upwards at about 60 degrees.
 
     public Pivot(int masterID, double offset)
     {
