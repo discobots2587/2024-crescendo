@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.Constants.OIConstants;
-
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,9 +26,11 @@ import com.pathplanner.lib.auto.AutoBuilder;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer
+{
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public static final Arm arm = new Arm();
 
   //Auto chooser
   private final SendableChooser<Command> autoChooser;

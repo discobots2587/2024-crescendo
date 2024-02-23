@@ -7,7 +7,8 @@ import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.PivotConstants;
 
 
-public class Arm extends SubsystemBase {
+public class Arm extends SubsystemBase
+{
     private final Pivot pivot;// = new Pivot(PivotConstants.kMasterID, PivotConstants.kOffset);
     private final Indexer indexer;// = new Indexer(IndexerConstants.kIndexerID, IndexerConstants.kHoodID, IndexerConstants.kOffset);
     private final Shooter flywheelShooter;// = new Shooter(FlywheelConstants.kMasterID, FlywheelConstants.kSlaveID);
@@ -42,7 +43,7 @@ public class Arm extends SubsystemBase {
         indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
     }
 
-    public void AmpMode()
+    public void ampMode()
     {
         state = ArmConstants.ArmState.AMP;
         pivot.setDesiredAngle(ArmConstants.PivotAmpPosition);
