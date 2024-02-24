@@ -30,8 +30,9 @@ public class Robot extends LoggedRobot {
   public void robotInit() {
 
     Logger.addDataReceiver(new NT4Publisher());
-
     Logger.start();
+
+    enableLiveWindowInTest(true);
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.

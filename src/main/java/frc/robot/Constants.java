@@ -48,15 +48,15 @@ public final class Constants {
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     // Chassis configuration
-    public static final double kTrackWidth = Units.inchesToMeters(23.5);
     // Distance between centers of right and left wheels on robot
-    public static final double kWheelBase = Units.inchesToMeters(23.5);
+    public static final double kTrackWidth = Units.inchesToMeters(23.5);
     // Distance between front and back wheels on robot
+    public static final double kWheelBase = Units.inchesToMeters(23.5);
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-        new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-        new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+        new Translation2d(kWheelBase / 2, kTrackWidth / 2), // + +
+        new Translation2d(kWheelBase / 2, -kTrackWidth / 2), // + -
+        new Translation2d(-kWheelBase / 2, +kTrackWidth / 2), // - +
+        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); // - -
 
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
@@ -111,14 +111,14 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = 0.04;
+    public static final double kDrivingP = 0.04; // 0.04
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 1; //1
+    public static final double kTurningP = 3; //1
     public static final double kTurningI = 0;
     public static final double kTurningD = 0;
     public static final double kTurningFF = 0;
@@ -128,13 +128,14 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 50; //50 // amps
+    public static final int kDrivingMotorCurrentLimit = 60; //50 // amps
     public static final int kTurningMotorCurrentLimit = 20; //20 // amps
   }
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.1;
+    public static final int kLaunchpadPort = 1;
   }
 
   public static final class AutoConstants {
@@ -143,9 +144,9 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-    public static final double kPXController = 0.4; //1
-    public static final double kPYController = 0.4; //1
-    public static final double kPThetaController = 0.4; //1
+    public static final double kPXController = 1; //1
+    public static final double kPYController = 1; //1
+    public static final double kPThetaController = 1; //1
 
     // Constraint for the motion profiled robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
