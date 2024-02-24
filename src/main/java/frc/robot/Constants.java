@@ -134,19 +134,19 @@ public final class Constants {
 
   public static final class IntakeConstants
   {
-    public static final int kIntakeCanID = 99;//TUNE
+    public static final int kIntakeCanID = 50; //TUNE
 
 
     public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
-    public static final int kIntakeMotorCurrentLimit = 50;//50 amps
+    public static final int kIntakeMotorCurrentLimit = 50; //50 amps
     
-    public static final double kIntakeSpeed = 0.75; // TUNE
-    public static final double kOuttakeSpeed = -1; // TUNE
+    public static final double kIntakeSpeed = 0.25; // TUNE
+    public static final double kOuttakeSpeed = -0.25; // TUNE
   }
 
   public static final class PivotConstants
   {
-    public static final int kMasterID = 99; //TUNE
+    public static final int kMasterID = 70; //TUNE
     // public static final int kSlaveID = 99; //TUNE
 
     public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
@@ -167,8 +167,8 @@ public final class Constants {
 
   public static final class FlywheelConstants
   {
-    public static final int kMasterID = 99; //TUNE
-    public static final int kSlaveID = 99; //TUNE
+    public static final int kMasterID = 71; //TUNE
+    public static final int kSlaveID = 72; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
     public static final int kMotorCurrentLimit = 20;//20 amps TUNE
@@ -186,8 +186,8 @@ public final class Constants {
 
   public static final class IndexerConstants
   {
-    public static final int kIndexerID = 99; //TUNE
-    public static final int kHoodID = 99; //TUNE
+    public static final int kIndexerID = 60; //TUNE
+    public static final int kHoodID = 73; //TUNE
 
     public static final IdleMode kIndexerIdleMode = IdleMode.kCoast;
     public static final IdleMode kHoodIdleMode = IdleMode.kBrake;
