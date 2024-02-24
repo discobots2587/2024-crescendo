@@ -9,14 +9,18 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.DriveSubsystem;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Intake;
+
+import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.IntakeConstants;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -30,6 +34,7 @@ public class RobotContainer
 {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public static final Intake intake = new Intake(IntakeConstants.kIntakeCanID);
   public static final Arm arm = new Arm();
 
   //Auto chooser
@@ -82,6 +87,10 @@ public class RobotContainer
         .onTrue(new InstantCommand(
             () -> m_robotDrive.zeroHeading(),
             m_robotDrive));
+
+    new JoystickButton(m_driverController, Button.kLeftBumper.value)
+        .whileTrue(new InstantCommand(
+          () -> intake.intake()));
   }
 
   /**
