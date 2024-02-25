@@ -134,6 +134,13 @@ public final class Constants {
 
   public static final class IntakeConstants
   {
+    public enum IntakeState
+    {
+      INTAKING,
+      STOPPED,
+      OUTTAKING
+    }
+    
     public static final int kIntakeCanID = 50; //TUNE
 
 

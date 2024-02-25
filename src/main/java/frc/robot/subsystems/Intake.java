@@ -13,12 +13,7 @@ import frc.robot.Constants.IntakeConstants;
 
 public class Intake extends SubsystemBase {
     private final CANSparkMax IntakeNEO;
-    private int intakeState;
-    /* 
-     * 1 = intake
-     * 0 = stopped
-     * -1 = outtake
-    */
+    private IntakeConstants.IntakeState intakeState;
     
     public Intake(int intakeID) {
         IntakeNEO = new CANSparkMax(intakeID, MotorType.kBrushless);
@@ -38,10 +33,10 @@ public class Intake extends SubsystemBase {
         // operation, it will maintain the above configurations.
         IntakeNEO.burnFlash();
 
-        intakeState = 0;
+        intakeState = IntakeConstants.IntakeState.STOPPED;
     }
 
-    public int getState()
+    public IntakeConstants.IntakeState getState()
     {
         return intakeState;
     }
@@ -54,18 +49,18 @@ public class Intake extends SubsystemBase {
     public void intake()
     {
         setSpeed(IntakeConstants.kIntakeSpeed);
-        intakeState = 1;
+        intakeState = IntakeConstants.IntakeState.INTAKING;
     }
 
     public void outtake()
     {
         setSpeed(IntakeConstants.kOuttakeSpeed);
-        intakeState = -1;
+        intakeState = IntakeConstants.IntakeState.OUTTAKING;
     }
 
     public void stop()
     {
         IntakeNEO.stopMotor();
-        intakeState = 0;
+        intakeState = IntakeConstants.IntakeState.STOPPED;
     }
 }
