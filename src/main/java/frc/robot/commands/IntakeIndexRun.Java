@@ -18,7 +18,7 @@ public class IntakeIndexRun extends Command
     // Use addRequirements() here to declare subsystem dependencies.
     intakeSup = intakeBumper;
     addRequirements(RobotContainer.arm);
-    addRequirements(RobotContainer.intake)
+    addRequirements(RobotContainer.intake);
   }
 
   // Called when the command is initially scheduled.
@@ -42,9 +42,9 @@ public class IntakeIndexRun extends Command
           break;
         case AMP:
           RobotContainer.intake.outtake();
-          RobotContainer.arm.outtake();
+          RobotContainer.arm.ampMode();
           break;
-        case Shooter://The arm will be tracking the goal or at a preset, non-intake friendly angle.
+        case SHOOTER://The arm will be tracking the goal or at a preset, non-intake friendly angle.
           RobotContainer.intake.outtake();
           RobotContainer.arm.shoot();
           break;
