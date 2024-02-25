@@ -18,7 +18,7 @@ public class Arm extends SubsystemBase
     public Arm()
     {
         pivot = new Pivot(PivotConstants.kMasterID, ArmConstants.kPivotOffset);
-        indexer = new Indexer(IndexerConstants.kIndexerID, IndexerConstants.kHoodID, ArmConstants.kHoodOffset);
+        indexer = new Indexer(IndexerConstants.kBeamBreakID, IndexerConstants.kIndexerID, IndexerConstants.kHoodID, ArmConstants.kHoodOffset);
         flywheelShooter = new Shooter(FlywheelConstants.kMasterID, FlywheelConstants.kSlaveID);
         
         state = ArmConstants.ArmState.INTAKE;
@@ -50,9 +50,29 @@ public class Arm extends SubsystemBase
         indexer.setDesiredAngle(ArmConstants.HoodAmpPosition);
     }
 
+    //Flywheel actions
     public void setFlywheelVelocity(double velocity)
     {
         flywheelShooter.setDesiredVelocity(velocity);
+    }
+
+    //Roller actions
+    public void shoot()
+    {
+        indexer.loadAndShoot();
+    }
+
+    public void ampOuttake()
+    {
+        indexer.outtakeMode();
+    }
+
+    public void load()
+    {
+        if(indexer.getBeamBreak())
+        {indexer.loadAndShoot();}
+        else
+        {indexer.stop();}
     }
 
     @Override

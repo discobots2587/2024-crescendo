@@ -189,6 +189,8 @@ public final class Constants {
     public static final int kIndexerID = 60; //TUNE
     public static final int kHoodID = 73; //TUNE
 
+    public static final int kBeamBreakID = 0; 
+
     public static final IdleMode kIndexerIdleMode = IdleMode.kCoast;
     public static final IdleMode kHoodIdleMode = IdleMode.kBrake;
 
@@ -211,6 +213,7 @@ public final class Constants {
     //Speed constant
     public static double kIntakeSpeed = 1;
     public static double kOuttakeSpeed = -1;
+    // public static double kBeamBreakThresh = 0.75;
   }
 
   public static final class ArmConstants
