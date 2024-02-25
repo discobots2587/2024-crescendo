@@ -13,12 +13,23 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.MAXModuleIO;
 import frc.robot.subsystems.NavXIO;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Intake;
+
+import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.IntakeConstants;
+
+import frc.robot.commands.IntakeIndexRun;
+import frc.robot.commands.ArmHold;
+// import frc.robot.commands.ArmHold;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -28,15 +39,19 @@ import com.pathplanner.lib.auto.AutoBuilder;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer
+{
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive;
+  public static final Intake intake = new Intake(IntakeConstants.kIntakeCanID);
+  public static final Arm arm = new Arm();
 
   //Auto chooser
   private final LoggedDashboardChooser<Command> autoChooser;
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -67,6 +82,12 @@ public class RobotContainer {
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
+
+    intake.setDefaultCommand(
+      new RunCommand(
+          () -> intake.outtake(), 
+          intake));
+          
   }
 
   /**
@@ -88,6 +109,13 @@ public class RobotContainer {
         .onTrue(new InstantCommand(
             () -> m_robotDrive.zeroHeading(),
             m_robotDrive));
+
+    new JoystickButton(m_driverController, Button.kLeftBumper.value)
+        .whileTrue(new InstantCommand(
+          () -> intake.intake(), 
+          intake));
+
+    
   }
 
   /**
@@ -99,5 +127,9 @@ public class RobotContainer {
     // PathPlannerPath path = PathPlannerPath.fromPathFile("driveStraight");
 
     return autoChooser.get();
+  }
+
+  public static void getTeleopCommand() {
+
   }
 }

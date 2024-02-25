@@ -132,6 +132,114 @@ public final class Constants {
     public static final int kTurningMotorCurrentLimit = 20; //20 // amps
   }
 
+  public static final class IntakeConstants
+  {
+    public static final int kIntakeCanID = 50; //TUNE
+
+
+    public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
+    public static final int kIntakeMotorCurrentLimit = 50; //50 amps
+    
+    public static final double kIntakeSpeed = 1; // TUNE
+    public static final double kOuttakeSpeed = -1; // TUNE
+  }
+
+  public static final class PivotConstants
+  {
+    public static final int kMasterID = 70; //TUNE
+    // public static final int kSlaveID = 99; //TUNE
+
+    public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
+    public static final int kMotorCurrentLimit = 20;//20 amps TUNE
+    
+    public static final double kTurningEncoderPositionFactor = (360); // degrees
+    public static final double kTurningEncoderVelocityFactor = (360) / 60.0; // degrees per second
+
+
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kTurningMinOutput = -1;
+    public static final double kTurningMaxOutput = 1;
+    
+  }
+
+  public static final class FlywheelConstants
+  {
+    public static final int kMasterID = 71; //TUNE
+    public static final int kSlaveID = 72; //TUNE
+
+    public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
+    public static final int kMotorCurrentLimit = 20;//20 amps TUNE
+    
+    public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
+
+
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -1;
+    public static final double kVelocityMaxOutput = 1;
+  }
+
+  public static final class IndexerConstants
+  {
+    public static final int kIndexerID = 60; //TUNE
+    public static final int kHoodID = 73; //TUNE
+
+    public static final int kBeamBreakID = 0; 
+
+    public static final IdleMode kIndexerIdleMode = IdleMode.kCoast;
+    public static final IdleMode kHoodIdleMode = IdleMode.kBrake;
+
+    public static final int kHoodCurrentLimit = 20; //20 amps TUNE
+    public static final int kIndexerCurrentLimit = 20; //20 amps TUNE
+
+    public static final double kOffset = 60; // TUNE 
+    
+    public static final double kTurningEncoderPositionFactor = (360); // degrees
+    public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
+
+    //Hood PID
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -1;
+    public static final double kVelocityMaxOutput = 1;
+
+    //Speed constant
+    public static double kIntakeSpeed = 1;
+    public static double kOuttakeSpeed = -1;
+    // public static double kBeamBreakThresh = 0.75;
+  }
+
+  public static final class ArmConstants
+  {
+    public enum ArmState
+    {
+      INTAKE,
+      SHOOTER,
+      AMP
+    }
+
+    //All of these constants are in degrees
+    public static double kPivotOffset = 60; //TUNE 
+    public static double kHoodOffset = 60; //TUNE
+
+    public static double PivotIntakePosition = 53.7; //TUNE
+    public static double PivotAmpPosition = 180; //TUNE
+
+    public static double HoodAmpPosition = 147; //TUNE
+    public static double HoodStowPosition = 0; //TUNE
+  }
+
+  public static final class VisionConstants {
+
+  }
+
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
     public static final double kDriveDeadband = 0.1;
