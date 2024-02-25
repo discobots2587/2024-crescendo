@@ -46,6 +46,7 @@ public class RobotContainer
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  XboxController m_opController = new XboxController(OIConstants.kOpControllerPort);
 
 
   //Driver Buttons
@@ -53,6 +54,10 @@ public class RobotContainer
   JoystickButton SetXBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
 
+  //Operator Buttons
+  JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
+  JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
+  JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
 
 
   /**
@@ -79,6 +84,7 @@ public class RobotContainer
             m_robotDrive));
 
     intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
+    arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
           
   }
 
