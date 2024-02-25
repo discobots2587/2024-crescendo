@@ -71,7 +71,11 @@ public class RobotContainer
                 true, true),
             m_robotDrive));
 
-    // intake.setDefaultCommand(new IntakeIndexRun(m_driverController.get));
+    intake.setDefaultCommand(
+      new RunCommand(
+          () -> intake.outtake(), 
+          intake));
+          
   }
 
   /**
@@ -96,7 +100,10 @@ public class RobotContainer
 
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
         .whileTrue(new InstantCommand(
-          () -> intake.intake()));
+          () -> intake.intake(), 
+          intake));
+
+    
   }
 
   /**
@@ -108,5 +115,9 @@ public class RobotContainer
     // PathPlannerPath path = PathPlannerPath.fromPathFile("driveStraight");
 
     return autoChooser.getSelected();
+  }
+
+  public static void getTeleopCommand() {
+
   }
 }

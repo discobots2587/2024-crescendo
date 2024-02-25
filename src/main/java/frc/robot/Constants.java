@@ -140,8 +140,8 @@ public final class Constants {
     public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
     public static final int kIntakeMotorCurrentLimit = 50; //50 amps
     
-    public static final double kIntakeSpeed = 0.25; // TUNE
-    public static final double kOuttakeSpeed = -0.25; // TUNE
+    public static final double kIntakeSpeed = 1; // TUNE
+    public static final double kOuttakeSpeed = -1; // TUNE
   }
 
   public static final class PivotConstants
@@ -234,6 +234,10 @@ public final class Constants {
 
     public static double HoodAmpPosition = 147; //TUNE
     public static double HoodStowPosition = 0; //TUNE
+  }
+
+  public static final class VisionConstants {
+
   }
 
   public static final class OIConstants {
