@@ -14,6 +14,7 @@ import frc.robot.subsystems.Drive.MAXModuleIO;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -23,8 +24,8 @@ import frc.robot.subsystems.Intake;
 // import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.IntakeConstants;
 
-
-//import frc.robot.commands.ArmHold;
+import frc.robot.commands.IntakeIndex;
+import frc.robot.commands.ArmHold;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
@@ -46,6 +47,18 @@ public class RobotContainer
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  XboxController m_opController = new XboxController(OIConstants.kOpControllerPort);
+
+
+  //Driver Buttons
+  JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
+  JoystickButton SetXBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
+  JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
+
+  //Operator Buttons
+  JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
+  JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
+  JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
 
 
   /**
@@ -78,10 +91,8 @@ public class RobotContainer
                 true, true),
             m_robotDrive));
 
-    intake.setDefaultCommand(
-      new RunCommand(
-          () -> intake.outtake(), 
-          intake));
+    intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
+    arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
           
   }
 
@@ -94,23 +105,10 @@ public class RobotContainer
    * passing it to a
    * {@link JoystickButton}.
    */
-  private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .whileTrue(new RunCommand(
-            () -> m_robotDrive.setX(),
-            m_robotDrive));
-
-    new JoystickButton(m_driverController, Button.kB.value)
-        .onTrue(new InstantCommand(
-            () -> m_robotDrive.zeroHeading(),
-            m_robotDrive));
-
-    new JoystickButton(m_driverController, Button.kLeftBumper.value)
-        .whileTrue(new InstantCommand(
-          () -> intake.intake(), 
-          intake));
-
-    
+  private void configureButtonBindings()
+  {
+    SetXBumper.whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
+    ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
   }
 
   /**

@@ -6,14 +6,15 @@ package frc.robot.commands;
 
 import java.util.function.BooleanSupplier;
 import edu.wpi.first.wpilibj2.command.Command;
+// import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotContainer;
 
-public class IntakeIndexRun extends Command
+public class IntakeIndex extends Command
 {
     private BooleanSupplier intakeSup;
     
   /** Creates a new IntakeIndexRun. */
-  public IntakeIndexRun(BooleanSupplier intakeBumper)
+  public IntakeIndex(BooleanSupplier intakeBumper)
   {
     // Use addRequirements() here to declare subsystem dependencies.
     intakeSup = intakeBumper;
