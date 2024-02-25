@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
@@ -18,14 +19,18 @@ public class Indexer extends SubsystemBase{
     private final AbsoluteEncoder hoodEnc;
     private final SparkPIDController hoodPID;
 
+    private final DigitalInput beambreakDigitalInput;
+
     private final double angleOffset;
 
-    public Indexer(int indexerID, int hoodID, double offset)
+    public Indexer(int beamBreakChannel, int indexerID, int hoodID, double offset)
     {
         IndexerSpark = new CANSparkMax(indexerID, MotorType.kBrushless);
         HoodSpark = new CANSparkMax(hoodID, MotorType.kBrushless);
 
         angleOffset = offset;
+
+        beambreakDigitalInput = new DigitalInput(beamBreakChannel);
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
@@ -84,7 +89,7 @@ public class Indexer extends SubsystemBase{
 
 
     //Indexer rollers
-    public void intakeMode()
+    public void loadAndShoot()
     {
         IndexerSpark.set(IndexerConstants.kIntakeSpeed);
     }
@@ -92,6 +97,18 @@ public class Indexer extends SubsystemBase{
     public void outtakeMode()
     {
         IndexerSpark.set(IndexerConstants.kOuttakeSpeed);
+    }
+
+    public void stop()
+    {
+        IndexerSpark.stopMotor();
+    }
+
+    //Beambreak
+    public boolean getBeamBreak()
+    {
+        if (beambreakDigitalInput.get()){return true;}
+        else{return false;}
     }
 
     @Override

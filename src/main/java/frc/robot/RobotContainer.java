@@ -22,6 +22,10 @@ import frc.robot.subsystems.Intake;
 import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.IntakeConstants;
 
+import frc.robot.commands.IntakeIndexRun;
+import frc.robot.commands.ArmHold;
+// import frc.robot.commands.ArmHold;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 
 /*
@@ -66,6 +70,8 @@ public class RobotContainer
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
                 true, true),
             m_robotDrive));
+
+    // intake.setDefaultCommand(new IntakeIndexRun(m_driverController.get));
   }
 
   /**
