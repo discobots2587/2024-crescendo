@@ -109,8 +109,6 @@ public class RobotContainer
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // PathPlannerPath path = PathPlannerPath.fromPathFile("driveStraight");
-
     return autoChooser.getSelected();
   }
 
