@@ -67,10 +67,10 @@ public class RobotContainer
                 true, true),
             m_robotDrive));
 
-    intake.setDefaultCommand(
-      new RunCommand(
-          () -> intake.outtake(), 
-          intake));
+    // intake.setDefaultCommand(
+    //   new RunCommand(
+    //       () -> intake.outtake(), 
+    //       intake));
           
   }
 
@@ -99,7 +99,15 @@ public class RobotContainer
           () -> intake.intake(), 
           intake));
 
-    
+    new JoystickButton(m_driverController, Button.kLeftBumper.value)
+        .whileFalse(new InstantCommand(
+          () -> intake.outtake(), 
+          intake));
+
+    // new JoystickButton(m_driverController, Button.kLeftBumper.value)
+    //     .whileFalse(new InstantCommand(
+    //       () -> intake.outtake(), 
+    //       intake));    
   }
 
   /**
@@ -108,8 +116,6 @@ public class RobotContainer
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // PathPlannerPath path = PathPlannerPath.fromPathFile("driveStraight");
-
     return autoChooser.getSelected();
   }
 
