@@ -246,15 +246,10 @@ public final class Constants {
 
   public static final class ClimberConstants
   {
-    public static final TalonFXConfiguration talonFXConfigs = new TalonFXConfiguration();
-
     public static final double kP = 1;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kFF = 0;
-    public static final double kVelocityMinOutput = -1;
-    public static final double kVelocityMaxOutput = 1;
-
   }
 
   public static final class VisionConstants {

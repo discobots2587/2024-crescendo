@@ -4,14 +4,14 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.PivotConstants;
+import frc.robot.Constants.ClimberConstants;
 
 public class Climber extends SubsystemBase{
     private final TalonFX LeftClimber;
@@ -20,8 +20,17 @@ public class Climber extends SubsystemBase{
     private final DigitalInput leftHoming;
     private final DigitalInput rightHoming;
 
+    private final PositionVoltage m_request;
+
     public Climber(int leftID, int rightID, int leftHomingPort, int rightHomingPort)
     {
+
+        final TalonFXConfiguration ClimberConfigs = new TalonFXConfiguration();
+        
+        ClimberConfigs.Slot0.kP = ClimberConstants.kP;
+        ClimberConfigs.Slot0.kI = ClimberConstants.kI;
+        ClimberConfigs.Slot0.kD = ClimberConstants.kD;
+
         LeftClimber = new TalonFX(leftID, "rio");
         RightClimber = new TalonFX(rightID, "rio");
 
@@ -29,30 +38,10 @@ public class Climber extends SubsystemBase{
         leftHoming = new DigitalInput(leftHomingPort);
         rightHoming = new DigitalInput(rightHomingPort);
 
-        LeftClimber.getConfigurator().apply(null);
-        
-        // Set the PID gains for the turning motor. Note these are example gains, and you
-        // may need to tune them for your own robot!
-        pivotPID.setP(PivotConstants.kP);
-        pivotPID.setI(PivotConstants.kI);
-        pivotPID.setD(PivotConstants.kD);
-        pivotPID.setFF(PivotConstants.kFF);
-        pivotPID.setOutputRange(PivotConstants.kTurningMinOutput, PivotConstants.kTurningMaxOutput);
-        
-        // SlaveSpark.setIdleMode(PivotConstants.kPivotIdleMode);
-        MasterSpark.setIdleMode(PivotConstants.kPivotIdleMode);
+        LeftClimber.getConfigurator().apply(ClimberConfigs);
+        RightClimber.getConfigurator().apply(ClimberConfigs);
 
-        MasterSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
-        // SlaveSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
-
-
-        // SlaveSpark.setInverted(true);
-        // SlaveSpark.follow(MasterSpark);
-
-        // Save the SPARK MAX configurations. If a SPARK MAX browns out during
-        // operation, it will maintain the above configurations.
-        MasterSpark.burnFlash();
-        // SlaveSpark.burnFlash();
+        m_request = new PositionVoltage(0).withSlot(0);
     }
 
     public boolean isLeftHomed()
@@ -67,12 +56,26 @@ public class Climber extends SubsystemBase{
 
     public double getLeftLocation()
     {
-        return LeftClimber.getRotorPosition(); // returms in rotations
+        return LeftClimber.getPosition().getValue(); // returms in rotations
     }
 
-    public void setDesiredAngle(double desiredDegrees)
+    public double getRightLocation()
+    {
+        return RightClimber.getPosition().getValue(); // returms in rotations
+    }
+
+    public void zeroLeft()
+    {
+        LeftClimber.setPosition(0);
+    }
+
+    public void zeroRight()
+    {
+        RightClimber.setPosition(0);
+    }
+
+    public void setLeftDesiredPosition(double desiredDegrees)
     {        
-        PositionVoltage m_request = new PositionVoltage(0).withSlot(0);
         double desiredRotations = desiredDegrees/360.0;
 
         SmartDashboard.putNumber("Target Position", desiredRotations); 
@@ -83,6 +86,9 @@ public class Climber extends SubsystemBase{
     @Override
     public void periodic()
     {
-        
+        if(isLeftHomed())
+        {zeroLeft();}
+        if(isRightHomed())
+        {zeroRight();}
     }
 }
