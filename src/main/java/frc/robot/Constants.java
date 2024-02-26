@@ -246,10 +246,21 @@ public final class Constants {
 
   public static final class ClimberConstants
   {
+    public static final int kLeftID = 99;
+    public static final int kRightID = 99;
+
+    public static final int kLeftSwitchPort = 1;
+    public static final int kRightSwitchPort = 2;
+
+    public static final TalonFXConfiguration talonFXConfigs = new TalonFXConfiguration();
     public static final double kP = 1;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -1;
+    public static final double kVelocityMaxOutput = 1;    
+
+    public static double kOutPosition = 90; //TUNE //degrees needed to rotate to get fully unspooled
   }
 
   public static final class VisionConstants {

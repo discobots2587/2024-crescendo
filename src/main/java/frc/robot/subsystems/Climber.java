@@ -64,6 +64,7 @@ public class Climber extends SubsystemBase{
         return RightClimber.getPosition().getValue(); // returms in rotations
     }
 
+    //Zeros climber;
     public void zeroLeft()
     {
         LeftClimber.setPosition(0);
@@ -74,14 +75,31 @@ public class Climber extends SubsystemBase{
         RightClimber.setPosition(0);
     }
 
+
+    //Moving the climber
     public void setLeftDesiredPosition(double desiredDegrees)
     {        
         double desiredRotations = desiredDegrees/360.0;
 
         SmartDashboard.putNumber("Target Position", desiredRotations); 
 
-        LeftClimber.setControl(m_request.withPosition(desiredRotations));
+        LeftClimber.setControl(m_request.withPosition(desiredRotations).withLimitReverseMotion(isLeftHomed()));
     }
+
+    public void setRightDesiredPosition(double desiredDegrees)
+    {        
+        double desiredRotations = desiredDegrees/360.0;
+
+        SmartDashboard.putNumber("Target Position", desiredRotations); 
+
+        RightClimber.setControl(m_request.withPosition(desiredRotations).withLimitReverseMotion(isRightHomed()));
+    }
+
+    public void stopLeft()
+    {LeftClimber.stopMotor();}
+
+    public void stopRight()
+    {RightClimber.stopMotor();}
 
     @Override
     public void periodic()
