@@ -17,16 +17,6 @@ public class MAXSwerveModule {
   private final ModuleIOInputsAutoLogged m_inputs = new ModuleIOInputsAutoLogged();
   private final int m_index;
 
-  // private final CANSparkMax m_drivingSparkMax;
-  // private final CANSparkMax m_turningSparkMax;
-
-  // private final RelativeEncoder m_drivingEncoder;
-  // private final AbsoluteEncoder m_turningEncoder;
-
-  // private final SparkPIDController m_drivingPIDController;
-  // private final SparkPIDController m_turningPIDController;
-
-  // private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
 
   /**
