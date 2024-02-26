@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -241,6 +242,19 @@ public final class Constants {
 
     public static double HoodAmpPosition = 147; //TUNE
     public static double HoodStowPosition = 0; //TUNE
+  }
+
+  public static final class ClimberConstants
+  {
+    public static final TalonFXConfiguration talonFXConfigs = new TalonFXConfiguration();
+
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -1;
+    public static final double kVelocityMaxOutput = 1;
+
   }
 
   public static final class VisionConstants {
