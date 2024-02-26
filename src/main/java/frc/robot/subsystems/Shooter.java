@@ -76,6 +76,12 @@ public class Shooter extends SubsystemBase{
         flywheelPID.setReference(desiredVelocity, CANSparkMax.ControlType.kVelocity);
     }
 
+    public void setDesiredVoltage(double desiredVoltage)
+    {
+        SmartDashboard.putNumber("Target Voltage", desiredVoltage); //log the target voltage of the flywheel
+        flywheelPID.setReference(desiredVoltage, CANSparkMax.ControlType.kVoltage);
+    }
+
     @Override
     public void periodic()
     {

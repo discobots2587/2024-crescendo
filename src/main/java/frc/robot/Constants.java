@@ -140,8 +140,8 @@ public final class Constants {
     public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
     public static final int kIntakeMotorCurrentLimit = 50; //50 amps
     
-    public static final double kIntakeSpeed = -0.75; // TUNE
-    public static final double kOuttakeSpeed = 0.75; // TUNE
+    public static final double kIntakeSpeed = -0.85; // TUNE
+    public static final double kOuttakeSpeed = 0.85; // TUNE
   }
 
   public static final class PivotConstants
@@ -167,7 +167,7 @@ public final class Constants {
 
   public static final class FlywheelConstants
   {
-    public static final int kMasterID = 71; //TUNE
+    public static final int kMasterID = 51; //TUNE
     public static final int kSlaveID = 72; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
