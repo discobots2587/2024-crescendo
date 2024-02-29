@@ -4,10 +4,9 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,7 +17,7 @@ public class Shooter extends SubsystemBase{
     private final CANSparkMax MasterSpark;
     private final CANSparkMax SlaveSpark;
 
-    private final AbsoluteEncoder fwEnc;
+    private final RelativeEncoder fwEnc;
 
     private final SparkPIDController flywheelPID;
 
@@ -35,7 +34,7 @@ public class Shooter extends SubsystemBase{
 
         
         // Setup encoders and PID controller for the pivot sparkmax.
-        fwEnc = MasterSpark.getAbsoluteEncoder(Type.kDutyCycle);
+        fwEnc = MasterSpark.getEncoder();
         flywheelPID = MasterSpark.getPIDController();
         flywheelPID.setFeedbackDevice(fwEnc);
         // flywheelPID.
@@ -74,6 +73,12 @@ public class Shooter extends SubsystemBase{
     {
         SmartDashboard.putNumber("Target Velocity", desiredVelocity); //log the target vlocity of the flywheel
         flywheelPID.setReference(desiredVelocity, CANSparkMax.ControlType.kVelocity);
+    }
+
+    public void setDesiredVoltage(double desiredVoltage)
+    {
+        SmartDashboard.putNumber("Target Voltage", desiredVoltage); //log the target voltage of the flywheel
+        flywheelPID.setReference(desiredVoltage, CANSparkMax.ControlType.kVoltage);
     }
 
     @Override
