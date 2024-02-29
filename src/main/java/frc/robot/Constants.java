@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -134,14 +135,21 @@ public final class Constants {
 
   public static final class IntakeConstants
   {
+    public enum IntakeState
+    {
+      INTAKING,
+      STOPPED,
+      OUTTAKING
+    }
+    
     public static final int kIntakeCanID = 50; //TUNE
 
 
     public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
     public static final int kIntakeMotorCurrentLimit = 50; //50 amps
     
-    public static final double kIntakeSpeed = -0.75; // TUNE
-    public static final double kOuttakeSpeed = 0.75; // TUNE
+    public static final double kIntakeSpeed = -0.85; // TUNE
+    public static final double kOuttakeSpeed = 0.85; // TUNE
   }
 
   public static final class PivotConstants
@@ -167,7 +175,7 @@ public final class Constants {
 
   public static final class FlywheelConstants
   {
-    public static final int kMasterID = 71; //TUNE
+    public static final int kMasterID = 51; //TUNE
     public static final int kSlaveID = 72; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
@@ -236,8 +244,42 @@ public final class Constants {
     public static double HoodStowPosition = 0; //TUNE
   }
 
-  public static final class VisionConstants {
+  public static final class ClimberConstants
+  {
+    public static final int kLeftID = 99;
+    public static final int kRightID = 99;
 
+    public static final int kLeftSwitchPort = 1;
+    public static final int kRightSwitchPort = 2;
+
+    public static final TalonFXConfiguration talonFXConfigs = new TalonFXConfiguration();
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -1;
+    public static final double kVelocityMaxOutput = 1;    
+
+    public static double kOutPosition = 90; //TUNE //degrees needed to rotate to get fully unspooled
+  }
+
+  public static final class VisionConstants 
+  {
+    // Constants such as camera and target height stored. Change per robot and goal!
+    public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
+    public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
+    // Angle between horizontal and the camera.
+    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
+
+    // How far from the target we want to be
+    public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+
+    // PID constants should be tuned per robot
+    public static final double LINEAR_P = 0.1;
+    public static final double LINEAR_D = 0.0;
+
+    public static final double ANGULAR_P = 0.1;
+    public static final double ANGULAR_D = 0.0;
   }
 
   public static final class OIConstants {
