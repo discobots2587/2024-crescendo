@@ -51,4 +51,6 @@ public interface ModuleIO {
   public default void resetDriveEncoder(){}
 
   public default void setReference(SwerveModuleState reference){}
+
+  public default void setPID(){}
 }

@@ -111,6 +111,11 @@ public class RobotContainer
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
   }
 
+  public void configureTestModeBindings(){
+    new JoystickButton(m_driverController, Button.kY.value).onTrue(
+                      new InstantCommand(() -> m_robotDrive.setPID(), m_robotDrive));
+  }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

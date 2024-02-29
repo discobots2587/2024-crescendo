@@ -321,4 +321,12 @@ public class DriveSubsystem extends SubsystemBase {
   public double getTurnRate() {
     return g_inputs.yawVelocity * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
+
+  /* (for Test Mode) Sets drive PID values using values on SmartDashboard */
+  public void setPID(){
+    m_frontLeft.setPID();
+    m_frontRight.setPID();
+    m_rearLeft.setPID();
+    m_rearRight.setPID();
+  }
 }

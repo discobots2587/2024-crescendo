@@ -90,4 +90,8 @@ public class MAXSwerveModule {
   public void resetDriveEncoder() {
     m_Io.resetDriveEncoder();
   }
+
+  public void setPID(){
+    m_Io.setPID();
+  }
 }

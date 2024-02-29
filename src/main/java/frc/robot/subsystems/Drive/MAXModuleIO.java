@@ -1,10 +1,14 @@
 package frc.robot.subsystems.Drive;
 
+import org.apache.commons.lang3.ObjectUtils.Null;
+import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
+
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.SparkPIDController.ArbFFUnits;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -24,10 +28,17 @@ public class MAXModuleIO implements ModuleIO{
 
   private final SparkPIDController m_drivingPIDController;
   private final SparkPIDController m_turningPIDController;
+  private final int id;
 
-  private double m_chassisAngularOffset = 0;
+  private final LoggedDashboardNumber driveKP, driveKI, driveKD, driveKFF, driveArbFF;
+  private final LoggedDashboardNumber turnKP, turnKI, turnKD, turnKFF, turnArbFF;
+
+  private double m_drivingArbFF = 0.0;
+  private double m_turningArbFF = 0.0;
+  private double m_chassisAngularOffset = 0.0;
 
     public MAXModuleIO(int id){
+        this. id = id;
         switch(id){
             case 0: //FrontLeft
                 m_drivingSparkMax = new CANSparkMax(DriveConstants.kFrontLeftDrivingCanId, MotorType.kBrushless);
@@ -122,6 +133,18 @@ public class MAXModuleIO implements ModuleIO{
 
         m_drivingEncoder.setPosition(0);
 
+        driveKP = new LoggedDashboardNumber("driveKP[" + id + "]", ModuleConstants.kDrivingP);
+        driveKI = new LoggedDashboardNumber("driveKI[" + id + "]", ModuleConstants.kDrivingI);
+        driveKD = new LoggedDashboardNumber("driveKP[" + id + "]", ModuleConstants.kDrivingD);
+        driveKFF = new LoggedDashboardNumber("driveKFF[" + id + "]", ModuleConstants.kDrivingFF);
+        driveArbFF = new LoggedDashboardNumber("driveArbFF[" + id + "]", 0);
+        
+        turnKP = new LoggedDashboardNumber("turnKP[" + id + "]", ModuleConstants.kTurningP);
+        turnKI = new LoggedDashboardNumber("turnKI[" + id + "]", ModuleConstants.kTurningI);
+        turnKD = new LoggedDashboardNumber("turnKD[" + id + "]", ModuleConstants.kTurningD);
+        turnKFF = new LoggedDashboardNumber("turnKFF[" + id + "]", ModuleConstants.kTurningFF);
+        turnArbFF = new LoggedDashboardNumber("turnArbFF[" + id + "]", 0);
+
     }
 
     @Override
@@ -143,8 +166,8 @@ public class MAXModuleIO implements ModuleIO{
         // Change reference (desired state) to be field relative
         reference.angle = reference.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
 
-        m_drivingPIDController.setReference(reference.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity);
-        m_turningPIDController.setReference(reference.angle.getRadians(), CANSparkMax.ControlType.kPosition);
+        m_drivingPIDController.setReference(reference.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity, 0, m_drivingArbFF, ArbFFUnits.kVoltage);
+        m_turningPIDController.setReference(reference.angle.getRadians(), CANSparkMax.ControlType.kPosition, 0, m_turningArbFF);
     }
 
     @Override
@@ -170,6 +193,21 @@ public class MAXModuleIO implements ModuleIO{
     @Override
     public void resetDriveEncoder(){
         m_drivingEncoder.setPosition(0);
+    }
+
+    @Override
+    public void setPID(){
+        m_drivingPIDController.setP(driveKP.get());
+        m_drivingPIDController.setI(driveKI.get());
+        m_drivingPIDController.setD(driveKD.get());
+        m_drivingPIDController.setFF(driveKFF.get());
+        m_drivingArbFF = driveArbFF.get();
+
+        m_turningPIDController.setP(turnKP.get());
+        m_turningPIDController.setI(turnKI.get());
+        m_turningPIDController.setD(turnKD.get());
+        m_turningPIDController.setFF(turnKFF.get());
+        m_turningArbFF = turnArbFF.get();
     }
 
 }
