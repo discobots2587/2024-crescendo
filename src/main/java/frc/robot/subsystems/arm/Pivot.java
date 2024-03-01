@@ -4,95 +4,55 @@
 
 package frc.robot.subsystems.arm;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
-import com.revrobotics.SparkPIDController;
+import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.PivotConstants;
 
 public class Pivot extends SubsystemBase{
-    private final CANSparkMax MasterSpark;
-    // private final CANSparkMax SlaveSpark;
 
-    private final AbsoluteEncoder absEncoder;
+    private final PivotIO pivotIO;
+    private final PivotIOInputsAutoLogged pivotInputs = new PivotIOInputsAutoLogged();
+    // private final double angleOffset; // This is the initial value of the arm. This shoukld be aiming upwards at about 60 degrees.
 
-    private final SparkPIDController pivotPID;
-
-    private final double angleOffset; // This is the initial value of the arm. This shoukld be aiming upwards at about 60 degrees.
-
-    public Pivot(int masterID, double offset)
+    public Pivot(int sparkID, double offset)
     {
-        MasterSpark = new CANSparkMax(masterID, MotorType.kBrushless);
-        // SlaveSpark = new CANSparkMax(slaveID, MotorType.kBrushless);
-
-        angleOffset = offset;
-
-        // Factory reset, so we get the SPARKS MAX to a known state before configuring
-        // them. This is useful in case a SPARK MAX is swapped out.
-        MasterSpark.restoreFactoryDefaults();
-        // SlaveSpark.restoreFactoryDefaults();
-
-        
-        // Setup encoders and PID controller for the pivot sparkmax.
-        absEncoder = MasterSpark.getAbsoluteEncoder(Type.kDutyCycle);
-        pivotPID = MasterSpark.getPIDController();
-        pivotPID.setFeedbackDevice(absEncoder);
-        // pivotPID.
-
-        // Apply position and velocity conversion factors for the turning encoder.
-        absEncoder.setPositionConversionFactor(PivotConstants.kTurningEncoderPositionFactor);
-        absEncoder.setVelocityConversionFactor(PivotConstants.kTurningEncoderVelocityFactor);
-
-        
-        // Set the PID gains for the turning motor. Note these are example gains, and you
-        // may need to tune them for your own robot!
-        pivotPID.setP(PivotConstants.kP);
-        pivotPID.setI(PivotConstants.kI);
-        pivotPID.setD(PivotConstants.kD);
-        pivotPID.setFF(PivotConstants.kFF);
-        pivotPID.setOutputRange(PivotConstants.kTurningMinOutput, PivotConstants.kTurningMaxOutput);
-        
-        // SlaveSpark.setIdleMode(PivotConstants.kPivotIdleMode);
-        MasterSpark.setIdleMode(PivotConstants.kPivotIdleMode);
-
-        MasterSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
-        // SlaveSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
-
-
-        // SlaveSpark.setInverted(true);
-        // SlaveSpark.follow(MasterSpark);
-
-        // Save the SPARK MAX configurations. If a SPARK MAX browns out during
-        // operation, it will maintain the above configurations.
-        MasterSpark.burnFlash();
-        // SlaveSpark.burnFlash();
+        pivotIO = new SparkPivotIO(sparkID, offset);
     }
 
-    public double getRawPosition()
+    /* 
+     * Get the position given by the absolute encoder
+     * 
+     * @return Rotation2d of angle
+    */
+    public Rotation2d getPosition()
     {
-        return absEncoder.getPosition(); // returns in degrees
+        return pivotInputs.position; // returns in degrees
     }
 
-    public double getAiming()
+    /*
+     * Get the angle of the pivot from the offset angle
+     * 
+     * @return Rotation2d of angle
+     */
+    public Rotation2d getAiming()
     {
-        return getRawPosition() - angleOffset; // returms in degrees
+        return pivotInputs.offsetPosition; // returns in degrees
     }
 
     public void setDesiredAngle(double desiredAngle)
     {
-        double turnPose = desiredAngle - angleOffset;
+        pivotIO.setDesiredAngle(desiredAngle);
+    }
 
-        SmartDashboard.putNumber("Target Position", turnPose); 
-        pivotPID.setReference(turnPose, CANSparkMax.ControlType.kPosition);
+    public void setDesiredAngle(Rotation2d desiredAngle){
+        pivotIO.setDesiredAngle(desiredAngle.getDegrees());
     }
 
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("Aiming Position", getAiming()); // log the aiming position of the arm.
+        pivotIO.updateInputs(pivotInputs);
+        Logger.processInputs("Arm/Pivot", pivotInputs);
     }
 }
