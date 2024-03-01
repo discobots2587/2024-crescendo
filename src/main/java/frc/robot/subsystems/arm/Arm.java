@@ -1,10 +1,12 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.arm;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.FlywheelConstants;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.PivotConstants;
+import frc.robot.subsystems.arm.Indexer;
+import frc.robot.subsystems.arm.Shooter;
 
 
 public class Arm extends SubsystemBase
