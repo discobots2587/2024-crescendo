@@ -33,5 +33,8 @@ public class Shooter extends SubsystemBase{
     }
 
     @Override
-    public void periodic(){}
+    public void periodic(){
+        io.updateInputs(inputs);
+        Logger.processInputs("Arm/Shooter", inputs);
+    }
 }

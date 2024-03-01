@@ -72,6 +72,8 @@ public class SparkFlywheelIO implements FlywheelIO {
         inputs.velocityDeg = fwEnc.getVelocity();
         inputs.masterAppliedVolts = MasterSpark.getAppliedOutput() * MasterSpark.getBusVoltage();
         inputs.slaveAppliedVolts = SlaveSpark.getAppliedOutput() * SlaveSpark.getBusVoltage();
+        inputs.masterCurrentAmps = MasterSpark.getOutputCurrent();
+        inputs.slaveCurrentAmps = SlaveSpark.getOutputCurrent();
     }
 
     @Override

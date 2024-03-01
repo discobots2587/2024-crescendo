@@ -14,6 +14,8 @@ public interface FlywheelIO {
         public double velocityDeg = 0.0;
         public double masterAppliedVolts = 0.0;
         public double slaveAppliedVolts = 0.0;
+        public double masterCurrentAmps = 0.0;
+        public double slaveCurrentAmps = 0.0;
         // public double[] currentAmps = new double[] {};
     }
 
