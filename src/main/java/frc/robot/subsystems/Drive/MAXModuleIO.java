@@ -37,7 +37,7 @@ public class MAXModuleIO implements ModuleIO{
   private double m_chassisAngularOffset = 0.0;
 
     public MAXModuleIO(int id){
-        this. id = id;
+        this.id = id;
         switch(id){
             case 0: //FrontLeft
                 m_drivingSparkMax = new CANSparkMax(DriveConstants.kFrontLeftDrivingCanId, MotorType.kBrushless);
@@ -153,7 +153,7 @@ public class MAXModuleIO implements ModuleIO{
         inputs.driveAppliedVolts = m_drivingSparkMax.getAppliedOutput() * m_drivingSparkMax.getBusVoltage();
         inputs.driveCurrentAmps = new double[] {m_drivingSparkMax.getOutputCurrent()};
 
-        inputs.turnPosition = Rotation2d.fromRadians(m_turningEncoder.getPosition() - m_chassisAngularOffset); //Chassis Relative
+        inputs.turnAbsolutePosition = Rotation2d.fromRadians(m_turningEncoder.getPosition() - m_chassisAngularOffset); //Chassis Relative
         inputs.turnPosition = Rotation2d.fromRadians(m_turningEncoder.getPosition());
         inputs.turnVelocityRadPerSec = m_turningEncoder.getVelocity();
         inputs.turnAppliedVolts = m_turningSparkMax.getAppliedOutput() * m_turningSparkMax.getBusVoltage();
