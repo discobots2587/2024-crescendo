@@ -10,7 +10,6 @@ import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
 
 import frc.robot.Constants.FlywheelConstants;
-import frc.robot.subsystems.arm.FlywheelIO.FlywheelIOInputs;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
 

@@ -7,7 +7,6 @@ package frc.robot.subsystems.arm;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.arm.FlywheelIOInputsAutoLogged;
 
 public class Shooter extends SubsystemBase{
     FlywheelIO io;
