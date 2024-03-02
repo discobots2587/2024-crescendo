@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakeConstants;
 
@@ -14,9 +15,10 @@ import frc.robot.Constants.IntakeConstants;
 public class Intake extends SubsystemBase {
     private final CANSparkMax IntakeNEO;
     private IntakeConstants.IntakeState intakeState;
+    // private double speed; 
     
     public Intake(int intakeID) {
-        IntakeNEO = new CANSparkMax(intakeID, MotorType.kBrushless); //Brushed
+        IntakeNEO = new CANSparkMax(intakeID, MotorType.kBrushed); //Brushed
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
@@ -34,6 +36,8 @@ public class Intake extends SubsystemBase {
         IntakeNEO.burnFlash();
 
         intakeState = IntakeConstants.IntakeState.STOPPED;
+        // speed = 0;
+
     }
 
     public IntakeConstants.IntakeState getState()
@@ -44,6 +48,7 @@ public class Intake extends SubsystemBase {
     public void setSpeed(double speed)
     {
         IntakeNEO.set(speed);
+        // this.speed = speed;
     }
 
     public void intake()
@@ -63,4 +68,10 @@ public class Intake extends SubsystemBase {
         IntakeNEO.stopMotor();
         intakeState = IntakeConstants.IntakeState.STOPPED;
     }
+
+    // @Override
+    // public void periodic()
+    // {
+    //     SmartDashboard.putNumber("intake target speed", this.speed);
+    // }
 }

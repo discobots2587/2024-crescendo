@@ -23,10 +23,10 @@ public class Shooter extends SubsystemBase{
         io.setDesiredVelocity(desiredVelocity);
     }
 
-    public void setDesiredVoltage(double desiredVoltage){
-        Logger.recordOutput("Shooter/setPointVoltage", desiredVoltage);
-        io.setDesiredVoltage(desiredVoltage);
-    }
+    // public void setDesiredVoltage(double desiredVoltage){
+    //     Logger.recordOutput("Shooter/setPointVoltage", desiredVoltage);
+    //     io.setDesiredVoltage(desiredVoltage);
+    // }
 
     public double getVelocity(){
         return inputs.velocityDeg;
@@ -36,5 +36,10 @@ public class Shooter extends SubsystemBase{
     public void periodic(){
         io.updateInputs(inputs);
         Logger.processInputs("Arm/Shooter", inputs);
+    }
+
+    public void stop()
+    {
+        io.stop();
     }
 }

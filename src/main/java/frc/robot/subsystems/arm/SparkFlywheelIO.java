@@ -4,9 +4,10 @@
 
 package frc.robot.subsystems.arm;
 
-import com.revrobotics.AbsoluteEncoder;
+// import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
+import com.revrobotics.RelativeEncoder;
+// import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
 
 import frc.robot.Constants.FlywheelConstants;
@@ -18,7 +19,7 @@ public class SparkFlywheelIO implements FlywheelIO {
     private final CANSparkMax MasterSpark;
     private final CANSparkMax SlaveSpark;
 
-    private final AbsoluteEncoder fwEnc;
+    private final RelativeEncoder fwEnc;
 
     private final SparkPIDController flywheelPID;
 
@@ -33,13 +34,13 @@ public class SparkFlywheelIO implements FlywheelIO {
 
         
         // Setup encoders and PID controller for the pivot sparkmax.
-        fwEnc = MasterSpark.getAbsoluteEncoder(Type.kDutyCycle);
+        fwEnc = MasterSpark.getEncoder();
         flywheelPID = MasterSpark.getPIDController();
         flywheelPID.setFeedbackDevice(fwEnc);
         // flywheelPID.
 
         // Apply position and velocity conversion factors for the turning encoder.
-        fwEnc.setVelocityConversionFactor(FlywheelConstants.kTurningEncoderVelocityFactor);
+        // fwEnc.setVelocityConversionFactor(FlywheelConstants.kTurningEncoderVelocityFactor);
 
         
         // Set the PID gains for the turning motor. Note these are example gains, and you
@@ -57,8 +58,8 @@ public class SparkFlywheelIO implements FlywheelIO {
         SlaveSpark.setSmartCurrentLimit(FlywheelConstants.kMotorCurrentLimit);
 
 
-        SlaveSpark.setInverted(true);
-        SlaveSpark.follow(MasterSpark);
+        // SlaveSpark.setInverted(true);
+        SlaveSpark.follow(MasterSpark, true);
 
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
         // operation, it will maintain the above configurations.
@@ -87,7 +88,11 @@ public class SparkFlywheelIO implements FlywheelIO {
     }
 
     @Override
-    public void stop(){
-        
+    public void stop()
+    {
+        MasterSpark.stopMotor();
+        SlaveSpark.stopMotor();    
+
+        // fwEnc.getVelocity();
     }
 }

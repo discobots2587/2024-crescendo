@@ -23,6 +23,8 @@ public class Indexer extends SubsystemBase{
 
     private final double angleOffset;
 
+    // private double speed;
+
     public Indexer(int beamBreakChannel, int indexerID, int hoodID, double offset)
     {
         IndexerSpark = new CANSparkMax(indexerID, MotorType.kBrushless);
@@ -65,6 +67,7 @@ public class Indexer extends SubsystemBase{
         // operation, it will maintain the above configurations.
         HoodSpark.burnFlash();
         IndexerSpark.burnFlash();
+        // speed = 0;
     }
 
 
@@ -115,5 +118,13 @@ public class Indexer extends SubsystemBase{
     public void periodic()
     {
         SmartDashboard.putNumber("Aiming Position", getAiming()); // log the aiming position of the arm.
+        // SmartDashboard.putNumber("Indexer target speed", this.speed);
+    }
+
+
+    public void setSpeed(double speed)
+    {
+        IndexerSpark.set(speed);
+        // this.speed = speed;
     }
 }

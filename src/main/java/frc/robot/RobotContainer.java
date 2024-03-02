@@ -9,6 +9,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.NavXIO;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.drive.DriveSubsystem;
@@ -18,13 +19,16 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import java.util.function.DoubleSupplier;
+
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.ArmHold;
-import frc.robot.commands.IntakeIndex;
+// import frc.robot.commands.ArmHold;
+// import frc.robot.commands.IntakeIndex;
+import frc.robot.commands.IntakeTest;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 
@@ -53,18 +57,21 @@ public class RobotContainer
   //Driver Buttons
   JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
   // JoystickButton SetXBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
-  JoystickButton TestShooter = new JoystickButton(m_driverController, Button.kRightBumper.value);
+  JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
 
+  DoubleSupplier leftOpSup = () -> m_opController.getLeftY();
+  DoubleSupplier rightOpSup = () -> m_opController.getRightY();
+
   //Operator Buttons
-  JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
-  JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
-  JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
+  // JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
+  // JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
+  // JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
 
-  JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kB.value);
+  // JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kB.value);
 
-  JoystickButton RightClimbDown = new JoystickButton(m_opController, Button.kRightBumper.value);
-  JoystickButton LeftClimbDown = new JoystickButton(m_opController, Button.kLeftBumper.value);
+  // JoystickButton RightClimbDown = new JoystickButton(m_opController, Button.kRightBumper.value);
+  // JoystickButton LeftClimbDown = new JoystickButton(m_opController, Button.kLeftBumper.value);
 
 
   /**
@@ -97,9 +104,11 @@ public class RobotContainer
                 true, true),
             m_robotDrive));
 
-    intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
-    arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
-          
+    // intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
+    // arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
+    
+
+    intake.setDefaultCommand(new IntakeTest(leftOpSup, rightOpSup));
   }
 
   /**
@@ -114,18 +123,19 @@ public class RobotContainer
   private void configureButtonBindings()
   {
     // SetXBumper.whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
-    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVoltage(14), arm));
-    TestShooter.whileFalse(new RunCommand(() -> arm.setFlywheelVoltage(0), arm));
-    ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)); 
+    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVelocity(5000), arm));
+    TestShooter.whileFalse(new RunCommand(() -> arm.stopFlywheel(), arm));
 
-    ClimbDeploy.onTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(ClimberConstants.kOutPosition)));
-    ClimbDeploy.onTrue(new InstantCommand(() -> climber.setRightDesiredPosition(ClimberConstants.kOutPosition)));
+    ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
 
-    RightClimbDown.whileTrue(new InstantCommand(() -> climber.setRightDesiredPosition(0)));
-    RightClimbDown.onFalse(new InstantCommand(() -> climber.stopRight()));
+    // ClimbDeploy.onTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(ClimberConstants.kOutPosition)));
+    // ClimbDeploy.onTrue(new InstantCommand(() -> climber.setRightDesiredPosition(ClimberConstants.kOutPosition)));
 
-    LeftClimbDown.whileTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(0)));
-    LeftClimbDown.onFalse(new InstantCommand(() -> climber.stopLeft()));
+    // RightClimbDown.whileTrue(new InstantCommand(() -> climber.setRightDesiredPosition(0)));
+    // RightClimbDown.onFalse(new InstantCommand(() -> climber.stopRight()));
+
+    // LeftClimbDown.whileTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(0)));
+    // LeftClimbDown.onFalse(new InstantCommand(() -> climber.stopLeft()));
   }
   public void configureTestModeBindings(){
     new JoystickButton(m_driverController, Button.kY.value).onTrue(

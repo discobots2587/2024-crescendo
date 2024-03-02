@@ -80,10 +80,29 @@ public class Arm extends SubsystemBase
         {indexer.stop();}
     }
 
+    public void indexStop()
+    {
+        indexer.stop();
+    }
+
+    public void indexTest(double speed)
+    {
+        indexer.setSpeed(speed);
+    }
+
+    public void shooterTest(double velocity)
+    {
+        flywheelShooter.setDesiredVelocity(velocity);
+    }
+
     @Override
     public void periodic()
     {
         SmartDashboard.putString("Arm State", state.toString());
+    }
+
+    public void stopFlywheel() {
+        flywheelShooter.stop();
     }
 }
 
