@@ -263,8 +263,23 @@ public final class Constants {
     public static double kOutPosition = 90; //TUNE //degrees needed to rotate to get fully unspooled
   }
 
-  public static final class VisionConstants {
+  public static final class VisionConstants 
+  {
+    // Constants such as camera and target height stored. Change per robot and goal!
+    public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
+    public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
+    // Angle between horizontal and the camera.
+    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
 
+    // How far from the target we want to be
+    public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+
+    // PID constants should be tuned per robot
+    public static final double LINEAR_P = 0.1;
+    public static final double LINEAR_D = 0.0;
+
+    public static final double ANGULAR_P = 0.1;
+    public static final double ANGULAR_D = 0.0;
   }
 
   public static final class OIConstants {
