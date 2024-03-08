@@ -17,6 +17,7 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.ModuleConstants;
+import frc.utils.LoggedDashboardPID;
 
 public class MAXModuleIO implements ModuleIO{
   private final CANSparkMax m_drivingSparkMax;
@@ -29,8 +30,9 @@ public class MAXModuleIO implements ModuleIO{
   private final SparkPIDController m_turningPIDController;
   private final int id;
 
-  private final LoggedDashboardNumber driveKP, driveKI, driveKD, driveKFF, driveArbFF;
-  private final LoggedDashboardNumber turnKP, turnKI, turnKD, turnKFF, turnArbFF;
+  private final LoggedDashboardPID drivekPID, turnkPID;
+  private final LoggedDashboardNumber /*driveKP, driveKI, driveKD,*/ driveKFF, driveArbFF;
+  private final LoggedDashboardNumber /*turnKP, turnKI, turnKD,*/ turnKFF, turnArbFF;
 
   private double m_drivingArbFF = 0.0;
   private double m_turningArbFF = 0.0;
@@ -132,15 +134,26 @@ public class MAXModuleIO implements ModuleIO{
 
         m_drivingEncoder.setPosition(0);
 
-        driveKP = new LoggedDashboardNumber("driveKP[" + id + "]", ModuleConstants.kDrivingP);
-        driveKI = new LoggedDashboardNumber("driveKI[" + id + "]", ModuleConstants.kDrivingI);
-        driveKD = new LoggedDashboardNumber("driveKP[" + id + "]", ModuleConstants.kDrivingD);
+
+        // driveKP = new LoggedDashboardNumber("driveKP[" + id + "]", ModuleConstants.kDrivingP);
+        // driveKI = new LoggedDashboardNumber("driveKI[" + id + "]", ModuleConstants.kDrivingI);
+        // driveKD = new LoggedDashboardNumber("driveKP[" + id + "]", ModuleConstants.kDrivingD);
+        drivekPID = new LoggedDashboardPID("drivekPID[" + id + "]", new double[]{ModuleConstants.kDrivingP,
+                                                                                ModuleConstants.kDrivingI,
+                                                                                ModuleConstants.kDrivingD,
+                                                                                Double.POSITIVE_INFINITY,
+                                                                                0.0});
         driveKFF = new LoggedDashboardNumber("driveKFF[" + id + "]", ModuleConstants.kDrivingFF);
         driveArbFF = new LoggedDashboardNumber("driveArbFF[" + id + "]", 0);
         
-        turnKP = new LoggedDashboardNumber("turnKP[" + id + "]", ModuleConstants.kTurningP);
-        turnKI = new LoggedDashboardNumber("turnKI[" + id + "]", ModuleConstants.kTurningI);
-        turnKD = new LoggedDashboardNumber("turnKD[" + id + "]", ModuleConstants.kTurningD);
+        // turnKP = new LoggedDashboardNumber("turnKP[" + id + "]", ModuleConstants.kTurningP);
+        // turnKI = new LoggedDashboardNumber("turnKI[" + id + "]", ModuleConstants.kTurningI);
+        // turnKD = new LoggedDashboardNumber("turnKD[" + id + "]", ModuleConstants.kTurningD);
+        turnkPID = new LoggedDashboardPID("drivekPID[" + id + "]", new double[]{ModuleConstants.kTurningP,
+                                                                                ModuleConstants.kTurningI,
+                                                                                ModuleConstants.kTurningD,
+                                                                                Double.POSITIVE_INFINITY,
+                                                                                0.0});
         turnKFF = new LoggedDashboardNumber("turnKFF[" + id + "]", ModuleConstants.kTurningFF);
         turnArbFF = new LoggedDashboardNumber("turnArbFF[" + id + "]", 0);
 
@@ -196,15 +209,21 @@ public class MAXModuleIO implements ModuleIO{
 
     @Override
     public void setPID(){
-        m_drivingPIDController.setP(driveKP.get());
-        m_drivingPIDController.setI(driveKI.get());
-        m_drivingPIDController.setD(driveKD.get());
+        // m_drivingPIDController.setP(driveKP.get());
+        // m_drivingPIDController.setI(driveKI.get());
+        // m_drivingPIDController.setD(driveKD.get());
+        m_drivingPIDController.setP(drivekPID.getP());
+        m_drivingPIDController.setI(drivekPID.getI());
+        m_drivingPIDController.setD(drivekPID.getD());
         m_drivingPIDController.setFF(driveKFF.get());
         m_drivingArbFF = driveArbFF.get();
 
-        m_turningPIDController.setP(turnKP.get());
-        m_turningPIDController.setI(turnKI.get());
-        m_turningPIDController.setD(turnKD.get());
+        // m_turningPIDController.setP(turnKP.get());
+        // m_turningPIDController.setI(turnKI.get());
+        // m_turningPIDController.setD(turnKD.get());
+        m_turningPIDController.setP(turnkPID.getP());
+        m_turningPIDController.setI(turnkPID.getI());
+        m_turningPIDController.setD(turnkPID.getD());
         m_turningPIDController.setFF(turnKFF.get());
         m_turningArbFF = turnArbFF.get();
     }
