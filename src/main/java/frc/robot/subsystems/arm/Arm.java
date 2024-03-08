@@ -1,4 +1,6 @@
 package frc.robot.subsystems.arm;
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
@@ -17,9 +19,9 @@ public class Arm extends SubsystemBase
     
     public Arm()
     {
-        pivot = new Pivot(PivotConstants.kMasterID, ArmConstants.kPivotOffset);
-        indexer = new Indexer(IndexerConstants.kBeamBreakID, IndexerConstants.kIndexerID, IndexerConstants.kHoodID, ArmConstants.kHoodOffset);
-        flywheelShooter = new Shooter(FlywheelConstants.kMasterID, FlywheelConstants.kSlaveID);
+        pivot = new Pivot(PivotConstants.kPivotCanID, ArmConstants.kPivotOffset);
+        indexer = new Indexer(IndexerConstants.kBeamBreakCanID, IndexerConstants.kIndexerCanID, IndexerConstants.kHoodCanID, ArmConstants.kHoodOffset);
+        flywheelShooter = new Shooter(FlywheelConstants.kMasterCanID, FlywheelConstants.kSlaveCanID);
         
         state = ArmConstants.ArmState.INTAKE;
     }
@@ -58,7 +60,7 @@ public class Arm extends SubsystemBase
 
     public void setFlywheelVoltage(double voltage)
     {
-        flywheelShooter.setDesiredVelocity(voltage);
+        flywheelShooter.setDesiredVoltage(voltage);
     }
 
     //Roller actions
@@ -72,6 +74,10 @@ public class Arm extends SubsystemBase
         indexer.outtakeMode();
     }
 
+    public void stopIndexer(){
+        indexer.stop();
+    }
+
     public void load()
     {
         if(indexer.getBeamBreak())
@@ -83,7 +89,7 @@ public class Arm extends SubsystemBase
     @Override
     public void periodic()
     {
-        SmartDashboard.putString("Arm State", state.toString());
+        Logger.recordOutput("Arm/State", state.toString());
     }
 }
 

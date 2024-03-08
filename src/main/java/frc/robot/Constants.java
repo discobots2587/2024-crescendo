@@ -154,8 +154,7 @@ public final class Constants {
 
   public static final class PivotConstants
   {
-    public static final int kMasterID = 70; //TUNE
-    // public static final int kSlaveID = 99; //TUNE
+    public static final int kPivotCanID = 99;//52 
 
     public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
     public static final int kMotorCurrentLimit = 20;//20 amps TUNE
@@ -175,11 +174,11 @@ public final class Constants {
 
   public static final class FlywheelConstants
   {
-    public static final int kMasterID = 51; //TUNE
-    public static final int kSlaveID = 72; //TUNE
+    public static final int kMasterCanID = 53; //TUNE
+    public static final int kSlaveCanID = 54; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
-    public static final int kMotorCurrentLimit = 20;//20 amps TUNE
+    public static final int kMotorCurrentLimit = 60;//20 amps TUNE
     
     public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
 
@@ -194,10 +193,10 @@ public final class Constants {
 
   public static final class IndexerConstants
   {
-    public static final int kIndexerID = 60; //TUNE
-    public static final int kHoodID = 73; //TUNE
+    public static final int kIndexerCanID = 51; 
+    public static final int kHoodCanID = 99; //TUNE
 
-    public static final int kBeamBreakID = 0; 
+    public static final int kBeamBreakCanID = 0; 
 
     public static final IdleMode kIndexerIdleMode = IdleMode.kCoast;
     public static final IdleMode kHoodIdleMode = IdleMode.kBrake;
@@ -246,8 +245,8 @@ public final class Constants {
 
   public static final class ClimberConstants
   {
-    public static final int kLeftID = 99;
-    public static final int kRightID = 99;
+    public static final int kLeftCanID = 99;
+    public static final int kRightCanID = 99;
 
     public static final int kLeftSwitchPort = 1;
     public static final int kRightSwitchPort = 2;
