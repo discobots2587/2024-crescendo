@@ -13,7 +13,7 @@ public class Arm extends SubsystemBase
     private final Indexer indexer;// = new Indexer(IndexerConstants.kIndexerID, IndexerConstants.kHoodID, IndexerConstants.kOffset);
     private final Shooter flywheelShooter;// = new Shooter(FlywheelConstants.kMasterID, FlywheelConstants.kSlaveID);
 
-    private ArmConstants.ArmState state;
+    private static ArmConstants.ArmState state;
     
     public Arm()
     {

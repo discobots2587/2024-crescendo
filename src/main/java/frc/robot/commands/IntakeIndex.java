@@ -26,7 +26,7 @@ public class IntakeIndex extends Command
   @Override
   public void initialize()
   {
-    RobotContainer.intake.outtake();
+    RobotContainer.intake.stop();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,11 +42,11 @@ public class IntakeIndex extends Command
           RobotContainer.arm.load();// This method should spin the indexer until the beam break detects a break Then it hsould stop
           break;
         case AMP:
-          RobotContainer.intake.outtake();
+          RobotContainer.intake.stop();
           RobotContainer.arm.ampMode();
           break;
         case SHOOTER://The arm will be tracking the goal or at a preset, non-intake friendly angle.
-          RobotContainer.intake.outtake();
+          RobotContainer.intake.stop();
           RobotContainer.arm.shoot();
           break;
       }
@@ -54,7 +54,7 @@ public class IntakeIndex extends Command
     }
     else
     {
-      RobotContainer.intake.outtake();
+      RobotContainer.intake.stop();
     }
   }
 

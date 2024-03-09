@@ -26,6 +26,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ArmHold;
 import frc.robot.commands.IntakeIndex;
 // import frc.robot.commands.ArmHold;
 // import frc.robot.commands.IntakeIndex;
@@ -58,7 +59,6 @@ public class RobotContainer
 
   //Driver Buttons
   JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
-  // JoystickButton SetXBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
   JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
 
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
@@ -110,8 +110,7 @@ public class RobotContainer
 
     intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
     // intake.setDefaultCommand(new IntakeTest(leftOpSup, rightOpSup));
-
-    // arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
+    arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
   }
 
   /**
@@ -129,6 +128,7 @@ public class RobotContainer
     TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVelocity(4500), arm));
     TestShooter.whileFalse(new RunCommand(() -> arm.stopFlywheel(), arm));
 
+    
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
 
     // ClimbDeploy.onTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(ClimberConstants.kOutPosition)));
