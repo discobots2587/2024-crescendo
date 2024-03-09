@@ -219,8 +219,8 @@ public final class Constants {
     public static final double kVelocityMaxOutput = 1;
 
     //Speed constant
-    public static double kIntakeSpeed = 1;
-    public static double kOuttakeSpeed = -1;
+    public static double kIntakeSpeed = -0.25;
+    public static double kOuttakeSpeed = -0.25;
     // public static double kBeamBreakThresh = 0.75;
   }
 

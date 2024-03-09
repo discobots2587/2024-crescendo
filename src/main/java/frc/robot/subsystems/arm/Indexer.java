@@ -110,7 +110,7 @@ public class Indexer extends SubsystemBase{
     //Beambreak
     public boolean getBeamBreak()
     {
-        return beambreakDigitalInput.get(); 
+        return !beambreakDigitalInput.get(); 
         // if (beambreakDigitalInput.get())
         // {return true;}
         // else{return false;}
@@ -120,6 +120,8 @@ public class Indexer extends SubsystemBase{
     public void periodic()
     {
         SmartDashboard.putNumber("Aiming Position", getAiming()); // log the aiming position of the arm.
+        SmartDashboard.putBoolean("Limit Switch", getBeamBreak());
+
         // SmartDashboard.putNumber("Indexer target speed", this.speed);
     }
 

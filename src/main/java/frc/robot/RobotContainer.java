@@ -26,6 +26,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.IntakeIndex;
 // import frc.robot.commands.ArmHold;
 // import frc.robot.commands.IntakeIndex;
 import frc.robot.commands.IntakeTest;
@@ -44,6 +45,7 @@ public class RobotContainer
   private final DriveSubsystem m_robotDrive;
   public static final Intake intake = new Intake(IntakeConstants.kIntakeCanID);
   public static final Arm arm = new Arm();
+  // public static final Indexer indexer new Indexer();
   public static final Climber climber = new Climber(ClimberConstants.kLeftID, ClimberConstants.kRightID, ClimberConstants.kLeftSwitchPort, ClimberConstants.kRightSwitchPort);
 
   //Auto chooser
@@ -64,9 +66,9 @@ public class RobotContainer
   DoubleSupplier rightOpSup = () -> m_opController.getRightY();
 
   //Operator Buttons
-  // JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
-  // JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
-  // JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
+  JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
+  JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
+  JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
 
   // JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kB.value);
 
@@ -104,11 +106,10 @@ public class RobotContainer
                 true, true),
             m_robotDrive));
 
-    // intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
-    // arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
-    
+    intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
+    // intake.setDefaultCommand(new IntakeTest(leftOpSup, rightOpSup));
 
-    intake.setDefaultCommand(new IntakeTest(leftOpSup, rightOpSup));
+    // arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
   }
 
   /**
@@ -123,7 +124,7 @@ public class RobotContainer
   private void configureButtonBindings()
   {
     // SetXBumper.whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
-    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVoltage(14), arm));
+    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVelocity(4500), arm));
     TestShooter.whileFalse(new RunCommand(() -> arm.stopFlywheel(), arm));
 
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
