@@ -110,8 +110,10 @@ public class Indexer extends SubsystemBase{
     //Beambreak
     public boolean getBeamBreak()
     {
-        if (beambreakDigitalInput.get()){return true;}
-        else{return false;}
+        return beambreakDigitalInput.get(); 
+        // if (beambreakDigitalInput.get())
+        // {return true;}
+        // else{return false;}
     }
 
     @Override
