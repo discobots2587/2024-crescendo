@@ -28,7 +28,7 @@ public class AutoShoot extends Command
   @Override
   public void execute()
   {
-    RobotContainer.arm.setFlywheelVelocity(4500);
+    // RobotContainer.arm.setFlywheelVelocity(4500);
     RobotContainer.arm.shoot();
 
   }
