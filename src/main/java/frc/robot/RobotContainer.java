@@ -60,7 +60,9 @@ public class RobotContainer
   JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
   // JoystickButton SetXBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
   JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
+
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
+  JoystickButton RobotCentric = new JoystickButton(m_driverController, Button.kA.value);
 
   DoubleSupplier leftOpSup = () -> m_opController.getLeftY();
   DoubleSupplier rightOpSup = () -> m_opController.getRightY();
@@ -103,7 +105,7 @@ public class RobotContainer
                 -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
                 -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
-                true, true),
+                !RobotCentric.getAsBoolean(), true),//Added the robot centric button
             m_robotDrive));
 
     intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
