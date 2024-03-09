@@ -36,7 +36,7 @@ public class Arm extends SubsystemBase
         indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
     }
 
-    public void shooterMode(double desiredAngle)//This allows for the arm to track 
+    public void shooterMode(double desiredAngle) //This allows for the arm to track 
     {
         state = ArmConstants.ArmState.SHOOTER;
         pivot.setDesiredAngle(desiredAngle);

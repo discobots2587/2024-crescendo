@@ -16,6 +16,12 @@
           "data": {
             "pathName": "driveStraight"
           }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
         }
       ]
     }
