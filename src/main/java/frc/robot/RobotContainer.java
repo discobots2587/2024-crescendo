@@ -28,10 +28,9 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmHold;
+import frc.robot.commands.AutoIntake;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.IntakeIndex;
-// import frc.robot.commands.ArmHold;
-// import frc.robot.commands.IntakeIndex;
 import frc.robot.commands.IntakeTest;
 
 import frc.robot.subsystems.Climber;
@@ -98,10 +97,10 @@ public class RobotContainer
 
     //Register named commands for auto
     NamedCommands.registerCommand("Shoot", new AutoShoot());
+    NamedCommands.registerCommand("Intake", new AutoIntake());
     
     //Auto chooser
-    autoChooser = new LoggedDashboardChooser<>("Auto Chooser", AutoBuilder.buildAutoChooser()); // Default auto will be Commands.none()
-
+    autoChooser = new LoggedDashboardChooser<>("Auto Chooser", AutoBuilder.buildAutoChooser()); // Default auto will be Commands.none()[]
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
