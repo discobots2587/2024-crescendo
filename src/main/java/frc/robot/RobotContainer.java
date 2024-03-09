@@ -49,7 +49,8 @@ public class RobotContainer
   private final DriveSubsystem m_robotDrive;
   public static final Intake intake = new Intake(IntakeConstants.kIntakeCanID);
   public static final Arm arm = new Arm();
-  public static final Climber climber = new Climber(ClimberConstants.kLeftID, ClimberConstants.kRightID, ClimberConstants.kLeftSwitchPort, ClimberConstants.kRightSwitchPort);
+  // public static final Indexer indexer new Indexer();
+  // public static final Climber climber = new Climber(ClimberConstants.kLeftID, ClimberConstants.kRightID, ClimberConstants.kLeftSwitchPort, ClimberConstants.kRightSwitchPort);
 
   //Auto chooser
   private final LoggedDashboardChooser<Command> autoChooser;

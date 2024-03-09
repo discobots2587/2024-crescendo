@@ -57,6 +57,8 @@ public class SparkFlywheelIO implements FlywheelIO {
         MasterSpark.setSmartCurrentLimit(FlywheelConstants.kMotorCurrentLimit);
         SlaveSpark.setSmartCurrentLimit(FlywheelConstants.kMotorCurrentLimit);
 
+        // MasterSpark.setInverted(false);
+
 
         // SlaveSpark.setInverted(true);
         SlaveSpark.follow(MasterSpark, true);

@@ -154,7 +154,7 @@ public final class Constants {
 
   public static final class PivotConstants
   {
-    public static final int kMasterID = 70; //TUNE
+    public static final int kMasterID = 8; //TUNE
     // public static final int kSlaveID = 99; //TUNE
 
     public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
@@ -179,14 +179,14 @@ public final class Constants {
     public static final int kSlaveID = 52; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
-    public static final int kMotorCurrentLimit = 80;//20 amps TUNE
+    public static final int kMotorCurrentLimit = 40;//20 amps TUNE
     
     // public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
 
 
-    public static final double kP = 0.5;
-    public static final double kI = 0;
-    public static final double kD = 0;
+    public static final double kP = 0.1;
+    public static final double kI = 0.1;
+    public static final double kD = 0.1;
     public static final double kFF = 0;
     public static final double kVelocityMinOutput = -1;
     public static final double kVelocityMaxOutput = 1;
@@ -195,7 +195,7 @@ public final class Constants {
   public static final class IndexerConstants
   {
     public static final int kIndexerID = 51;
-    public static final int kHoodID = 73; //TUNE
+    public static final int kHoodID = 9; //TUNE
 
     public static final int kBeamBreakID = 0; 
 

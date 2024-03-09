@@ -36,7 +36,7 @@ public class ArmHold extends Command
   {
     if(shootMode.getAsBoolean())
     {
-        RobotContainer.arm.intakeMode();
+        RobotContainer.arm.shooterMode(0);
     }
     else if (ampMode.getAsBoolean())
     {
