@@ -123,7 +123,7 @@ public class RobotContainer
   private void configureButtonBindings()
   {
     // SetXBumper.whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
-    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVelocity(5000), arm));
+    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVoltage(14), arm));
     TestShooter.whileFalse(new RunCommand(() -> arm.stopFlywheel(), arm));
 
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));

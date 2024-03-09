@@ -29,7 +29,10 @@ public interface FlywheelIO {
         return 0.0; 
     }
 
-    public default void setDesiredVoltage(double voltage){}
+    public default void setDesiredVoltage(double voltage)
+    {
+        
+    }
 
     public default void setDesiredVelocity(double desiredVelocity){}
 
