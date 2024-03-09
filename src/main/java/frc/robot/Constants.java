@@ -176,7 +176,7 @@ public final class Constants {
   public static final class FlywheelConstants
   {
     public static final int kMasterID = 53; //TUNE
-    public static final int kSlaveID = 52; //TUNE
+    public static final int kSlaveID = 54; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
     public static final int kMotorCurrentLimit = 80;//20 amps TUNE
