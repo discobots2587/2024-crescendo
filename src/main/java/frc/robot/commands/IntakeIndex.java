@@ -55,6 +55,7 @@ public class IntakeIndex extends Command
     else
     {
       RobotContainer.intake.stop();
+      RobotContainer.arm.indexStop();
     }
   }
 
