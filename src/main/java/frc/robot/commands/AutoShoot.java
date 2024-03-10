@@ -31,16 +31,18 @@ public class AutoShoot extends Command
   @Override
   public void execute()
   {
-    RobotContainer.arm.setFlywheelVelocity(300);
-    RobotContainer.arm.shoot();
-
+    RobotContainer.arm.setFlywheelVelocity(4500);
+    if(Timer.getFPGATimestamp() > time + 1.0) {
+      RobotContainer.arm.shoot();
+    }
   }
 
   // Called once the command ends or is interrupted
   @Override
   public void end(boolean interrupted)
   {
-
+    RobotContainer.arm.stopFlywheel();
+    RobotContainer.arm.indexStop();
   }
 
   // Returns true when the command should end.
@@ -49,7 +51,7 @@ public class AutoShoot extends Command
     if(Timer.getFPGATimestamp() > time + 2.0) {
       return true;
     } else {
-      return true;
+      return false;
     }
   }
 }
