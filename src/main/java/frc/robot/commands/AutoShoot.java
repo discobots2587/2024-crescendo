@@ -4,11 +4,14 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 
 public class AutoShoot extends Command
 {
+
+  private double time;
 
   public AutoShoot()
   {
@@ -21,28 +24,32 @@ public class AutoShoot extends Command
   @Override
   public void initialize()
   {
-    RobotContainer.intake.stop();
+    time = Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute()
   {
-    // RobotContainer.arm.setFlywheelVelocity(4500);
+    RobotContainer.arm.setFlywheelVelocity(300);
     RobotContainer.arm.shoot();
 
   }
 
-  // Called once the command ends or is interrupted.
+  // Called once the command ends or is interrupted
   @Override
   public void end(boolean interrupted)
   {
-    RobotContainer.intake.stop();
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if(Timer.getFPGATimestamp() > time + 2.0) {
+      return true;
+    } else {
+      return true;
+    }
   }
 }
