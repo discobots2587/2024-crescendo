@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2.0,
-      "y": 5.0
+      "x": 1.9112722961537205,
+      "y": 5.550936522700434
     },
     "rotation": 0.0
   },
@@ -14,7 +14,31 @@
         {
           "type": "path",
           "data": {
-            "pathName": "testingPath"
+            "pathName": "scoreBase"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "collectLeftNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "scoreBase"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "collectRightNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "scoreBase"
           }
         }
       ]

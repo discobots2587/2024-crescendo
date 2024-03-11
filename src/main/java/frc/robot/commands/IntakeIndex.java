@@ -39,8 +39,7 @@ public class IntakeIndex extends Command
       {
         case INTAKE:
           RobotContainer.intake.intake();
-          // RobotContainer.arm.load();// This method should spin the indexer until the beam break detects a break Then it hsould stop
-          RobotContainer.arm.shoot();
+          RobotContainer.arm.load();// This method should spin the indexer until the beam break detects a break Then it hsould stop
           break;
         case AMP:
           RobotContainer.intake.stop();
