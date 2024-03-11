@@ -15,7 +15,7 @@ public class AutoShoot extends Command
 
   public AutoShoot()
   {
-    // Use addRequirements() here to declare subsystem dependencies.
+    //Subsystem dependencies.
     addRequirements(RobotContainer.arm);
     addRequirements(RobotContainer.intake);
   }
@@ -24,6 +24,7 @@ public class AutoShoot extends Command
   @Override
   public void initialize()
   {
+    //Timestamp in which the command starts
     time = Timer.getFPGATimestamp();
   }
 
@@ -31,8 +32,10 @@ public class AutoShoot extends Command
   @Override
   public void execute()
   {
+    //Spins up shooter
     RobotContainer.arm.setFlywheelVelocity(4500);
     
+    //Feeds note to shooter after 1 second has passed
     if(Timer.getFPGATimestamp() > time + 1.0) {
       RobotContainer.arm.shoot();
     }
@@ -42,13 +45,14 @@ public class AutoShoot extends Command
   @Override
   public void end(boolean interrupted)
   {
-    RobotContainer.arm.stopFlywheel();
-    RobotContainer.arm.indexStop();
+    RobotContainer.arm.stopFlywheel();      //Stops shooter
+    RobotContainer.arm.indexStop();         //Stops indexer
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //Stops command after 2 seconds have passed
     if(Timer.getFPGATimestamp() > time + 2.0) {
       return true;
     } else {

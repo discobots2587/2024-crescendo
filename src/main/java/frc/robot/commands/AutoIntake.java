@@ -14,7 +14,7 @@ public class AutoIntake extends Command
 
   public AutoIntake()
   {
-    // Use addRequirements() here to declare subsystem dependencies.
+    //Subsystem dependencies
     addRequirements(RobotContainer.arm);
     addRequirements(RobotContainer.intake);
   }
@@ -23,6 +23,7 @@ public class AutoIntake extends Command
   @Override
   public void initialize()
   {
+    //Timestamp in which the command starts
     time = Timer.getFPGATimestamp();
   }
 
@@ -30,20 +31,21 @@ public class AutoIntake extends Command
   @Override
   public void execute()
   {
-    RobotContainer.intake.intake();
-    RobotContainer.arm.load();
+    RobotContainer.intake.intake();     //Intake note
+    RobotContainer.arm.load();          //Stores note in indexer 
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted)
   {
-    RobotContainer.intake.stop();
+    RobotContainer.intake.stop();     //Stops intake
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //Stops command after 2 seconds have passed
     if(Timer.getFPGATimestamp() > time + 2.0) {
         return true;
       } else {
