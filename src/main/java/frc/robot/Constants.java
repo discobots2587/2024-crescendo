@@ -234,10 +234,10 @@ public final class Constants {
     }
 
     //All of these constants are in degrees
-    public static double kPivotOffset = 60; //TUNE 
-    public static double kHoodOffset = 60; //TUNE
+    public static double kPivotOffset = 0; //TUNE 
+    public static double kHoodOffset = 40; //TUNE
 
-    public static double PivotIntakePosition = 53.7; //TUNE
+    public static double PivotIntakePosition = 55; //TUNE
     public static double PivotAmpPosition = 180; //TUNE
 
     public static double HoodAmpPosition = 147; //TUNE
