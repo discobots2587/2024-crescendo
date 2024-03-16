@@ -47,7 +47,7 @@ public class Indexer extends SubsystemBase{
 
         // Apply position and velocity conversion factors for the turning encoder.
         hoodEnc.setVelocityConversionFactor(IndexerConstants.kTurningEncoderVelocityFactor);
-
+        hoodEnc.setPositionConversionFactor(IndexerConstants.kTurningEncoderPositionFactor);
         
         // Set the PID gains for the turning motor. Note these are example gains, and you
         // may need to tune them for your own robot!
@@ -119,7 +119,7 @@ public class Indexer extends SubsystemBase{
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("Aiming Position", getAiming()); // log the aiming position of the arm.
+        SmartDashboard.putNumber("Hood Position", getRawPosition()); // log the aiming position of the arm.
         SmartDashboard.putBoolean("Limit Switch", getBeamBreak());
 
         // SmartDashboard.putNumber("Indexer target speed", this.speed);

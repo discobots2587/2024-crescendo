@@ -23,13 +23,14 @@ import java.util.function.DoubleSupplier;
 
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmHold;
 import frc.robot.commands.AutoIntake;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.IntakeIndex;
-
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
 
 /*
@@ -45,7 +46,7 @@ public class RobotContainer
   public static final Intake intake = new Intake(IntakeConstants.kIntakeCanID);
   public static final Arm arm = new Arm();
   // public static final Indexer indexer new Indexer();
-  // public static final Climber climber = new Climber(ClimberConstants.kLeftID, ClimberConstants.kRightID, ClimberConstants.kLeftSwitchPort, ClimberConstants.kRightSwitchPort);
+  public static final Climber climber = new Climber(ClimberConstants.kLeftID, ClimberConstants.kRightID, ClimberConstants.kLeftSwitchPort, ClimberConstants.kRightSwitchPort);
 
   //Auto chooser
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -113,7 +114,7 @@ public class RobotContainer
     intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
     // intake.setDefaultCommand(new IntakeTest(leftOpSup, rightOpSup));
 
-    arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
+    // arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
   }
 
   /**
@@ -133,7 +134,7 @@ public class RobotContainer
 
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
 
-    ArmShootMode.onTrue(new RunCommand(() -> arm.shooterMode(10), arm)); // Desired angle needs to use auto aim command
+    ArmShootMode.onTrue(new RunCommand(() -> arm.shooterMode(270), arm)); // Desired angle needs to use auto aim command
     ArmAmpMode.onTrue(new RunCommand(() -> arm.ampMode(), arm));
 
     ArmShootMode.onFalse(new RunCommand(() -> arm.intakeMode(), arm));

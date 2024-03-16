@@ -1,0 +1,13 @@
+{
+    "sparkMaxIds": {
+        "frontLeftTurning": 31,
+        "frontLeftDrive": 30,
+        "frontRightTurning": 41,
+        "frontRightDrive": 40,
+        "backLeftTurning": 21,
+        "backLeftDrive": 20,
+        "backRightTurning": 11,
+        "backRightDrive": 10
+    },
+    "version": 1
+}

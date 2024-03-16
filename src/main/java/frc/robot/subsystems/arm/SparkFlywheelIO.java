@@ -61,7 +61,7 @@ public class SparkFlywheelIO implements FlywheelIO {
 
 
         // SlaveSpark.setInverted(true);
-        SlaveSpark.follow(MasterSpark, true);
+        SlaveSpark.follow(MasterSpark, false);
 
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
         // operation, it will maintain the above configurations.

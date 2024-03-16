@@ -48,10 +48,11 @@ public class SparkPivotIO implements PivotIO{
         pivotPID.setI(PivotConstants.kI);
         pivotPID.setD(PivotConstants.kD);
         pivotPID.setFF(PivotConstants.kFF);
-        pivotPID.setOutputRange(PivotConstants.kTurningMinOutput, PivotConstants.kTurningMaxOutput);
+        pivotPID.setOutputRange(-0.75,0.75);
 
         pivotSpark.setIdleMode(PivotConstants.kPivotIdleMode);
-        pivotSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
+        pivotSpark.setSmartCurrentLimit(15,15);
+        // pivotSpark.setStall
 
         pivotSpark.burnFlash();
     }
