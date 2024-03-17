@@ -23,6 +23,10 @@ public class Indexer extends SubsystemBase{
 
     private final double angleOffset;
 
+    private DigitalInput StowSwitch;
+
+    private DigitalInput DeployedSwitch;
+
     // private double speed;
 
     public Indexer(int beamBreakChannel, int indexerID, int hoodID, double offset)
@@ -33,6 +37,9 @@ public class Indexer extends SubsystemBase{
         angleOffset = offset;
 
         beambreakDigitalInput = new DigitalInput(beamBreakChannel);
+
+        StowSwitch = new DigitalInput(IndexerConstants.kStowID);
+        DeployedSwitch = new DigitalInput(IndexerConstants.kDeployedID);
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
@@ -57,11 +64,17 @@ public class Indexer extends SubsystemBase{
         hoodPID.setFF(IndexerConstants.kFF);
         hoodPID.setOutputRange(IndexerConstants.kVelocityMinOutput, IndexerConstants.kVelocityMaxOutput);
         
+        hoodPID.setPositionPIDWrappingEnabled(true);
+        hoodPID.setPositionPIDWrappingMaxInput(360);
+        hoodPID.setPositionPIDWrappingMinInput(0);
+
         HoodSpark.setIdleMode(IndexerConstants.kHoodIdleMode);
         IndexerSpark.setIdleMode(IndexerConstants.kIndexerIdleMode);
 
-        HoodSpark.setSmartCurrentLimit(IndexerConstants.kHoodCurrentLimit);
+        HoodSpark.setSmartCurrentLimit(5,10);
         IndexerSpark.setSmartCurrentLimit(IndexerConstants.kIndexerCurrentLimit);
+
+        HoodSpark.setInverted(true);
 
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
         // operation, it will maintain the above configurations.
@@ -71,7 +84,7 @@ public class Indexer extends SubsystemBase{
     }
 
 
-    //Hood
+    //Hood with absolute encoder
     public double getRawPosition()
     {
         return hoodEnc.getPosition(); // returns in degrees
@@ -88,6 +101,31 @@ public class Indexer extends SubsystemBase{
 
         SmartDashboard.putNumber("Target Position", turnPose); 
         hoodPID.setReference(turnPose, CANSparkMax.ControlType.kPosition);
+    }
+
+    //hood with the limit switches
+    public void stowHood()
+    {
+        if(StowSwitch.get())
+        {
+            HoodSpark.set(-0.5);//This needs to be checked to make sure it goes the right way.
+        }
+        else
+        {
+            HoodSpark.stopMotor();
+        }
+    }
+    
+    public void deployHood()
+    {
+        if(DeployedSwitch.get())
+        {
+            HoodSpark.set(0.5);//This needs to be checked to make sure it goes the right way.
+        }
+        else
+        {
+            HoodSpark.stopMotor();
+        }
     }
 
 

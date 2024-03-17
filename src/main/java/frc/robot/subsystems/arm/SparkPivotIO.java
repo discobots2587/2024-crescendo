@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import frc.robot.Constants.PivotConstants;
 
 import com.revrobotics.CANSparkLowLevel;
@@ -51,10 +52,11 @@ public class SparkPivotIO implements PivotIO{
         pivotPID.setOutputRange(-0.75,0.75);
 
         pivotSpark.setIdleMode(PivotConstants.kPivotIdleMode);
-        pivotSpark.setSmartCurrentLimit(15,15);
+        pivotSpark.setSmartCurrentLimit(25,30);
         // pivotSpark.setStall
 
         pivotSpark.burnFlash();
+
     }
 
     @Override

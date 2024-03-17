@@ -72,7 +72,8 @@ public class RobotContainer
   JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
   JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
 
-  // JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kB.value);
+  JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kLeftBumper.value);
+  JoystickButton ClimbReverse = new JoystickButton(m_opController, Button.kB.value);
 
   // JoystickButton RightClimbDown = new JoystickButton(m_opController, Button.kRightBumper.value);
   // JoystickButton LeftClimbDown = new JoystickButton(m_opController, Button.kLeftBumper.value);
@@ -129,7 +130,7 @@ public class RobotContainer
   private void configureButtonBindings()
   {
     // SetXBumper.whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
-    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVelocity(4500), arm));
+    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVoltage(10), arm));
     TestShooter.whileFalse(new RunCommand(() -> arm.stopFlywheel(), arm));
 
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
@@ -140,8 +141,11 @@ public class RobotContainer
     ArmShootMode.onFalse(new RunCommand(() -> arm.intakeMode(), arm));
     ArmAmpMode.onFalse(new RunCommand(() -> arm.intakeMode(), arm));
 
-    // ClimbDeploy.onTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(ClimberConstants.kOutPosition)));
-    // ClimbDeploy.onTrue(new InstantCommand(() -> climber.setRightDesiredPosition(ClimberConstants.kOutPosition)));
+    ClimbDeploy.onTrue(new InstantCommand(() -> climber.spinBoth()));
+    ClimbDeploy.onFalse(new InstantCommand(() -> climber.stopBoth()));
+
+    ClimbReverse.onTrue(new InstantCommand(() -> climber.reverseBoth()));
+    ClimbReverse.onFalse(new InstantCommand(() -> climber.stopBoth()));
 
     // RightClimbDown.whileTrue(new InstantCommand(() -> climber.setRightDesiredPosition(0)));
     // RightClimbDown.onFalse(new InstantCommand(() -> climber.stopRight()));

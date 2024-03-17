@@ -157,7 +157,7 @@ public final class Constants {
     public static final int kMasterID = 54; //TUNE
     // public static final int kSlaveID = 99; //TUNE
 
-    public static final IdleMode kPivotIdleMode = IdleMode.kCoast;
+    public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
     public static final int kMotorCurrentLimit = 20;//20 amps TUNE
     
     public static final double kTurningEncoderPositionFactor = (360); // degrees
@@ -170,7 +170,6 @@ public final class Constants {
     public static final double kFF = 0;
     public static final double kTurningMinOutput = -1;
     public static final double kTurningMaxOutput = 1;
-    
   }
 
   public static final class FlywheelConstants
@@ -220,8 +219,11 @@ public final class Constants {
 
     //Speed constant
     public static double kIntakeSpeed = -0.5;
-    public static double kOuttakeSpeed = 0.5;
+    public static double kOuttakeSpeed = 1;
     // public static double kBeamBreakThresh = 0.75;
+
+    public static int kDeployedID = 4;
+    public static int kStowID = 3;
   }
 
   public static final class ArmConstants
@@ -238,10 +240,10 @@ public final class Constants {
     public static double kHoodOffset = 40; //TUNE
 
     public static double PivotIntakePosition = 307; //TUNE
-    public static double PivotAmpPosition = 225; //TUNE
+    public static double PivotAmpPosition = 200; //TUNE
 
-    public static double HoodAmpPosition = 147; //TUNE
-    public static double HoodStowPosition = 0; //TUNE
+    public static double HoodAmpPosition = 350; //TUNE
+    public static double HoodStowPosition = 235; //TUNE
   }
 
   public static final class ClimberConstants

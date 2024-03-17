@@ -1,4 +1,5 @@
 package frc.robot.subsystems.arm;
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
@@ -33,21 +34,32 @@ public class Arm extends SubsystemBase
     {
         state = ArmConstants.ArmState.INTAKE;
         pivot.setDesiredAngle(ArmConstants.PivotIntakePosition);
-        indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
+        // indexer.setDesiredAngleinde.(ArmConstants.HoodStowPosition);
+        indexer.stowHood();
     }
 
     public void shooterMode(double desiredAngle) //This allows for the arm to track 
     {
         state = ArmConstants.ArmState.SHOOTER;
         pivot.setDesiredAngle(desiredAngle);
-        indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
+        // indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
+        indexer.stowHood();
+    }
+
+    public void shooterMode(Pose2d robotPose) //This allows for the arm to track 
+    {
+        state = ArmConstants.ArmState.SHOOTER;
+        pivot.setDesiredAngle(0); // Make this do the math for the vision thingie and the angle it needs to shoot at.
+        // indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
+        indexer.stowHood();
     }
 
     public void ampMode()
     {
         state = ArmConstants.ArmState.AMP;
         pivot.setDesiredAngle(ArmConstants.PivotAmpPosition);
-        indexer.setDesiredAngle(ArmConstants.HoodAmpPosition);
+        // indexer.setDesiredAngle(ArmConstants.HoodAmpPosition);
+        indexer.deployHood();
     }
 
     //Flywheel actions

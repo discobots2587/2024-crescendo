@@ -49,7 +49,7 @@ public class SparkFlywheelIO implements FlywheelIO {
         flywheelPID.setI(FlywheelConstants.kI);
         flywheelPID.setD(FlywheelConstants.kD);
         flywheelPID.setFF(FlywheelConstants.kFF);
-        flywheelPID.setOutputRange(FlywheelConstants.kVelocityMinOutput, FlywheelConstants.kVelocityMaxOutput);
+        // flywheelPID.setOutputRange(FlywheelConstants.kVelocityMinOutput, FlywheelConstants.kVelocityMaxOutput);
         
         SlaveSpark.setIdleMode(FlywheelConstants.kFlywheelIdleMode);
         MasterSpark.setIdleMode(FlywheelConstants.kFlywheelIdleMode);
@@ -57,10 +57,6 @@ public class SparkFlywheelIO implements FlywheelIO {
         MasterSpark.setSmartCurrentLimit(FlywheelConstants.kMotorCurrentLimit);
         SlaveSpark.setSmartCurrentLimit(FlywheelConstants.kMotorCurrentLimit);
 
-        // MasterSpark.setInverted(false);
-
-
-        // SlaveSpark.setInverted(true);
         SlaveSpark.follow(MasterSpark, false);
 
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
