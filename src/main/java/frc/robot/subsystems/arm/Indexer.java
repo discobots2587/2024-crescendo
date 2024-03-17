@@ -108,7 +108,7 @@ public class Indexer extends SubsystemBase{
     {
         if(StowSwitch.get())
         {
-            HoodSpark.set(-0.5);//This needs to be checked to make sure it goes the right way.
+            HoodSpark.set(0.5);//This needs to be checked to make sure it goes the right way.
         }
         else
         {
@@ -120,7 +120,7 @@ public class Indexer extends SubsystemBase{
     {
         if(DeployedSwitch.get())
         {
-            HoodSpark.set(0.5);//This needs to be checked to make sure it goes the right way.
+            HoodSpark.set(-0.5);//This needs to be checked to make sure it goes the right way.
         }
         else
         {
@@ -159,6 +159,9 @@ public class Indexer extends SubsystemBase{
     {
         SmartDashboard.putNumber("Hood Position", getRawPosition()); // log the aiming position of the arm.
         SmartDashboard.putBoolean("Limit Switch", getBeamBreak());
+
+        SmartDashboard.putBoolean("Hood Stow Sw", StowSwitch.get());
+        SmartDashboard.putBoolean("Hood Deploy Sw", DeployedSwitch.get());
 
         // SmartDashboard.putNumber("Indexer target speed", this.speed);
     }
