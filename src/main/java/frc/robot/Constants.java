@@ -154,7 +154,7 @@ public final class Constants {
 
   public static final class PivotConstants
   {
-    public static final int kPivotCanID = 99;//52 
+    public static final int kPivotCanID = 54;//52 
 
     public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
     public static final int kMotorCurrentLimit = 20;//20 amps TUNE
@@ -175,7 +175,7 @@ public final class Constants {
   public static final class FlywheelConstants
   {
     public static final int kMasterCanID = 53; //TUNE
-    public static final int kSlaveCanID = 54; //TUNE
+    public static final int kSlaveCanID = 52; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
     public static final int kMotorCurrentLimit = 60;//20 amps TUNE
@@ -194,7 +194,7 @@ public final class Constants {
   public static final class IndexerConstants
   {
     public static final int kIndexerCanID = 51; 
-    public static final int kHoodCanID = 99; //TUNE
+    public static final int kHoodCanID = 55; 
 
     public static final int kBeamBreakCanID = 0; 
 
@@ -245,8 +245,8 @@ public final class Constants {
 
   public static final class ClimberConstants
   {
-    public static final int kLeftCanID = 99;
-    public static final int kRightCanID = 99;
+    public static final int kLeftCanID = 62;
+    public static final int kRightCanID = 61;
 
     public static final int kLeftSwitchPort = 1;
     public static final int kRightSwitchPort = 2;
