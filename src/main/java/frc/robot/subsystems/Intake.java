@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
     private IntakeConstants.IntakeState intakeState;
     
     public Intake(int intakeID) {
-        IntakeNEO = new CANSparkMax(intakeID, MotorType.kBrushed); //Brushed
+        IntakeNEO = new CANSparkMax(intakeID, MotorType.kBrushless); //Brushed
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
