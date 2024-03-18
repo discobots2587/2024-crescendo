@@ -1,119 +1,64 @@
 package frc.robot.subsystems.arm;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkLowLevel.MotorType;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.SparkAbsoluteEncoder.Type;
-import com.revrobotics.SparkPIDController;
+import org.littletonrobotics.junction.Logger;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
 
 public class Indexer extends SubsystemBase{
-    private final CANSparkMax HoodSpark;
-    private final CANSparkMax IndexerSpark;
 
-
-    private final AbsoluteEncoder hoodEnc;
-    private final SparkPIDController hoodPID;
-
-    private final DigitalInput beambreakDigitalInput;
-
-    private final double angleOffset;
+    private final IndexerIO indexerIO;
+    private final IndexerIOInputsAutoLogged inputs = new IndexerIOInputsAutoLogged();
 
     public Indexer(int beamBreakChannel, int indexerID, int hoodID, double offset)
     {
-        IndexerSpark = new CANSparkMax(indexerID, MotorType.kBrushless);
-        HoodSpark = new CANSparkMax(hoodID, MotorType.kBrushless);
-
-        angleOffset = offset;
-
-        beambreakDigitalInput = new DigitalInput(beamBreakChannel);
-
-        // Factory reset, so we get the SPARKS MAX to a known state before configuring
-        // them. This is useful in case a SPARK MAX is swapped out.
-        IndexerSpark.restoreFactoryDefaults();
-        HoodSpark.restoreFactoryDefaults();
-
-        // Setup encoders and PID controller for the pivot sparkmax.
-        hoodEnc = HoodSpark.getAbsoluteEncoder(Type.kDutyCycle);
-        hoodPID = HoodSpark.getPIDController();
-        hoodPID.setFeedbackDevice(hoodEnc);
-        // hoodPID.
-
-        // Apply position and velocity conversion factors for the turning encoder.
-        hoodEnc.setVelocityConversionFactor(IndexerConstants.kTurningEncoderVelocityFactor);
-
-        
-        // Set the PID gains for the turning motor. Note these are example gains, and you
-        // may need to tune them for your own robot!
-        hoodPID.setP(IndexerConstants.kP);
-        hoodPID.setI(IndexerConstants.kI);
-        hoodPID.setD(IndexerConstants.kD);
-        hoodPID.setFF(IndexerConstants.kFF);
-        hoodPID.setOutputRange(IndexerConstants.kVelocityMinOutput, IndexerConstants.kVelocityMaxOutput);
-        
-        HoodSpark.setIdleMode(IndexerConstants.kHoodIdleMode);
-        IndexerSpark.setIdleMode(IndexerConstants.kIndexerIdleMode);
-
-        HoodSpark.setSmartCurrentLimit(IndexerConstants.kHoodCurrentLimit);
-        IndexerSpark.setSmartCurrentLimit(IndexerConstants.kIndexerCurrentLimit);
-
-        // Save the SPARK MAX configurations. If a SPARK MAX browns out during
-        // operation, it will maintain the above configurations.
-        HoodSpark.burnFlash();
-        IndexerSpark.burnFlash();
+        indexerIO = new SparkIndexerIO(beamBreakChannel, indexerID, hoodID, offset);
     }
-
 
     //Hood
-    public double getRawPosition()
+    public Rotation2d getRawPosition()
     {
-        return hoodEnc.getPosition(); // returns in degrees
+        return inputs.position; // returns in degrees
     }
 
-    public double getAiming()
+    public Rotation2d getAiming()
     {
-        return getRawPosition() - angleOffset; // returms in degrees
+        return inputs.offsetPosition; // returns in degrees
     }
 
     public void setDesiredAngle(double desiredAngle)
     {
-        double turnPose = desiredAngle - angleOffset;
-
-        SmartDashboard.putNumber("Target Position", turnPose); 
-        hoodPID.setReference(turnPose, CANSparkMax.ControlType.kPosition);
+        indexerIO.setDesiredAngle(desiredAngle);
     }
 
 
     //Indexer rollers
     public void loadAndShoot()
     {
-        IndexerSpark.set(IndexerConstants.kIntakeSpeed);
+        indexerIO.setIndexerSpeed(IndexerConstants.kIntakeSpeed);
     }
 
     public void outtakeMode()
     {
-        IndexerSpark.set(IndexerConstants.kOuttakeSpeed);
+        indexerIO.setIndexerSpeed(IndexerConstants.kOuttakeSpeed);
     }
 
     public void stop()
     {
-        IndexerSpark.stopMotor();
+        indexerIO.stop();
     }
 
     //Beambreak
     public boolean getBeamBreak()
     {
-        if (beambreakDigitalInput.get()){return true;}
-        else{return false;}
+        return false;
     }
 
     @Override
     public void periodic()
     {
-        SmartDashboard.putNumber("Aiming Position", getAiming()); // log the aiming position of the arm.
+        indexerIO.updateInputs(inputs);
+        Logger.processInputs("Indexer", inputs);
     }
 }
