@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import java.util.function.DoubleSupplier;
 
@@ -99,7 +100,6 @@ public class RobotContainer
     autoChooser = new LoggedDashboardChooser<>("Auto Chooser", AutoBuilder.buildAutoChooser()); // Default auto will be Commands.none()
 
     //System Identification setup
-    autoChooser.addOption("Drive System ID", new DriveMotorFFCharacterization(m_robotDrive));
     autoChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward));
     autoChooser.addOption("Drive Backwards Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kReverse));
     autoChooser.addOption("Drive Forward Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kForward));
