@@ -19,6 +19,7 @@ import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.PathPlannerLogging;
@@ -31,6 +32,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.GyroIO;
 import frc.robot.subsystems.GyroIOInputsAutoLogged;
+import frc.utils.LocalADStarAK;
 import frc.utils.SwerveUtils;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -122,8 +124,18 @@ public class DriveSubsystem extends SubsystemBase {
                 },
                 this // Reference to this subsystem to set requirements
         );
+        Pathfinding.setPathfinder(new LocalADStarAK());
 
-        PathPlannerLogging.setLogActivePathCallback((poses) -> field.getObject("path").setPoses(poses));
+        PathPlannerLogging.setLogActivePathCallback(
+            (activePath) -> {
+              Logger.recordOutput("Odometry/Trajectory", activePath.toArray(new Pose2d[activePath.size()]));
+            }
+        );
+        PathPlannerLogging.setLogTargetPoseCallback(
+          (targetPose) -> {
+            Logger.recordOutput("Odometry/TrajectorySetPoint", targetPose);
+          }
+        );
         SmartDashboard.putData("Field", field);
   }
 
