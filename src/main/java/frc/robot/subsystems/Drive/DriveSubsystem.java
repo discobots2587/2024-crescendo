@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.units.Units;
 import edu.wpi.first.util.WPIUtilJNI;
 
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -33,7 +34,10 @@ import frc.robot.subsystems.GyroIO;
 import frc.robot.subsystems.GyroIOInputsAutoLogged;
 import frc.utils.LocalADStarAK;
 import frc.utils.SwerveUtils;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
@@ -57,6 +61,18 @@ public class DriveSubsystem extends SubsystemBase {
   private SlewRateLimiter m_magLimiter = new SlewRateLimiter(DriveConstants.kMagnitudeSlewRate);
   private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(DriveConstants.kRotationalSlewRate);
   private double m_prevTime = WPIUtilJNI.now() * 1e-6;
+
+  private SysIdRoutine driveSysId = new SysIdRoutine(
+    new SysIdRoutine.Config(
+      null, null, null,
+      (state) -> Logger.recordOutput("Drive/SysIdTestState", state.toString())
+    ),
+    new SysIdRoutine.Mechanism(
+      (voltage) -> this.runDriveCharacterizationVolts(voltage.in(Units.Volts)),
+      null,
+      this
+    )
+  );
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry;
@@ -316,8 +332,19 @@ public class DriveSubsystem extends SubsystemBase {
     gyroIo.reset();
   }
 
-  public void runCharacterizationVolts(double volts){
-    
+  public void runDriveCharacterizationVolts(double volts){
+    m_frontLeft.setDriveVoltage(volts);
+    m_rearLeft.setDriveVoltage(volts);
+    m_frontRight.setDriveVoltage(volts);
+    m_rearRight.setDriveVoltage(volts);
+  }
+
+  public Command getDriveQuasistaticSysId(Direction direction){
+    return driveSysId.quasistatic(direction);
+  }
+
+  public Command getDriveDynamicSysId(Direction direction){
+    return driveSysId.dynamic(direction);
   }
 
   /**

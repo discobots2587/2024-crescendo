@@ -85,6 +85,10 @@ public class MAXSwerveModule {
     return SwerveModuleState.optimize(desiredState, m_inputs.turnAbsolutePosition);  
   }
 
+  public void setDriveVoltage(double volts){
+    m_Io.setDriveVoltage(volts);
+  }
+
   /** Zeroes all the SwerveModule encoders. */
   public void resetDriveEncoder() {
     m_Io.resetDriveEncoder();

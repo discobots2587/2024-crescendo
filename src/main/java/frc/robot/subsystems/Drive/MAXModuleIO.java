@@ -149,7 +149,7 @@ public class MAXModuleIO implements ModuleIO{
         // turnKP = new LoggedDashboardNumber("turnKP[" + id + "]", ModuleConstants.kTurningP);
         // turnKI = new LoggedDashboardNumber("turnKI[" + id + "]", ModuleConstants.kTurningI);
         // turnKD = new LoggedDashboardNumber("turnKD[" + id + "]", ModuleConstants.kTurningD);
-        turnkPID = new LoggedDashboardPID("drivekPID[" + id + "]", new double[]{ModuleConstants.kTurningP,
+        turnkPID = new LoggedDashboardPID("turnkPID[" + id + "]", new double[]{ModuleConstants.kTurningP,
                                                                                 ModuleConstants.kTurningI,
                                                                                 ModuleConstants.kTurningD,
                                                                                 Double.POSITIVE_INFINITY,
