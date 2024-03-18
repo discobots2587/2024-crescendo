@@ -109,15 +109,6 @@ public class Robot extends LoggedRobot {
     CommandScheduler.getInstance().cancelAll();
 
     m_robotContainer.configureTestModeBindings();
-    //Put PID constants on shuffleboard so that they can be changed in test mode.
-    SmartDashboard.putNumber("driveKP", Constants.ModuleConstants.kDrivingP);
-    SmartDashboard.putNumber("driveKI", Constants.ModuleConstants.kDrivingI);
-    SmartDashboard.putNumber("driveKD", Constants.ModuleConstants.kDrivingD);
-    SmartDashboard.putNumber("driveKFF", Constants.ModuleConstants.kDrivingFF);
-    SmartDashboard.putNumber("turnKP", Constants.ModuleConstants.kTurningP);
-    SmartDashboard.putNumber("turnKI", Constants.ModuleConstants.kTurningI);
-    SmartDashboard.putNumber("turnKD", Constants.ModuleConstants.kTurningD);
-    SmartDashboard.putNumber("turnKFF", Constants.ModuleConstants.kTurningFF);
   }
 
   /** This function is called periodically during test mode. */
