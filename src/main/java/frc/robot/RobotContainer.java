@@ -45,20 +45,17 @@ public class RobotContainer
   private final DriveSubsystem m_robotDrive;
   public static final Intake intake = new Intake(IntakeConstants.kIntakeCanID);
   public static final Arm arm = new Arm();
-  // public static final Indexer indexer new Indexer();
-  public static final Climber climber = new Climber(ClimberConstants.kLeftID, ClimberConstants.kRightID, ClimberConstants.kLeftSwitchPort, ClimberConstants.kRightSwitchPort);
+  public static final Climber climber = new Climber(ClimberConstants.kLeftClimberCanID, ClimberConstants.kRightClimberCanID, ClimberConstants.kLeftSwitchPort, ClimberConstants.kRightSwitchPort);
 
   //Auto chooser
   private final LoggedDashboardChooser<Command> autoChooser;
 
-  // The driver's controller
+  // Controllers
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_opController = new XboxController(OIConstants.kOpControllerPort);
 
-
   //Driver Buttons
   JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
-  // JoystickButton SetXBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
   JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
 
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
@@ -129,7 +126,6 @@ public class RobotContainer
    */
   private void configureButtonBindings()
   {
-    // SetXBumper.whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
     TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVoltage(10), arm));
     TestShooter.whileFalse(new RunCommand(() -> arm.stopFlywheel(), arm));
 
@@ -163,8 +159,6 @@ public class RobotContainer
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // PathPlannerPath path = PathPlannerPath.fromPathFile("driveStraight");
-
     return autoChooser.get();
   }
 

@@ -142,8 +142,7 @@ public final class Constants {
       OUTTAKING
     }
     
-    public static final int kIntakeCanID = 50; //TUNE
-
+    public static final int kIntakeCanID = 50;
 
     public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
     public static final int kIntakeMotorCurrentLimit = 50; //50 amps
@@ -154,8 +153,7 @@ public final class Constants {
 
   public static final class PivotConstants
   {
-    public static final int kMasterID = 54; //TUNE
-    // public static final int kSlaveID = 99; //TUNE
+    public static final int kPivotCanID = 54;
 
     public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
     public static final int kMotorCurrentLimit = 20;//20 amps TUNE
@@ -174,14 +172,13 @@ public final class Constants {
 
   public static final class FlywheelConstants
   {
-    public static final int kMasterID = 53; //TUNE
-    public static final int kSlaveID = 52; //TUNE
+    public static final int kFlywheelMasterCanID = 53; //TUNE
+    public static final int kFlywheelSlaveCanID = 52; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
     public static final int kMotorCurrentLimit = 40;//20 amps TUNE
     
     // public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
-
 
     public static final double kP = 0.01;
     public static final double kI = 0;
@@ -193,8 +190,8 @@ public final class Constants {
 
   public static final class IndexerConstants
   {
-    public static final int kIndexerID = 51;
-    public static final int kHoodID = 55; //TUNE
+    public static final int kIndexerCanID = 51;
+    public static final int kHoodCanID = 55; //TUNE
 
     public static final int kBeamBreakID = 0; 
 
@@ -248,8 +245,8 @@ public final class Constants {
 
   public static final class ClimberConstants
   {
-    public static final int kLeftID = 61;
-    public static final int kRightID = 62;
+    public static final int kLeftClimberCanID = 61;
+    public static final int kRightClimberCanID = 62;
 
     public static final int kLeftSwitchPort = 1;
     public static final int kRightSwitchPort = 2;

@@ -18,9 +18,9 @@ public class Arm extends SubsystemBase
     
     public Arm()
     {
-        pivot = new Pivot(PivotConstants.kMasterID, ArmConstants.kPivotOffset);
-        indexer = new Indexer(IndexerConstants.kBeamBreakID, IndexerConstants.kIndexerID, IndexerConstants.kHoodID, ArmConstants.kHoodOffset);
-        flywheelShooter = new Shooter(FlywheelConstants.kMasterID, FlywheelConstants.kSlaveID);
+        pivot = new Pivot(PivotConstants.kPivotCanID, ArmConstants.kPivotOffset);
+        indexer = new Indexer(IndexerConstants.kBeamBreakID, IndexerConstants.kIndexerCanID, IndexerConstants.kHoodCanID, ArmConstants.kHoodOffset);
+        flywheelShooter = new Shooter(FlywheelConstants.kFlywheelMasterCanID, FlywheelConstants.kFlywheelSlaveCanID);
         
         state = ArmConstants.ArmState.INTAKE;
     }
