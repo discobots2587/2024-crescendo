@@ -14,31 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "scoreBase"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "collectLeftNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "scoreBase"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "collectRightNote"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "scoreBase"
+            "pathName": "collectMidNote"
           }
         }
       ]

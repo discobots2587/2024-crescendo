@@ -4,15 +4,15 @@
     {
       "anchor": {
         "x": 1.35,
-        "y": 5.5
+        "y": 5.550936522700434
       },
       "prevControl": null,
       "nextControl": {
         "x": 1.420710678118655,
-        "y": 5.429289321881345
+        "y": 5.4802258445817795
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "scoreLocation"
     },
     {
       "anchor": {
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "rightNote"
     }
   ],
   "rotationTargets": [
@@ -36,18 +36,7 @@
     }
   ],
   "constraintZones": [],
-  "eventMarkers": [
-    {
-      "name": "intake",
-      "waypointRelativePos": 0.5,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": []
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
