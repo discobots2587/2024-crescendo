@@ -44,6 +44,18 @@ public class Indexer extends SubsystemBase{
         indexerIO.setIndexerSpeed(IndexerConstants.kOuttakeSpeed);
     }
 
+    public void stowHood(){
+        indexerIO.stowHood();
+    }
+
+    public void deployHood(){
+        indexerIO.deployHood();
+    }
+
+    public void setIndexerSpeed(double speedRPM){
+        indexerIO.setIndexerSpeed(speedRPM);
+    }
+
     public void stop()
     {
         indexerIO.stop();
@@ -52,7 +64,7 @@ public class Indexer extends SubsystemBase{
     //Beambreak
     public boolean getBeamBreak()
     {
-        return false;
+        return inputs.beambreak;
     }
 
     @Override
@@ -60,5 +72,10 @@ public class Indexer extends SubsystemBase{
     {
         indexerIO.updateInputs(inputs);
         Logger.processInputs("Indexer", inputs);
+        if(!inputs.stowSwitch && inputs.hoodAppliedVolts <= -1e-6){
+            indexerIO.stopHood();
+        } else if(!inputs.deployedSwitch && inputs.hoodAppliedVolts >= 1e-6 ){
+            indexerIO.stopHood();
+        }
     }
 }

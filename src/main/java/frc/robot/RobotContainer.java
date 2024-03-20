@@ -104,7 +104,7 @@ public class RobotContainer
             m_robotDrive));
 
     intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
-    arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
+    // arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
           
   }
 
@@ -123,6 +123,14 @@ public class RobotContainer
     TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVoltage(14), arm));
     TestShooter.whileFalse(new RunCommand(() -> arm.setFlywheelVoltage(0), arm));
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)); 
+    TestIndexer.onTrue(new InstantCommand(() -> arm.ampOuttake(), arm));
+    TestIndexer.onFalse(new InstantCommand(() -> arm.stopIndexer(), arm));
+
+    ArmShootMode.onTrue(new InstantCommand(() -> arm.shooterMode(270), arm));
+    ArmAmpMode.onTrue(new InstantCommand(() -> arm.ampMode(), arm));
+
+    ArmShootMode.onFalse(new InstantCommand(() -> arm.intakeMode(), arm));
+    ArmAmpMode.onFalse(new InstantCommand(() -> arm.intakeMode(), arm));
 
     ClimbDeploy.onTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(ClimberConstants.kOutPosition)));
     ClimbDeploy.onTrue(new InstantCommand(() -> climber.setRightDesiredPosition(ClimberConstants.kOutPosition)));

@@ -27,6 +27,8 @@ public class SparkIndexerIO implements IndexerIO
     private final SparkPIDController hoodPID;
 
     private final DigitalInput beambreakDigitalInput;
+    private final DigitalInput stowSwitch;
+    private final DigitalInput deployedSwitch;
 
     private final double angleOffset;
 
@@ -37,6 +39,8 @@ public class SparkIndexerIO implements IndexerIO
         angleOffset = offset;
 
         beambreakDigitalInput = new DigitalInput(beamBreakChannel);
+        stowSwitch = new DigitalInput(IndexerConstants.kStowID);
+        deployedSwitch = new DigitalInput(IndexerConstants.kDeployedID);
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
@@ -92,10 +96,39 @@ public class SparkIndexerIO implements IndexerIO
     }
 
     @Override
+    public void stopHood(){
+        hoodSpark.stopMotor();
+    }
+
+    @Override
+    public void stowHood(){
+        if(!stowSwitch.get()){
+            hoodSpark.stopMotor();
+        } else {
+            hoodSpark.setVoltage(-1.0);
+        }
+    }
+
+    @Override
+    public void deployHood(){
+        if(!deployedSwitch.get()){
+            hoodSpark.stopMotor();
+        } else {
+            hoodSpark.setVoltage(1.0);
+        }
+    }
+
+    @Override
+    public void hoodPeriodic(){
+    }
+
+    @Override
     public void updateInputs(IndexerIOInputs inputs) {
         inputs.position = Rotation2d.fromDegrees(hoodEnc.getPosition());
         inputs.offsetPosition = inputs.position.minus(Rotation2d.fromDegrees(angleOffset));
         inputs.beambreak = beambreakDigitalInput.get();
+        inputs.stowSwitch = stowSwitch.get();
+        inputs.deployedSwitch = deployedSwitch.get();
         inputs.indexerAppliedVolts = indexerSpark.getAppliedOutput() * indexerSpark.getBusVoltage();
         inputs.hoodAppliedVolts = hoodSpark.getAppliedOutput() * hoodSpark.getBusVoltage();
         inputs.indexerCurrent = indexerSpark.getOutputCurrent();

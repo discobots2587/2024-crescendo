@@ -197,6 +197,8 @@ public final class Constants {
     public static final int kHoodCanID = 55; 
 
     public static final int kBeamBreakCanID = 0; 
+    public static final int kDeployedID = 4;
+    public static final int kStowID = 3;
 
     public static final IdleMode kIndexerIdleMode = IdleMode.kCoast;
     public static final IdleMode kHoodIdleMode = IdleMode.kBrake;

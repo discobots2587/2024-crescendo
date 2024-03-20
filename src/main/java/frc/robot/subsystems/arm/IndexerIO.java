@@ -15,6 +15,8 @@ public interface IndexerIO {
         public Rotation2d position = new Rotation2d();
         public Rotation2d offsetPosition = new Rotation2d();
         public boolean beambreak = false;
+        public boolean stowSwitch = false;
+        public boolean deployedSwitch = false;
         public double indexerAppliedVolts = 0.0;
         public double hoodAppliedVolts = 0.0;
         public double indexerCurrent = 0.0;
@@ -28,4 +30,12 @@ public interface IndexerIO {
     default void setIndexerSpeed(double speed){}
 
     default void stop(){}
+
+    default void stopHood(){}
+
+    default void deployHood(){}
+
+    default void stowHood(){}
+
+    default void hoodPeriodic(){}
 }

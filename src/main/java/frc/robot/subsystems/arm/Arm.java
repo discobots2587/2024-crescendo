@@ -36,6 +36,7 @@ public class Arm extends SubsystemBase
         state = ArmConstants.ArmState.INTAKE;
         pivot.setDesiredAngle(ArmConstants.PivotIntakePosition);
         indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
+        indexer.stowHood();
     }
 
     public void shooterMode(double desiredAngle)//This allows for the arm to track 
@@ -43,13 +44,15 @@ public class Arm extends SubsystemBase
         state = ArmConstants.ArmState.SHOOTER;
         pivot.setDesiredAngle(desiredAngle);
         indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
+        indexer.stowHood();
     }
 
     public void ampMode()
     {
         state = ArmConstants.ArmState.AMP;
         pivot.setDesiredAngle(ArmConstants.PivotAmpPosition);
-        indexer.setDesiredAngle(ArmConstants.HoodAmpPosition);
+        // indexer.setDesiredAngle(ArmConstants.HoodAmpPosition);
+        indexer.deployHood();
     }
 
     //Flywheel actions
