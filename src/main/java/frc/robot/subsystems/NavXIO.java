@@ -14,7 +14,7 @@ public class NavXIO implements GyroIO{
     private final AHRS navx = new AHRS(Port.kMXP);
 
     public NavXIO() {
-
+        navx.setAngleAdjustment(90);
     }
 
     @Override
