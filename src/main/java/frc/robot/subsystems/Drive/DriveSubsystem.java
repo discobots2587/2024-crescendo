@@ -279,6 +279,26 @@ public class DriveSubsystem extends SubsystemBase {
     Logger.recordOutput("SwerveStates/OptimizedSetPoints", desiredStates);
   }
 
+  /**
+   * Sets the swerve ModuleStates. For driving, it should almost always be optimized.
+   * This method is only for testing or system identification.
+   * 
+   * @param desiredStates The desired SwerveModule states.
+   * @param optimize Whether the states should be optimized (desaturate wheelspeeds and minimize change in angle)
+   */
+  public void setModuleStates(SwerveModuleState[] desiredStates, boolean optimize){
+    if(optimize){
+      setModuleStates(desiredStates);
+    } else {
+      Logger.recordOutput("SwerveStates/SetPoints", desiredStates);
+      Logger.recordOutput("SwerveStates/OptimizedSetPoints", desiredStates);
+      m_frontLeft.setDesiredState(desiredStates[0]);
+      m_frontRight.setDesiredState(desiredStates[1]);
+      m_rearLeft.setDesiredState(desiredStates[2]);
+      m_rearRight.setDesiredState(desiredStates[3]);
+    }
+  }
+
   @AutoLogOutput(key = "SwerveStates/Measured")
   public SwerveModuleState[] getModuleStates() {
     SwerveModuleState[] states = new SwerveModuleState[4];
