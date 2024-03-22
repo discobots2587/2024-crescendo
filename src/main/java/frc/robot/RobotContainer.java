@@ -54,18 +54,20 @@ public class RobotContainer
   //Driver Buttons
   JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
   // JoystickButton SetXBumper = new JoystickButton(m_driverController, Button.kRightBumper.value);
-  JoystickButton TestShooter = new JoystickButton(m_driverController, Button.kRightBumper.value);
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
+  JoystickButton TestIndexer = new JoystickButton(m_driverController, Button.kA.value);
 
   //Operator Buttons
   JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
   JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
   JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
+  
+  JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
+  JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kLeftBumper.value);
+  JoystickButton ClimbReverse = new JoystickButton(m_opController, Button.kB.value);
 
-  JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kB.value);
-
-  JoystickButton RightClimbDown = new JoystickButton(m_opController, Button.kRightBumper.value);
-  JoystickButton LeftClimbDown = new JoystickButton(m_opController, Button.kLeftBumper.value);
+  // JoystickButton RightClimbDown = new JoystickButton(m_opController, Button.kRightBumper.value);
+  // JoystickButton LeftClimbDown = new JoystickButton(m_opController, Button.kLeftBumper.value);
 
 
   /**
@@ -120,11 +122,11 @@ public class RobotContainer
   private void configureButtonBindings()
   {
     // SetXBumper.whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
-    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVoltage(14), arm));
+    TestShooter.whileTrue(new RunCommand(() -> arm.setFlywheelVoltage(10), arm));
     TestShooter.whileFalse(new RunCommand(() -> arm.setFlywheelVoltage(0), arm));
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive)); 
-    TestIndexer.onTrue(new InstantCommand(() -> arm.ampOuttake(), arm));
-    TestIndexer.onFalse(new InstantCommand(() -> arm.stopIndexer(), arm));
+    // TestIndexer.onTrue(new InstantCommand(() -> arm.ampOuttake(), arm));
+    // TestIndexer.onFalse(new InstantCommand(() -> arm.stopIndexer(), arm));
 
     ArmShootMode.onTrue(new InstantCommand(() -> arm.shooterMode(270), arm));
     ArmAmpMode.onTrue(new InstantCommand(() -> arm.ampMode(), arm));
@@ -132,14 +134,17 @@ public class RobotContainer
     ArmShootMode.onFalse(new InstantCommand(() -> arm.intakeMode(), arm));
     ArmAmpMode.onFalse(new InstantCommand(() -> arm.intakeMode(), arm));
 
-    ClimbDeploy.onTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(ClimberConstants.kOutPosition)));
-    ClimbDeploy.onTrue(new InstantCommand(() -> climber.setRightDesiredPosition(ClimberConstants.kOutPosition)));
+    ClimbDeploy.onTrue(new InstantCommand(() -> climber.spinBoth(), climber));
+    ClimbDeploy.onFalse(new InstantCommand(() -> climber.stopBoth(), climber));
 
-    RightClimbDown.whileTrue(new InstantCommand(() -> climber.setRightDesiredPosition(0)));
-    RightClimbDown.onFalse(new InstantCommand(() -> climber.stopRight()));
+    ClimbReverse.onTrue(new InstantCommand(() -> climber.reverseBoth(), climber));
+    ClimbReverse.onFalse(new InstantCommand(() -> climber.stopBoth(), climber));
 
-    LeftClimbDown.whileTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(0)));
-    LeftClimbDown.onFalse(new InstantCommand(() -> climber.stopLeft()));
+    // RightClimbDown.whileTrue(new InstantCommand(() -> climber.setRightDesiredPosition(0)));
+    // RightClimbDown.onFalse(new InstantCommand(() -> climber.stopRight()));
+
+    // LeftClimbDown.whileTrue(new InstantCommand(() -> climber.setLeftDesiredPosition(0)));
+    // LeftClimbDown.onFalse(new InstantCommand(() -> climber.stopLeft()));
   }
   public void configureTestModeBindings(){
     new JoystickButton(m_driverController, Button.kY.value).onTrue(
