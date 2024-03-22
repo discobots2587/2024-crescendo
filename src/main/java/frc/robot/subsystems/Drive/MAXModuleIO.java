@@ -226,6 +226,9 @@ public class MAXModuleIO implements ModuleIO{
         m_turningPIDController.setD(turnkPID.getD());
         m_turningPIDController.setFF(turnKFF.get());
         m_turningArbFF = turnArbFF.get();
+
+        m_drivingSparkMax.burnFlash();
+        m_turningSparkMax.burnFlash();
     }
 
 }
