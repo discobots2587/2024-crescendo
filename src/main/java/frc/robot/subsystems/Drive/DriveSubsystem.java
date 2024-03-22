@@ -324,6 +324,47 @@ public class DriveSubsystem extends SubsystemBase {
     gyroIo.reset();
   }
 
+  public void runDriveCharacterizationVolts(double volts){
+    m_frontLeft.setDriveVoltage(volts);
+    m_rearLeft.setDriveVoltage(volts);
+    m_frontRight.setDriveVoltage(volts);
+    m_rearRight.setDriveVoltage(volts);
+  }
+
+  /**
+   * UNTESTED FUNCTIONALITY
+   * Checks if a module are at their set desired state
+   * 
+   * 
+   * @param id Id value of module to check
+   */
+  public boolean atDesiredAngle(int id){
+    switch(id){
+      case 0:
+        return m_frontLeft.atDesiredAngle();
+      case 1:
+        return m_rearLeft.atDesiredAngle();
+      case 2:
+        return m_frontRight.atDesiredAngle();
+      case 3:
+        return m_rearRight.atDesiredAngle();
+      default:
+        return false;
+    }
+  }
+
+  public boolean atDesiredAngle(){
+    return atDesiredAngle(0) && atDesiredAngle(1) && atDesiredAngle(2) && atDesiredAngle(3);
+  }
+
+  public Command getDriveQuasistaticSysId(Direction direction){
+    return driveSysId.quasistatic(direction);
+  }
+
+  public Command getDriveDynamicSysId(Direction direction){
+    return driveSysId.dynamic(direction);
+  }
+
   /**
    * Returns the heading of the robot.
    *

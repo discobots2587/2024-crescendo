@@ -76,6 +76,10 @@ public class MAXSwerveModule {
     m_desiredState = desiredState;
   }
 
+  public boolean atDesiredAngle(){
+    return Math.abs(m_desiredState.angle.getDegrees() - m_inputs.turnPosition.getDegrees()) <= 0.05;
+  }
+
   /**
    * Optimizes the desired state for the module to avoid spinning further than 90 degrees.
    * 
