@@ -129,7 +129,7 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 50; //50 // amps
+    public static final int kDrivingMotorCurrentLimit = 45; //50 // amps
     public static final int kTurningMotorCurrentLimit = 20; //20 // amps
   }
 
@@ -145,8 +145,8 @@ public final class Constants {
     public static final int kIntakeCanID = 50; //TUNE
 
 
-    public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
-    public static final int kIntakeMotorCurrentLimit = 50; //50 amps
+    public static final IdleMode kIntakeMotorIdleMode = IdleMode.kCoast;
+    public static final int kIntakeMotorCurrentLimit = 40; //50 amps
     
     public static final double kIntakeSpeed = -0.85; // TUNE
     public static final double kOuttakeSpeed = 0.85; // TUNE
@@ -157,18 +157,18 @@ public final class Constants {
     public static final int kPivotCanID = 54;//52 
 
     public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
-    public static final int kMotorCurrentLimit = 20;//20 amps TUNE
+    public static final int kMotorCurrentLimit = 30;//20 amps TUNE
     
     public static final double kTurningEncoderPositionFactor = (360); // degrees
     public static final double kTurningEncoderVelocityFactor = (360) / 60.0; // degrees per second
 
 
-    public static final double kP = 1;
+    public static final double kP = 0.05;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kFF = 0;
-    public static final double kTurningMinOutput = -1;
-    public static final double kTurningMaxOutput = 1;
+    public static final double kTurningMinOutput = -0.75;
+    public static final double kTurningMaxOutput = 0.25;
     
   }
 
@@ -178,17 +178,17 @@ public final class Constants {
     public static final int kSlaveCanID = 52; //TUNE
 
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
-    public static final int kMotorCurrentLimit = 60;//20 amps TUNE
+    public static final int kMotorCurrentLimit = 40;//20 amps TUNE
     
     public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
 
 
-    public static final double kP = 1;
+    public static final double kP = 0.03;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final double kFF = 0;
-    public static final double kVelocityMinOutput = -1;
-    public static final double kVelocityMaxOutput = 1;
+    public static final double kVelocityMinOutput = -0.5;
+    public static final double kVelocityMaxOutput = 0.5;
   }
 
   public static final class IndexerConstants
@@ -204,7 +204,7 @@ public final class Constants {
     public static final IdleMode kHoodIdleMode = IdleMode.kBrake;
 
     public static final int kHoodCurrentLimit = 20; //20 amps TUNE
-    public static final int kIndexerCurrentLimit = 20; //20 amps TUNE
+    public static final int kIndexerCurrentLimit = 40; //20 amps TUNE
 
     public static final double kOffset = 60; // TUNE 
     
@@ -220,8 +220,8 @@ public final class Constants {
     public static final double kVelocityMaxOutput = 1;
 
     //Speed constant
-    public static double kIntakeSpeed = 1;
-    public static double kOuttakeSpeed = -1;
+    public static double kIntakeSpeed = -0.5;
+    public static double kOuttakeSpeed = 1;
     // public static double kBeamBreakThresh = 0.75;
   }
 
@@ -235,14 +235,14 @@ public final class Constants {
     }
 
     //All of these constants are in degrees
-    public static double kPivotOffset = 60; //TUNE 
-    public static double kHoodOffset = 60; //TUNE
+    public static double kPivotOffset = 0; //TUNE 
+    public static double kHoodOffset = 40; //TUNE
 
-    public static double PivotIntakePosition = 53.7; //TUNE
-    public static double PivotAmpPosition = 180; //TUNE
+    public static double PivotIntakePosition = 307; //TUNE
+    public static double PivotAmpPosition = 160; //TUNE
 
-    public static double HoodAmpPosition = 147; //TUNE
-    public static double HoodStowPosition = 0; //TUNE
+    public static double HoodAmpPosition = 350; //TUNE
+    public static double HoodStowPosition = 235; //TUNE
   }
 
   public static final class ClimberConstants
