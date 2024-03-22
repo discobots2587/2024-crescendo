@@ -105,7 +105,7 @@ public class SparkIndexerIO implements IndexerIO
         if(!stowSwitch.get()){
             hoodSpark.stopMotor();
         } else {
-            hoodSpark.setVoltage(-1.0);
+            hoodSpark.setVoltage(-5.0);
         }
     }
 
@@ -114,7 +114,7 @@ public class SparkIndexerIO implements IndexerIO
         if(!deployedSwitch.get()){
             hoodSpark.stopMotor();
         } else {
-            hoodSpark.setVoltage(1.0);
+            hoodSpark.setVoltage(5.0);
         }
     }
 
