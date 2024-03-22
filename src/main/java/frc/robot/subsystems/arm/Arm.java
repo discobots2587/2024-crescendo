@@ -35,7 +35,7 @@ public class Arm extends SubsystemBase
     {
         state = ArmConstants.ArmState.INTAKE;
         pivot.setDesiredAngle(ArmConstants.PivotIntakePosition);
-        indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
+        //indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
         indexer.stowHood();
     }
 
@@ -43,7 +43,7 @@ public class Arm extends SubsystemBase
     {
         state = ArmConstants.ArmState.SHOOTER;
         pivot.setDesiredAngle(desiredAngle);
-        indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
+        //indexer.setDesiredAngle(ArmConstants.HoodStowPosition);
         indexer.stowHood();
     }
 
