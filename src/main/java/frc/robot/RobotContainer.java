@@ -29,6 +29,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ArmHold;
 import frc.robot.commands.AutoIntake;
 import frc.robot.commands.AutoShoot;
+import frc.robot.commands.DriveMotorFFCharacterization;
 import frc.robot.commands.IntakeIndex;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -95,7 +96,14 @@ public class RobotContainer
     NamedCommands.registerCommand("Intake", new AutoIntake());
     
     //Auto chooser
-    autoChooser = new LoggedDashboardChooser<>("Auto Chooser", AutoBuilder.buildAutoChooser()); // Default auto will be Commands.none()[]
+    autoChooser = new LoggedDashboardChooser<>("Auto Chooser", AutoBuilder.buildAutoChooser()); // Default auto will be Commands.none()
+
+    //System Identification setup
+    autoChooser.addOption("Drive System ID", new DriveMotorFFCharacterization(m_robotDrive));
+    autoChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward));
+    autoChooser.addOption("Drive Backwards Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kReverse));
+    autoChooser.addOption("Drive Forward Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kForward));
+    autoChooser.addOption("Drive Backwards Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kReverse));
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
