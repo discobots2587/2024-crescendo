@@ -95,6 +95,21 @@ public class Climber extends SubsystemBase{
         RightClimber.setControl(m_request.withPosition(desiredRotations).withLimitReverseMotion(isRightHomed()));
     }
 
+    public void spinBoth(){
+        LeftClimber.set(-0.5);
+        RightClimber.set(0.5);
+    }
+
+    public void reverseBoth(){
+        LeftClimber.set(0.5);
+        RightClimber.set(-0.5);
+    }
+
+    public void stopBoth(){
+        stopLeft();
+        stopRight();
+    }
+
     public void stopLeft()
     {LeftClimber.stopMotor();}
 
