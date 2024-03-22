@@ -4,12 +4,13 @@
 
 package frc.robot;
 
+import java.util.Calendar;
+
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
-// import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -31,7 +32,12 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {
 
-    // Logger.addDataReceiver(new WPILOGWriter());
+    // Code to log directly to the roborio without a USB attached (Untested)
+    // Calendar cal = Calendar.getInstance();
+    // Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/logs/" 
+    //                                         + (cal.get(Calendar.MONTH) + 1) +"_"+ cal.get(Calendar.DAY_OF_MONTH) + "_" 
+    //                                         + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND)
+    //                                         + ".wpilib"));
     Logger.addDataReceiver(new NT4Publisher());
 
     Logger.start();
