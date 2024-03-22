@@ -89,6 +89,10 @@ public class Arm extends SubsystemBase
         {indexer.stop();}
     }
 
+    public void stopFlywheel(){
+        flywheelShooter.stop();
+    }
+
     @Override
     public void periodic()
     {

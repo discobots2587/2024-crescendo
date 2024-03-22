@@ -88,6 +88,7 @@ public class SparkFlywheelIO implements FlywheelIO {
 
     @Override
     public void stop(){
-        
+        MasterSpark.stopMotor();
+        SlaveSpark.stopMotor();
     }
 }
