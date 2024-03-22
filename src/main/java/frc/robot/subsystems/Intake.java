@@ -46,15 +46,21 @@ public class Intake extends SubsystemBase {
         IntakeNEO.set(speed);
     }
 
+    public void setVoltage(double volts){
+        IntakeNEO.setVoltage(volts);
+    }
+
     public void intake()
     {
         setSpeed(IntakeConstants.kIntakeSpeed);
+        setVoltage(-12);
         intakeState = IntakeConstants.IntakeState.INTAKING;
     }
 
     public void outtake()
     {
-        setSpeed(IntakeConstants.kOuttakeSpeed);
+        // setSpeed(IntakeConstants.kOuttakeSpeed);
+        setVoltage(12);
         intakeState = IntakeConstants.IntakeState.OUTTAKING;
     }
 
