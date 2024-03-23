@@ -17,6 +17,8 @@ import frc.robot.subsystems.drive.MAXModuleIO;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
@@ -51,6 +53,7 @@ public class RobotContainer
 
   //Auto chooser
   private final LoggedDashboardChooser<Command> autoChooser;
+  private final LoggedDashboardChooser<Command> feedForwardChooser;
 
   // Controllers
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -62,6 +65,7 @@ public class RobotContainer
 
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
   JoystickButton RobotCentric = new JoystickButton(m_driverController, Button.kA.value);
+  JoystickButton FeedForwardTest = new JoystickButton(m_driverController, Button.kX.value);
 
   DoubleSupplier leftOpSup = () -> m_opController.getLeftY();
   DoubleSupplier rightOpSup = () -> m_opController.getRightY();
@@ -98,12 +102,26 @@ public class RobotContainer
     
     //Auto chooser
     autoChooser = new LoggedDashboardChooser<>("Auto Chooser", AutoBuilder.buildAutoChooser()); // Default auto will be Commands.none()
+    feedForwardChooser = new LoggedDashboardChooser<>("System ID Routine Chooser");
 
     //System Identification setup
-    autoChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward));
-    autoChooser.addOption("Drive Backwards Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kReverse));
-    autoChooser.addOption("Drive Forward Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kForward));
-    autoChooser.addOption("Drive Backwards Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kReverse));
+    feedForwardChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward)
+                                                                              .beforeStarting(new SequentialCommandGroup(
+                                                                                          new InstantCommand(() -> m_robotDrive.setFFAngles()),
+                                                                                          new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
+    feedForwardChooser.addOption("Drive Backwards Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kReverse)
+                                                                              .beforeStarting(new SequentialCommandGroup(
+                                                                                          new InstantCommand(() -> m_robotDrive.setFFAngles()),
+                                                                                          new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
+    feedForwardChooser.addOption("Drive Forward Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kForward)
+                                                                              .beforeStarting(new SequentialCommandGroup(
+                                                                                          new InstantCommand(() -> m_robotDrive.setFFAngles()),
+                                                                                          new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
+    feedForwardChooser.addOption("Drive Backwards Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kReverse)
+                                                                              .beforeStarting(new SequentialCommandGroup(
+                                                                                          new InstantCommand(() -> m_robotDrive.setFFAngles()),
+                                                                                          new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
+
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -158,6 +176,7 @@ public class RobotContainer
     // LeftClimbDown.onFalse(new InstantCommand(() -> climber.stopLeft()));
   }
   public void configureTestModeBindings(){
+    FeedForwardTest.whileTrue(feedForwardChooser.get());
     new JoystickButton(m_driverController, Button.kY.value).onTrue(
                       new InstantCommand(() -> m_robotDrive.setPID(), m_robotDrive));
   }

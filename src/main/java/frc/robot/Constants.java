@@ -236,10 +236,10 @@ public final class Constants {
     public static double kPivotOffset = 0; //TUNE 
     public static double kHoodOffset = 40; //TUNE
 
-    public static double PivotIntakePosition = 307; //TUNE
+    public static double PivotIntakePosition = 311; //TUNE
     public static double PivotAmpPosition = 200; //TUNE
 
-    public static double HoodAmpPosition = 350; //TUNE
+  public static double HoodAmpPosition = 350; //TUNE
     public static double HoodStowPosition = 235; //TUNE
   }
 

@@ -288,6 +288,19 @@ public class DriveSubsystem extends SubsystemBase {
   }
 
   /**
+   * Sets the wheels with bevels facing away from center. Used for drive motor feedforward routine.
+   */
+  public void setFFAngles(){
+    setModuleStates(new SwerveModuleState[] {
+          new SwerveModuleState(0, Rotation2d.fromDegrees(-45)),
+          new SwerveModuleState(0, Rotation2d.fromDegrees(45)),
+          new SwerveModuleState(0, Rotation2d.fromDegrees(45 + 180)),
+          new SwerveModuleState(0, Rotation2d.fromDegrees(-45 + 180))},
+          false
+    );
+  }
+
+  /**
    * Sets the swerve ModuleStates.
    *
    * @param desiredStates The desired SwerveModule states.
