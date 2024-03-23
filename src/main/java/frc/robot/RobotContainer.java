@@ -139,11 +139,11 @@ public class RobotContainer
 
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
 
-    ArmShootMode.onTrue(new RunCommand(() -> arm.shooterMode(270), arm)); // Desired angle needs to use auto aim command
-    ArmAmpMode.onTrue(new RunCommand(() -> arm.ampMode(), arm));
+    ArmShootMode.onTrue(new InstantCommand(() -> arm.shooterMode(270), arm)); // Desired angle needs to use auto aim command
+    ArmAmpMode.onTrue(new InstantCommand(() -> arm.ampMode(), arm));
 
-    ArmShootMode.onFalse(new RunCommand(() -> arm.intakeMode(), arm));
-    ArmAmpMode.onFalse(new RunCommand(() -> arm.intakeMode(), arm));
+    ArmShootMode.onFalse(new InstantCommand(() -> arm.intakeMode(), arm));
+    ArmAmpMode.onFalse(new InstantCommand(() -> arm.intakeMode(), arm));
 
     ClimbDeploy.onTrue(new InstantCommand(() -> climber.spinBoth()));
     ClimbDeploy.onFalse(new InstantCommand(() -> climber.stopBoth()));
