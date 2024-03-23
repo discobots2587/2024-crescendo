@@ -61,6 +61,7 @@ public class RobotContainer
 
   //Driver Buttons
   JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
+  JoystickButton DriverOuttake = new JoystickButton(m_driverController, Button.kRightBumper.value);
   JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
 
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
@@ -152,6 +153,8 @@ public class RobotContainer
    */
   private void configureButtonBindings()
   {
+    DriverOuttake.onTrue(new InstantCommand(() -> intake.outtake()));
+    DriverOuttake.onFalse(new InstantCommand(() -> intake.getDefaultCommand()));
     TestShooter.onTrue(new InstantCommand(() -> arm.setFlywheelVoltage(10), arm));
     TestShooter.onFalse(new InstantCommand(() -> arm.stopFlywheel(), arm));
 
