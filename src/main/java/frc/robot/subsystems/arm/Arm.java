@@ -1,6 +1,8 @@
 package frc.robot.subsystems.arm;
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.FlywheelConstants;
@@ -84,6 +86,10 @@ public class Arm extends SubsystemBase
         indexer.outtakeMode();
     }
 
+    public void stopIndexer(){
+        indexer.stop();
+    }
+
     public void load()
     {
         if(indexer.getBeamBreak())
@@ -107,14 +113,14 @@ public class Arm extends SubsystemBase
         flywheelShooter.setDesiredVelocity(velocity);
     }
 
+    public void stopFlywheel(){
+        flywheelShooter.stop();
+    }
+
     @Override
     public void periodic()
     {
-        SmartDashboard.putString("Arm State", state.toString());
-    }
-
-    public void stopFlywheel() {
-        flywheelShooter.stop();
+        Logger.recordOutput("Arm/State", state.toString());
     }
 }
 
