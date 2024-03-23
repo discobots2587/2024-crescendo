@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "collectMidNote"
+                  "pathName": "speaker_mid"
                 }
               },
               {

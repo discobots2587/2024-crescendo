@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.9,
-      "y": 4.1
+      "x": 0.787031987758696,
+      "y": 4.368142031576503
     },
     "rotation": 0.0
   },
@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "collectRightNote"
+                  "pathName": "speaker_mid"
                 }
               },
               {

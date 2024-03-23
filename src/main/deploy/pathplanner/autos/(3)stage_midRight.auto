@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "collectMidNote"
+                  "pathName": "speaker_mid"
                 }
               },
               {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "collectRightNote"
+                  "pathName": "speaker_right"
                 }
               },
               {
@@ -82,6 +82,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "3note",
   "choreoAuto": false
 }

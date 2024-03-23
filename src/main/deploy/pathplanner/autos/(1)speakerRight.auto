@@ -2,24 +2,30 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.9112722961537205,
-      "y": 5.550936522700434
+      "x": 0.7,
+      "y": 4.4
     },
-    "rotation": 0.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "speaker_mid"
+            "pathName": "leaveRight"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "1note",
   "choreoAuto": false
 }
