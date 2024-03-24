@@ -136,7 +136,7 @@ public class RobotContainer
                 !RobotCentric.getAsBoolean(), true),//Added the robot centric button
             m_robotDrive));
 
-    intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
+    // intake.setDefaultCommand(new IntakeIndex(() -> DriverIntakeBumper.getAsBoolean()));
     // intake.setDefaultCommand(new IntakeTest(leftOpSup, rightOpSup));
 
     // arm.setDefaultCommand(new ArmHold(() -> ArmShootMode.getAsBoolean(), () -> ArmAmpMode.getAsBoolean()));
@@ -153,8 +153,16 @@ public class RobotContainer
    */
   private void configureButtonBindings()
   {
-    DriverOuttake.onTrue(new InstantCommand(() -> intake.outtake()));
-    DriverOuttake.onFalse(new InstantCommand(() -> intake.getDefaultCommand()));
+    DriverOuttake.onTrue(new InstantCommand(() -> {
+      intake.outtake();
+      arm.ampOuttake();
+    }, intake));
+    DriverOuttake.onFalse(new InstantCommand(() -> {
+      intake.stop();
+      arm.indexStop();
+    }, intake));
+    DriverIntakeBumper.whileTrue(new IntakeIndex(true));
+    DriverIntakeBumper.onFalse(new IntakeIndex(false));
     TestShooter.onTrue(new InstantCommand(() -> arm.setFlywheelVoltage(10), arm));
     TestShooter.onFalse(new InstantCommand(() -> arm.stopFlywheel(), arm));
 

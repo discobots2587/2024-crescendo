@@ -11,13 +11,15 @@ import frc.robot.RobotContainer;
 
 public class IntakeIndex extends Command
 {
-    private BooleanSupplier intakeSup;
+    // private BooleanSupplier intakeSup;
+    private boolean pressed;
     
   /** Creates a new IntakeIndexRun. */
-  public IntakeIndex(BooleanSupplier intakeBumper)
+  public IntakeIndex(boolean bumper)
   {
     // Use addRequirements() here to declare subsystem dependencies.
-    intakeSup = intakeBumper;
+    // intakeSup = intakeBumper;
+    pressed = bumper;
     addRequirements(RobotContainer.arm);
     addRequirements(RobotContainer.intake);
   }
@@ -33,7 +35,8 @@ public class IntakeIndex extends Command
   @Override
   public void execute()
   {
-    if(intakeSup.getAsBoolean())
+    // if(intakeSup.getAsBoolean())
+    if(pressed)
     {
       switch(RobotContainer.arm.getState())
       {
