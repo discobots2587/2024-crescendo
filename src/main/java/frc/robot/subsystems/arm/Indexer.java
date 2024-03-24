@@ -132,12 +132,12 @@ public class Indexer extends SubsystemBase{
     //Indexer rollers
     public void loadAndShoot()
     {
-        IndexerSpark.set(IndexerConstants.kIntakeSpeed);
+        IndexerSpark.setVoltage(IndexerConstants.kIntakeVoltage);
     }
 
     public void outtakeMode()
     {
-        IndexerSpark.set(IndexerConstants.kOuttakeSpeed);
+        IndexerSpark.setVoltage(IndexerConstants.kOuttakeVoltage);
     }
 
     public void stop()
