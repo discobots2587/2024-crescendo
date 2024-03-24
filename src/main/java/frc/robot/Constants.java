@@ -44,8 +44,8 @@ public final class Constants {
     public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
-    public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
+    public static final double kDirectionSlewRate = 2.0; // radians per second
+    public static final double kMagnitudeSlewRate = 2.4; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     // Chassis configuration
@@ -112,7 +112,7 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = 0.04;
+    public static final double kDrivingP = 0.06;
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
@@ -129,7 +129,7 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 50; //50 // amps
+    public static final int kDrivingMotorCurrentLimit = 40; //50 // amps
     public static final int kTurningMotorCurrentLimit = 20; //20 // amps
   }
 
@@ -145,7 +145,7 @@ public final class Constants {
     public static final int kIntakeCanID = 50;
 
     public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
-    public static final int kIntakeMotorCurrentLimit = 50; //50 amps
+    public static final int kIntakeMotorCurrentLimit = 40; //50 amps
     
     public static final double kIntakeSpeed = -0.85; // TUNE
     public static final double kOuttakeSpeed = 0.85; // TUNE
@@ -199,7 +199,7 @@ public final class Constants {
     public static final IdleMode kHoodIdleMode = IdleMode.kBrake;
 
     public static final int kHoodCurrentLimit = 20; //20 amps TUNE
-    public static final int kIndexerCurrentLimit = 60; //20 amps TUNE
+    public static final int kIndexerCurrentLimit = 40; //20 amps TUNE
 
     public static final double kOffset = 60; // TUNE 
     
@@ -236,7 +236,7 @@ public final class Constants {
     public static double kPivotOffset = 0; //TUNE 
     public static double kHoodOffset = 40; //TUNE
 
-    public static double PivotIntakePosition = 311; //TUNE
+    public static double PivotIntakePosition = 312; //TUNE
     public static double PivotAmpPosition = 200; //TUNE
 
   public static double HoodAmpPosition = 350; //TUNE
