@@ -27,6 +27,8 @@ public class Indexer extends SubsystemBase{
 
     private DigitalInput DeployedSwitch;
 
+    private double appliedVoltage = 0.0;
+
     // private double speed;
 
     public Indexer(int beamBreakChannel, int indexerID, int hoodID, double offset)
@@ -108,11 +110,13 @@ public class Indexer extends SubsystemBase{
     {
         if(StowSwitch.get())
         {
-            HoodSpark.set(0.5);//This needs to be checked to make sure it goes the right way.
+            HoodSpark.setVoltage(-5);//This needs to be checked to make sure it goes the right way.
+            appliedVoltage = -5;
         }
         else
         {
             HoodSpark.stopMotor();
+            appliedVoltage = 0;
         }
     }
     
@@ -120,11 +124,13 @@ public class Indexer extends SubsystemBase{
     {
         if(DeployedSwitch.get())
         {
-            HoodSpark.set(-0.5);//This needs to be checked to make sure it goes the right way.
+            HoodSpark.setVoltage(5);//This needs to be checked to make sure it goes the right way.
+            appliedVoltage = 5;
         }
         else
         {
             HoodSpark.stopMotor();
+            appliedVoltage = 0;
         }
     }
 
@@ -162,7 +168,11 @@ public class Indexer extends SubsystemBase{
 
         SmartDashboard.putBoolean("Hood Stow Sw", StowSwitch.get());
         SmartDashboard.putBoolean("Hood Deploy Sw", DeployedSwitch.get());
-
+        if(!StowSwitch.get() && appliedVoltage < 0){
+            HoodSpark.stopMotor();
+        } else if(!DeployedSwitch.get() && appliedVoltage > 0){
+            HoodSpark.stopMotor();
+        }
         // SmartDashboard.putNumber("Indexer target speed", this.speed);
     }
 
