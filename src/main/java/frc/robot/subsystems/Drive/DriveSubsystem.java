@@ -180,7 +180,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void resetOdometry(Pose2d pose) {
     gyroIo.reset();
     m_odometry.resetPosition(
-        new Rotation2d(),
+        Rotation2d.fromDegrees(180),// new Rotation2d(),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
             m_frontRight.getPosition(),
