@@ -4,10 +4,14 @@
 
 package frc.robot;
 
+import java.util.Calendar;
+
 import org.littletonrobotics.junction.LoggedRobot;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -29,6 +33,12 @@ public class Robot extends LoggedRobot {
   @Override
   public void robotInit() {
 
+    // Code to log directly to the roborio without a USB attached (Untested)
+    // Calendar cal = Calendar.getInstance();
+    // Logger.addDataReceiver(new WPILOGWriter("/home/lvuser/logs/" 
+    //                                         + (cal.get(Calendar.MONTH) + 1) +"_"+ cal.get(Calendar.DAY_OF_MONTH) + "_" 
+    //                                         + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND)
+    //                                         + ".wpilib"));
     Logger.addDataReceiver(new NT4Publisher());
     Logger.start();
 
@@ -97,12 +107,25 @@ public class Robot extends LoggedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    RobotContainer.getTeleopCommand();
+  }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+
+    m_robotContainer.configureTestModeBindings();
+    //Put PID constants on shuffleboard so that they can be changed in test mode.
+    SmartDashboard.putNumber("driveKP", Constants.ModuleConstants.kDrivingP);
+    SmartDashboard.putNumber("driveKI", Constants.ModuleConstants.kDrivingI);
+    SmartDashboard.putNumber("driveKD", Constants.ModuleConstants.kDrivingD);
+    SmartDashboard.putNumber("driveKFF", Constants.ModuleConstants.kDrivingFF);
+    SmartDashboard.putNumber("turnKP", Constants.ModuleConstants.kTurningP);
+    SmartDashboard.putNumber("turnKI", Constants.ModuleConstants.kTurningI);
+    SmartDashboard.putNumber("turnKD", Constants.ModuleConstants.kTurningD);
+    SmartDashboard.putNumber("turnKFF", Constants.ModuleConstants.kTurningFF);
   }
 
   /** This function is called periodically during test mode. */

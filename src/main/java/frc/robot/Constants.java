@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.revrobotics.CANSparkBase.IdleMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
@@ -43,8 +44,8 @@ public final class Constants {
     public static final double kMaxSpeedMetersPerSecond = 4.8;
     public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
 
-    public static final double kDirectionSlewRate = 1.2; // radians per second
-    public static final double kMagnitudeSlewRate = 1.8; // percent per second (1 = 100%)
+    public static final double kDirectionSlewRate = 2.0; // radians per second
+    public static final double kMagnitudeSlewRate = 2.4; // percent per second (1 = 100%)
     public static final double kRotationalSlewRate = 2.0; // percent per second (1 = 100%)
 
     // Chassis configuration
@@ -52,12 +53,20 @@ public final class Constants {
     public static final double kTrackWidth = Units.inchesToMeters(23.5);
     // Distance between front and back wheels on robot
     public static final double kWheelBase = Units.inchesToMeters(23.5);
-    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-        new Translation2d(kWheelBase / 2, kTrackWidth / 2), // + +
-        new Translation2d(kWheelBase / 2, -kTrackWidth / 2), // + -
-        new Translation2d(-kWheelBase / 2, +kTrackWidth / 2), // - +
-        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); // - -
 
+    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+        new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+        new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+        new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
+    
+    //new
+    // public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+    //     new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+    //     new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+    //     new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+    //     new Translation2d(kWheelBase / 2, kTrackWidth / 2));
+    
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
@@ -67,16 +76,29 @@ public final class Constants {
     //Drive base radius in meters. Distance from robot center to furthest module
     public static final double driveBaseRadius = 0.42207; //16.617 inches
 
-    // SPARK MAX CAN IDs
-    public static final int kFrontRightDrivingCanId = 10;
-    public static final int kFrontLeftDrivingCanId = 20;
-    public static final int kRearLeftDrivingCanId = 30;
-    public static final int kRearRightDrivingCanId = 40;
+    //old
+    // // SPARK MAX CAN IDs
+    // public static final int kFrontRightDrivingCanId = 10;
+    // public static final int kFrontLeftDrivingCanId = 20;
+    // public static final int kRearLeftDrivingCanId = 30;
+    // public static final int kRearRightDrivingCanId = 40;
 
-    public static final int kFrontRightTurningCanId = 11;
-    public static final int kFrontLeftTurningCanId = 21;
-    public static final int kRearLeftTurningCanId = 31;
-    public static final int kRearRightTurningCanId = 41;
+    // public static final int kFrontRightTurningCanId = 11;
+    // public static final int kFrontLeftTurningCanId = 21;
+    // public static final int kRearLeftTurningCanId = 31;
+    // public static final int kRearRightTurningCanId = 41;
+
+    //new
+    // SPARK MAX CAN IDs
+    public static final int kFrontRightDrivingCanId = 40;
+    public static final int kFrontLeftDrivingCanId = 30;
+    public static final int kRearLeftDrivingCanId = 20;
+    public static final int kRearRightDrivingCanId = 10;
+
+    public static final int kFrontRightTurningCanId = 41;
+    public static final int kFrontLeftTurningCanId = 31;
+    public static final int kRearLeftTurningCanId = 21;
+    public static final int kRearRightTurningCanId = 11;
 
     public static final boolean kGyroReversed = false;
   }
@@ -111,7 +133,7 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = kTurningEncoderPositionFactor; // radians
 
-    public static final double kDrivingP = 0.04; // 0.04
+    public static final double kDrivingP = 0.06;
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 0;
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
@@ -128,12 +150,162 @@ public final class Constants {
     public static final IdleMode kDrivingMotorIdleMode = IdleMode.kBrake;
     public static final IdleMode kTurningMotorIdleMode = IdleMode.kBrake;
 
-    public static final int kDrivingMotorCurrentLimit = 60; //50 // amps
+    public static final int kDrivingMotorCurrentLimit = 40; //50 // amps
     public static final int kTurningMotorCurrentLimit = 20; //20 // amps
+  }
+
+  public static final class IntakeConstants
+  {
+    public enum IntakeState
+    {
+      INTAKING,
+      STOPPED,
+      OUTTAKING
+    }
+    
+    public static final int kIntakeCanID = 50;
+
+    public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
+    public static final int kIntakeMotorCurrentLimit = 40; //50 amps
+    
+    public static final double kIntakeVoltage = -12; // TUNE
+    public static final double kOuttakeVoltage = 12; // TUNE
+  }
+
+  public static final class PivotConstants
+  {
+    public static final int kPivotCanID = 54;
+
+    public static final IdleMode kPivotIdleMode = IdleMode.kBrake;
+    public static final int kMotorCurrentLimit = 20;//20 amps TUNE
+    
+    public static final double kTurningEncoderPositionFactor = (360); // degrees
+    public static final double kTurningEncoderVelocityFactor = (360) / 60.0; // degrees per second
+
+
+    public static final double kP = 0.005;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kTurningMinOutput = -1;
+    public static final double kTurningMaxOutput = 1;
+  }
+
+  public static final class FlywheelConstants
+  {
+    public static final int kFlywheelMasterCanID = 53; //TUNE
+    public static final int kFlywheelSlaveCanID = 52; //TUNE
+
+    public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
+    public static final int kMotorCurrentLimit = 40;//20 amps TUNE
+    
+    // public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
+
+    public static final double kP = 0.01;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -2; //-1
+    public static final double kVelocityMaxOutput = 2; //1
+  }
+
+  public static final class IndexerConstants
+  {
+    public static final int kIndexerCanID = 51;
+    public static final int kHoodCanID = 55; //TUNE
+
+    public static final int kBeamBreakID = 0; 
+
+    public static final IdleMode kIndexerIdleMode = IdleMode.kCoast;
+    public static final IdleMode kHoodIdleMode = IdleMode.kBrake;
+
+    public static final int kHoodCurrentLimit = 20; //20 amps TUNE
+    public static final int kIndexerCurrentLimit = 40; //20 amps TUNE
+
+    public static final double kOffset = 60; // TUNE 
+    
+    public static final double kTurningEncoderPositionFactor = (360); // degrees
+    public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
+
+    //Hood PID
+    public static final double kP = 0.001;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -1;
+    public static final double kVelocityMaxOutput = 1;
+
+    //Speed constant
+    public static double kIntakeVoltage = -10;
+    public static double kOuttakeVoltage = 10;
+    // public static double kBeamBreakThresh = 0.75;
+
+    public static int kDeployedID = 4;
+    public static int kStowID = 3;
+  }
+
+  public static final class ArmConstants
+  {
+    public enum ArmState
+    {
+      INTAKE,
+      SHOOTER,
+      AMP
+    }
+
+    //All of these constants are in degrees
+    public static double kPivotOffset = 0; //TUNE 
+    public static double kHoodOffset = 40; //TUNE
+
+    public static double PivotIntakePosition = 312; //TUNE
+    public static double PivotAmpPosition = 200; //TUNE
+
+  public static double HoodAmpPosition = 350; //TUNE
+    public static double HoodStowPosition = 235; //TUNE
+  }
+
+  public static final class ClimberConstants
+  {
+    public static final int kLeftClimberCanID = 61;
+    public static final int kRightClimberCanID = 62;
+
+    public static final int kLeftSwitchPort = 1;
+    public static final int kRightSwitchPort = 2;
+
+    public static final TalonFXConfiguration talonFXConfigs = new TalonFXConfiguration();
+    public static final double kP = 1;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    public static final double kFF = 0;
+    public static final double kVelocityMinOutput = -1;
+    public static final double kVelocityMaxOutput = 1;    
+
+    public static double kOutPosition = 90; //TUNE //degrees needed to rotate to get fully unspooled
+  }
+
+  public static final class VisionConstants 
+  {
+    // Constants such as camera and target height stored. Change per robot and goal!
+    public static final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(24);
+    public static final double TARGET_HEIGHT_METERS = Units.feetToMeters(5);
+    // Angle between horizontal and the camera.
+    public static final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(0);
+
+    // How far from the target we want to be
+    public static final double GOAL_RANGE_METERS = Units.feetToMeters(3);
+
+    // PID constants should be tuned per robot
+    public static final double LINEAR_P = 0.1;
+    public static final double LINEAR_D = 0.0;
+
+    public static final double ANGULAR_P = 0.1;
+    public static final double ANGULAR_D = 0.0;
   }
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kOpControllerPort = 1;
+    
     public static final double kDriveDeadband = 0.1;
     public static final int kLaunchpadPort = 1;
   }
