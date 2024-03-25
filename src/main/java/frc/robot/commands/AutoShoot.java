@@ -33,7 +33,7 @@ public class AutoShoot extends Command
   public void execute()
   {
     //Spins up shooter
-    RobotContainer.arm.setFlywheelVelocity(4500);
+    RobotContainer.arm.setFlywheelVoltage(12);
     
     //Feeds note to shooter after 1 second has passed
     if(Timer.getFPGATimestamp() > time + 1.0) {
