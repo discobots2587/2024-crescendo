@@ -395,6 +395,7 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
+  @AutoLogOutput(key = "SwerveStates/atDesired")
   public boolean atDesiredAngle(){
     return atDesiredAngle(0) && atDesiredAngle(1) && atDesiredAngle(2) && atDesiredAngle(3);
   }
