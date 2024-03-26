@@ -399,6 +399,21 @@ public class DriveSubsystem extends SubsystemBase {
     return atDesiredAngle(0) && atDesiredAngle(1) && atDesiredAngle(2) && atDesiredAngle(3);
   }
 
+  public double getModuleVelocity(int id){
+    switch(id){
+      case 0:
+        return m_frontLeft.getVelocity();
+      case 1:
+        return m_rearLeft.getVelocity();
+      case 2:
+        return m_frontRight.getVelocity();
+      case 3:
+        return m_rearRight.getVelocity();
+      default:
+        throw new Error("Invalid Module Index");
+    }
+  }
+
   public SwerveModuleState[] offsetAngles(SwerveModuleState[] states){
     return new SwerveModuleState[]{
       m_frontLeft.applyOffset(states[0]),
