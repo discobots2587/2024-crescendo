@@ -89,6 +89,10 @@ public class MAXSwerveModule {
     return SwerveModuleState.optimize(desiredState, m_inputs.turnAbsolutePosition);  
   }
 
+  public SwerveModuleState applyOffset(SwerveModuleState state){
+    return m_Io.applyOffset(state);
+  }
+
   public void setDriveVoltage(double volts){
     m_Io.setDriveVoltage(volts);
   }
