@@ -53,20 +53,12 @@ public final class Constants {
     // Distance between centers of right and left wheels on robot
     public static final double kWheelBase = Units.inchesToMeters(23.5);
     
-    //Old
     // Distance between front and back wheels on robot
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
         new Translation2d(kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
         new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
-    
-    //new
-    // public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
-    //     new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-    //     new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-    //     new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
-    //     new Translation2d(kWheelBase / 2, kTrackWidth / 2));
     
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
@@ -77,29 +69,17 @@ public final class Constants {
     //Drive base radius in meters. Distance from robot center to furthest module
     public static final double driveBaseRadius = 0.42207; //16.617 inches
 
-    //old
+    //Old
     // // SPARK MAX CAN IDs
-    // public static final int kFrontRightDrivingCanId = 10;
-    // public static final int kFrontLeftDrivingCanId = 20;
-    // public static final int kRearLeftDrivingCanId = 30;
-    // public static final int kRearRightDrivingCanId = 40;
+    public static final int kFrontRightDrivingCanId = 10;
+    public static final int kFrontLeftDrivingCanId = 20;
+    public static final int kRearLeftDrivingCanId = 30;
+    public static final int kRearRightDrivingCanId = 40;
 
-    // public static final int kFrontRightTurningCanId = 11;
-    // public static final int kFrontLeftTurningCanId = 21;
-    // public static final int kRearLeftTurningCanId = 31;
-    // public static final int kRearRightTurningCanId = 41;
-
-    //new
-    // SPARK MAX CAN IDs
-    public static final int kFrontRightDrivingCanId = 40;
-    public static final int kFrontLeftDrivingCanId = 30;
-    public static final int kRearLeftDrivingCanId = 20;
-    public static final int kRearRightDrivingCanId = 10;
-
-    public static final int kFrontRightTurningCanId = 41;
-    public static final int kFrontLeftTurningCanId = 31;
-    public static final int kRearLeftTurningCanId = 21;
-    public static final int kRearRightTurningCanId = 11;
+    public static final int kFrontRightTurningCanId = 11;
+    public static final int kFrontLeftTurningCanId = 21;
+    public static final int kRearLeftTurningCanId = 31;
+    public static final int kRearRightTurningCanId = 41;
 
     public static final boolean kGyroReversed = false;
   }
