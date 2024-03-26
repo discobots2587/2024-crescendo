@@ -33,6 +33,7 @@ import frc.robot.commands.ArmHold;
 import frc.robot.commands.AutoIntake;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.DriveMotorFFCharacterization;
+import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.IntakeIndex;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -106,6 +107,13 @@ public class RobotContainer
     feedForwardChooser = new LoggedDashboardChooser<>("System ID Routine Chooser");
 
     //System Identification setup
+    feedForwardChooser.addOption("Drive FF Characterization", new SequentialCommandGroup(new InstantCommand(() -> m_robotDrive.setFFAngles()), 
+                                                                                              new FeedForwardCharacterization(m_robotDrive, 
+                                                                                                  m_robotDrive::runDriveCharacterizationVolts, 
+                                                                                                  () -> m_robotDrive.getModuleVelocity(0),
+                                                                                                  () -> m_robotDrive.getModuleVelocity(1),
+                                                                                                  () -> m_robotDrive.getModuleVelocity(2),
+                                                                                                  () -> m_robotDrive.getModuleVelocity(3))));
     feedForwardChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward)
                                                                               .beforeStarting(new SequentialCommandGroup(
                                                                                           new InstantCommand(() -> m_robotDrive.setFFAngles()),
