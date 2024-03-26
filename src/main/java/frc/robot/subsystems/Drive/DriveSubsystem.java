@@ -320,7 +320,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         desiredStates, DriveConstants.kMaxSpeedMetersPerSecond);
-    Logger.recordOutput("SwerveStates/SetPoints", desiredStates);
+    Logger.recordOutput("SwerveStates/SetPoints", offsetAngles(desiredStates));
     desiredStates[0] = m_frontLeft.getOptimizedState(desiredStates[0]);
     desiredStates[1] = m_frontLeft.getOptimizedState(desiredStates[1]);
     desiredStates[2] = m_frontLeft.getOptimizedState(desiredStates[2]);
@@ -329,7 +329,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight.setDesiredState(desiredStates[1]);
     m_rearLeft.setDesiredState(desiredStates[2]);
     m_rearRight.setDesiredState(desiredStates[3]);
-    Logger.recordOutput("SwerveStates/OptimizedSetPoints", desiredStates);
+    Logger.recordOutput("SwerveStates/OptimizedSetPoints", offsetAngles(desiredStates));
   }
 
   /**
@@ -406,8 +406,33 @@ public class DriveSubsystem extends SubsystemBase {
     }
   }
 
+  @AutoLogOutput(key = "SwerveStates/atDesired")
   public boolean atDesiredAngle(){
     return atDesiredAngle(0) && atDesiredAngle(1) && atDesiredAngle(2) && atDesiredAngle(3);
+  }
+
+  public double getModuleVelocity(int id){
+    switch(id){
+      case 0:
+        return m_frontLeft.getVelocity();
+      case 1:
+        return m_rearLeft.getVelocity();
+      case 2:
+        return m_frontRight.getVelocity();
+      case 3:
+        return m_rearRight.getVelocity();
+      default:
+        throw new Error("Invalid Module Index");
+    }
+  }
+
+  public SwerveModuleState[] offsetAngles(SwerveModuleState[] states){
+    return new SwerveModuleState[]{
+      m_frontLeft.applyOffset(states[0]),
+      m_rearLeft.applyOffset(states[1]),
+      m_frontRight.applyOffset(states[2]),
+      m_rearRight.applyOffset(states[3])
+    };
   }
 
   public Command getDriveQuasistaticSysId(Direction direction){

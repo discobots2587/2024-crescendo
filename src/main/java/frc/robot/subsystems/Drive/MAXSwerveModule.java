@@ -47,6 +47,15 @@ public class MAXSwerveModule {
     // relative to the chassis.
     return new SwerveModuleState( m_inputs.driveVelocity, m_inputs.turnAbsolutePosition );
   }
+
+  /**
+   * Returns the current drive velocity of the module in feet per second.
+   * 
+   * @return The current velocity measurement of the module.
+   */
+  public double getVelocity() {
+    return m_inputs.driveVelocity;
+  }
   
   // public void runCharacterization(double volts) {
   //   m_desiredState = null;
@@ -87,6 +96,10 @@ public class MAXSwerveModule {
    */
   public SwerveModuleState getOptimizedState(SwerveModuleState desiredState) {
     return SwerveModuleState.optimize(desiredState, m_inputs.turnAbsolutePosition);  
+  }
+
+  public SwerveModuleState applyOffset(SwerveModuleState state){
+    return m_Io.applyOffset(state);
   }
 
   public void setDriveVoltage(double volts){
