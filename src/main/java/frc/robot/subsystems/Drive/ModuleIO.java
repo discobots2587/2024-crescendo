@@ -52,5 +52,7 @@ public interface ModuleIO {
 
   public default void setReference(SwerveModuleState reference){}
 
+  public default SwerveModuleState applyOffset(SwerveModuleState state){return state;}
+
   public default void setPID(){}
 }

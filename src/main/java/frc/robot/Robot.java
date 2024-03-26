@@ -40,8 +40,9 @@ public class Robot extends LoggedRobot {
     //                                         + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND)
     //                                         + ".wpilib"));
     Logger.addDataReceiver(new NT4Publisher());
-
     Logger.start();
+
+    enableLiveWindowInTest(true);
 
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.

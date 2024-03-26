@@ -33,6 +33,7 @@ import frc.robot.commands.ArmHold;
 import frc.robot.commands.AutoIntake;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.DriveMotorFFCharacterization;
+import frc.robot.commands.FeedForwardCharacterization;
 import frc.robot.commands.IntakeIndex;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -62,7 +63,6 @@ public class RobotContainer
   //Driver Buttons
   JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
   JoystickButton DriverOuttake = new JoystickButton(m_driverController, Button.kRightBumper.value);
-  JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
 
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
   JoystickButton RobotCentric = new JoystickButton(m_driverController, Button.kA.value);
@@ -75,6 +75,7 @@ public class RobotContainer
   JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
   JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
   JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
+  JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
 
   JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kLeftBumper.value);
   JoystickButton ClimbReverse = new JoystickButton(m_opController, Button.kB.value);
@@ -106,6 +107,13 @@ public class RobotContainer
     feedForwardChooser = new LoggedDashboardChooser<>("System ID Routine Chooser");
 
     //System Identification setup
+    feedForwardChooser.addOption("Drive FF Characterization", new SequentialCommandGroup(new InstantCommand(() -> m_robotDrive.setFFAngles()), 
+                                                                                              new FeedForwardCharacterization(m_robotDrive, 
+                                                                                                  m_robotDrive::runDriveCharacterizationVolts, 
+                                                                                                  () -> m_robotDrive.getModuleVelocity(0),
+                                                                                                  () -> m_robotDrive.getModuleVelocity(1),
+                                                                                                  () -> m_robotDrive.getModuleVelocity(2),
+                                                                                                  () -> m_robotDrive.getModuleVelocity(3))));
     feedForwardChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward)
                                                                               .beforeStarting(new SequentialCommandGroup(
                                                                                           new InstantCommand(() -> m_robotDrive.setFFAngles()),

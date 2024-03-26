@@ -208,6 +208,12 @@ public class MAXModuleIO implements ModuleIO{
     }
 
     @Override
+    public SwerveModuleState applyOffset(SwerveModuleState state){
+        state.angle = state.angle.minus(Rotation2d.fromRadians(m_chassisAngularOffset));
+        return state;
+    }
+
+    @Override
     public void setPID(){
         // m_drivingPIDController.setP(driveKP.get());
         // m_drivingPIDController.setI(driveKI.get());
