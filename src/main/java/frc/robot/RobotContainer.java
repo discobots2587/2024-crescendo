@@ -63,7 +63,6 @@ public class RobotContainer
   //Driver Buttons
   JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
   JoystickButton DriverOuttake = new JoystickButton(m_driverController, Button.kRightBumper.value);
-  JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
 
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
   JoystickButton RobotCentric = new JoystickButton(m_driverController, Button.kA.value);
@@ -76,6 +75,7 @@ public class RobotContainer
   JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
   JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
   JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
+  JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
 
   JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kLeftBumper.value);
   JoystickButton ClimbReverse = new JoystickButton(m_opController, Button.kB.value);
