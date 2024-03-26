@@ -56,6 +56,15 @@ public class MAXSwerveModule {
   public double getVelocity() {
     return m_inputs.driveVelocity;
   }
+
+  /**
+   * Returns the current angular velocity of the module in rad per second.
+   * 
+   * @return The current angular velocity measurement of the module.
+   */
+  public double getTurnVelocity() {
+    return m_inputs.turnVelocityRadPerSec;
+  }
   
   // public void runCharacterization(double volts) {
   //   m_desiredState = null;
@@ -104,6 +113,10 @@ public class MAXSwerveModule {
 
   public void setDriveVoltage(double volts){
     m_Io.setDriveVoltage(volts);
+  }
+
+  public void setTurnVoltage(double volts){
+    m_Io.setTurnVoltage(volts);
   }
 
   /** Zeroes all the SwerveModule encoders. */

@@ -15,6 +15,7 @@ import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.MAXModuleIO;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -33,7 +34,7 @@ import frc.robot.commands.ArmHold;
 import frc.robot.commands.AutoIntake;
 import frc.robot.commands.AutoShoot;
 import frc.robot.commands.DriveMotorFFCharacterization;
-import frc.robot.commands.FeedForwardCharacterization;
+import frc.robot.commands.QuasistaticFeedForwardCharacterization;
 import frc.robot.commands.IntakeIndex;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
@@ -108,12 +109,19 @@ public class RobotContainer
 
     //System Identification setup
     feedForwardChooser.addOption("Drive FF Characterization", new SequentialCommandGroup(new InstantCommand(() -> m_robotDrive.setFFAngles()), 
-                                                                                              new FeedForwardCharacterization(m_robotDrive, 
+                                                                                              new QuasistaticFeedForwardCharacterization(m_robotDrive, 
+                                                                                                  true,
                                                                                                   m_robotDrive::runDriveCharacterizationVolts, 
                                                                                                   () -> m_robotDrive.getModuleVelocity(0),
                                                                                                   () -> m_robotDrive.getModuleVelocity(1),
                                                                                                   () -> m_robotDrive.getModuleVelocity(2),
                                                                                                   () -> m_robotDrive.getModuleVelocity(3))));
+    feedForwardChooser.addOption("Turn FF Characterization", new QuasistaticFeedForwardCharacterization(m_robotDrive, true, 
+                                                                      m_robotDrive::runTurnCharacterizationVolts,
+                                                                      () -> m_robotDrive.getTurnVelocity(0),
+                                                                      () -> m_robotDrive.getTurnVelocity(1),
+                                                                      () -> m_robotDrive.getTurnVelocity(2),
+                                                                      () -> m_robotDrive.getTurnVelocity(3)));
     feedForwardChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward)
                                                                               .beforeStarting(new SequentialCommandGroup(
                                                                                           new InstantCommand(() -> m_robotDrive.setFFAngles()),
@@ -195,6 +203,7 @@ public class RobotContainer
     // LeftClimbDown.onFalse(new InstantCommand(() -> climber.stopLeft()));
   }
   public void configureTestModeBindings(){
+    CommandScheduler.getInstance().clearComposedCommands();;
     FeedForwardTest.whileTrue(feedForwardChooser.get());
     new JoystickButton(m_driverController, Button.kY.value).onTrue(
                       new InstantCommand(() -> m_robotDrive.setPID(), m_robotDrive));

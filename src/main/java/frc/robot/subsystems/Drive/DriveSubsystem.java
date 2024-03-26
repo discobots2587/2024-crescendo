@@ -384,6 +384,11 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDriveVoltage(volts);
   }
 
+  public void runTurnCharacterizationVolts(double volts){
+    m_frontLeft.setTurnVoltage(volts);
+    m_rearLeft.setTurnVoltage(volts);
+  }
+
   /**
    * UNTESTED FUNCTIONALITY
    * Checks if a module are at their set desired state
@@ -421,6 +426,21 @@ public class DriveSubsystem extends SubsystemBase {
         return m_frontRight.getVelocity();
       case 3:
         return m_rearRight.getVelocity();
+      default:
+        throw new Error("Invalid Module Index");
+    }
+  }
+
+  public double getTurnVelocity(int id){
+    switch(id){
+      case 0:
+        return m_frontLeft.getTurnVelocity();
+      case 1:
+        return m_rearLeft.getTurnVelocity();
+      case 2:
+        return m_frontRight.getTurnVelocity();
+      case 3:
+        return m_rearRight.getTurnVelocity();
       default:
         throw new Error("Invalid Module Index");
     }

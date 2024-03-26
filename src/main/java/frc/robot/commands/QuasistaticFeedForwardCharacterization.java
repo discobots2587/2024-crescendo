@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class FeedForwardCharacterization extends Command {
+public class QuasistaticFeedForwardCharacterization extends Command {
   private static final double START_DELAY_SECS = 2.0;
   private static final double RAMP_VOLTS_PER_SEC = 0.1;
 
@@ -34,8 +34,13 @@ public class FeedForwardCharacterization extends Command {
   private final Timer timer = new Timer();
 
   /** Creates a new FeedForwardCharacterization command. */
-  public FeedForwardCharacterization(
-      Subsystem subsystem, Consumer<Double> voltageConsumer, Supplier<Double> v0Supplier, Supplier<Double> v1Supplier, Supplier<Double> v2Supplier, Supplier<Double> v3Supplier) {
+  public QuasistaticFeedForwardCharacterization(
+      Subsystem subsystem, 
+      Consumer<Double> voltageConsumer, 
+      Supplier<Double> v0Supplier, 
+      Supplier<Double> v1Supplier, 
+      Supplier<Double> v2Supplier, 
+      Supplier<Double> v3Supplier) {
     addRequirements(subsystem);
     this.voltageConsumer = voltageConsumer;
     this.v0Supplier = v0Supplier;
@@ -43,6 +48,16 @@ public class FeedForwardCharacterization extends Command {
     this.v2Supplier = v2Supplier;
     this.v3Supplier = v3Supplier;
     numSuppliers = 4;
+  }
+
+  public QuasistaticFeedForwardCharacterization(Subsystem subsystem, Consumer<Double> voltageConsumer, Supplier<Double> velocitySupplier){
+    addRequirements(subsystem);
+    this.voltageConsumer = voltageConsumer;
+    this.v0Supplier = velocitySupplier;
+    v1Supplier = null;
+    v2Supplier = null;
+    v3Supplier = null;
+    numSuppliers = 1;
   }
 
   // Called when the command is initially scheduled.

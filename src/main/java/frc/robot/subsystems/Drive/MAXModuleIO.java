@@ -179,7 +179,7 @@ public class MAXModuleIO implements ModuleIO{
         reference.angle = reference.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
 
         m_drivingPIDController.setReference(reference.speedMetersPerSecond, CANSparkMax.ControlType.kVelocity, 0, m_drivingArbFF, ArbFFUnits.kVoltage);
-        m_turningPIDController.setReference(reference.angle.getRadians(), CANSparkMax.ControlType.kPosition, 0, m_turningArbFF);
+        m_turningPIDController.setReference(reference.angle.getRadians(), CANSparkMax.ControlType.kPosition, 0, m_turningArbFF, ArbFFUnits.kVoltage);
     }
 
     @Override
