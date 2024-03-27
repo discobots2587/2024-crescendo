@@ -116,28 +116,40 @@ public class RobotContainer
                                                                                                   () -> m_robotDrive.getModuleVelocity(1),
                                                                                                   () -> m_robotDrive.getModuleVelocity(2),
                                                                                                   () -> m_robotDrive.getModuleVelocity(3))));
-    feedForwardChooser.addOption("Turn FF Characterization", new QuasistaticFeedForwardCharacterization(m_robotDrive, true, 
+    feedForwardChooser.addOption("Turn FF Characterization (Forwards)", new QuasistaticFeedForwardCharacterization(m_robotDrive, true, 
                                                                       m_robotDrive::runTurnCharacterizationVolts,
                                                                       () -> m_robotDrive.getTurnVelocity(0),
                                                                       () -> m_robotDrive.getTurnVelocity(1),
                                                                       () -> m_robotDrive.getTurnVelocity(2),
                                                                       () -> m_robotDrive.getTurnVelocity(3)));
-    feedForwardChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward)
-                                                                              .beforeStarting(new SequentialCommandGroup(
-                                                                                          new InstantCommand(() -> m_robotDrive.setFFAngles()),
-                                                                                          new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
-    feedForwardChooser.addOption("Drive Backwards Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kReverse)
-                                                                              .beforeStarting(new SequentialCommandGroup(
-                                                                                          new InstantCommand(() -> m_robotDrive.setFFAngles()),
-                                                                                          new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
-    feedForwardChooser.addOption("Drive Forward Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kForward)
-                                                                              .beforeStarting(new SequentialCommandGroup(
-                                                                                          new InstantCommand(() -> m_robotDrive.setFFAngles()),
-                                                                                          new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
-    feedForwardChooser.addOption("Drive Backwards Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kReverse)
-                                                                              .beforeStarting(new SequentialCommandGroup(
-                                                                                          new InstantCommand(() -> m_robotDrive.setFFAngles()),
-                                                                                          new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
+    feedForwardChooser.addOption("Turn FF Characterization (Reverse)", new QuasistaticFeedForwardCharacterization(m_robotDrive, false, 
+                                                                      m_robotDrive::runTurnCharacterizationVolts,
+                                                                      () -> m_robotDrive.getTurnVelocity(0),
+                                                                      () -> m_robotDrive.getTurnVelocity(1),
+                                                                      () -> m_robotDrive.getTurnVelocity(2),
+                                                                      () -> m_robotDrive.getTurnVelocity(3)));
+    feedForwardChooser.addOption("Flywheel FF Characterization (Forwards)", new QuasistaticFeedForwardCharacterization(arm, true,
+                                                                      arm::setFlywheelVoltage,
+                                                                      arm::getFlywheelVelocity));
+    feedForwardChooser.addOption("Flywheel FF Characterization (Reverse)", new QuasistaticFeedForwardCharacterization(arm, false,
+                                                                      arm::setFlywheelVoltage,
+                                                                      arm::getFlywheelVelocity));
+    // feedForwardChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward)
+    //                                                                           .beforeStarting(new SequentialCommandGroup(
+    //                                                                                       new InstantCommand(() -> m_robotDrive.setFFAngles()),
+    //                                                                                       new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
+    // feedForwardChooser.addOption("Drive Backwards Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kReverse)
+    //                                                                           .beforeStarting(new SequentialCommandGroup(
+    //                                                                                       new InstantCommand(() -> m_robotDrive.setFFAngles()),
+    //                                                                                       new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
+    // feedForwardChooser.addOption("Drive Forward Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kForward)
+    //                                                                           .beforeStarting(new SequentialCommandGroup(
+    //                                                                                       new InstantCommand(() -> m_robotDrive.setFFAngles()),
+    //                                                                                       new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
+    // feedForwardChooser.addOption("Drive Backwards Dynamic SysId", m_robotDrive.getDriveDynamicSysId(Direction.kReverse)
+    //                                                                           .beforeStarting(new SequentialCommandGroup(
+    //                                                                                       new InstantCommand(() -> m_robotDrive.setFFAngles()),
+    //                                                                                       new WaitUntilCommand(() -> m_robotDrive.atDesiredAngle()))));
 
 
     // Configure default commands
