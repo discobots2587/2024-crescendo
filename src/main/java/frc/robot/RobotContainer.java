@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
@@ -60,31 +61,31 @@ public class RobotContainer
   private final LoggedDashboardChooser<Command> feedForwardChooser;
 
   // Controllers
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_opController = new XboxController(OIConstants.kOpControllerPort);
+  private final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  private final XboxController m_opController = new XboxController(OIConstants.kOpControllerPort);
 
   //Driver Buttons
-  JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
-  JoystickButton DriverOuttake = new JoystickButton(m_driverController, Button.kRightBumper.value);
+  private final JoystickButton DriverIntakeBumper = new JoystickButton(m_driverController, Button.kLeftBumper.value);
+  private final JoystickButton DriverOuttake = new JoystickButton(m_driverController, Button.kRightBumper.value);
 
-  JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
-  JoystickButton RobotCentric = new JoystickButton(m_driverController, Button.kA.value);
-  JoystickButton FeedForwardTest = new JoystickButton(m_driverController, Button.kX.value);
-  JoystickButton SetDrivePID = new JoystickButton(m_driverController, Button.kY.value);
+  private final JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
+  private final JoystickButton RobotCentric = new JoystickButton(m_driverController, Button.kA.value);
+  private final JoystickButton FeedForwardTest = new JoystickButton(m_driverController, Button.kX.value);
+  private final JoystickButton SetDrivePID = new JoystickButton(m_driverController, Button.kY.value);
 
-  JoystickButton SlowMode = new JoystickButton(m_driverController, Button.kRightStick.value);
+  private final JoystickButton SlowMode = new JoystickButton(m_driverController, Button.kRightStick.value);
 
   DoubleSupplier leftOpSup = () -> m_opController.getLeftY();
   DoubleSupplier rightOpSup = () -> m_opController.getRightY();
 
   //Operator Buttons
-  JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
-  JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
-  JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
-  JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
+  private final JoystickButton ArmIntakeMode = new JoystickButton(m_opController, Button.kA.value);
+  private final JoystickButton ArmShootMode = new JoystickButton(m_opController, Button.kX.value);
+  private final JoystickButton ArmAmpMode = new JoystickButton(m_opController, Button.kY.value);
+  private final JoystickButton TestShooter = new JoystickButton(m_opController, Button.kRightBumper.value);
 
-  JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kLeftBumper.value);
-  JoystickButton ClimbReverse = new JoystickButton(m_opController, Button.kB.value);
+  private final JoystickButton ClimbDeploy = new JoystickButton(m_opController, Button.kLeftBumper.value);
+  private final JoystickButton ClimbReverse = new JoystickButton(m_opController, Button.kB.value);
 
   // JoystickButton RightClimbDown = new JoystickButton(m_opController, Button.kRightBumper.value);
   // JoystickButton LeftClimbDown = new JoystickButton(m_opController, Button.kLeftBumper.value);
@@ -196,30 +197,32 @@ public class RobotContainer
       .onTrue(new InstantCommand(() -> {
         intake.outtake();
         arm.ampOuttake();
-      }, intake))
+      }, intake, arm.getIndexer()))
       .onFalse(new InstantCommand(() -> {
         intake.stop();
         arm.indexStop();
-      }, intake));
+      }, intake, arm.getIndexer()));
 
     DriverIntakeBumper.whileTrue(new IntakeIndex(true));
-    TestShooter.onTrue(new InstantCommand(() -> arm.setFlywheelVoltage(10), arm))
-                .onFalse(new InstantCommand(() -> arm.stopFlywheel(), arm));
+    TestShooter.onTrue(new InstantCommand(() -> arm.setFlywheelVoltage(10), arm.getShooter()))
+                .onFalse(new InstantCommand(() -> arm.stopFlywheel(), arm.getShooter()));
 
     SlowMode.onTrue(new InstantCommand(() -> scaler = (scaler == 1.0)? 0.5 : 1.0));
 
-    ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
+    ZeroHeading.onTrue(new InstantCommand(m_robotDrive::zeroHeading, m_robotDrive));
 
-    ArmShootMode.onTrue(new InstantCommand(() -> arm.shooterMode(10), arm)); // Desired angle needs to use auto aim command
-    ArmAmpMode.whileTrue(new InstantCommand(() -> arm.ampMode(), arm));
+    ArmShootMode.whileTrue(new InstantCommand(() -> arm.shooterMode(10), arm)); // Desired angle needs to use auto aim command
+    ArmAmpMode.whileTrue(
+      new InstantCommand(() -> arm.ampMode(), arm).withInterruptBehavior(InterruptionBehavior.kCancelIncoming)
+    );
 
     ArmShootMode.and(ArmAmpMode).whileFalse(new InstantCommand(() -> arm.intakeMode(), arm));
 
-    ClimbDeploy.onTrue(new InstantCommand(() -> climber.spinBoth()))
-                .onFalse(new InstantCommand(() -> climber.stopBoth()));
+    ClimbDeploy.whileTrue(new InstantCommand(() -> climber.spinBoth(), climber).withInterruptBehavior(InterruptionBehavior.kCancelIncoming))
+                .onFalse(new InstantCommand(() -> climber.stopBoth(), climber));
 
-    ClimbReverse.onTrue(new InstantCommand(() -> climber.reverseBoth()))
-                .onFalse(new InstantCommand(() -> climber.stopBoth()));
+    ClimbReverse.whileTrue(new InstantCommand(() -> climber.reverseBoth(), climber))
+                .onFalse(new InstantCommand(() -> climber.stopBoth(), climber));
 
     // RightClimbDown.whileTrue(new InstantCommand(() -> climber.setRightDesiredPosition(0)));
     // RightClimbDown.onFalse(new InstantCommand(() -> climber.stopRight()));
