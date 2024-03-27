@@ -110,8 +110,8 @@ public class Indexer extends SubsystemBase{
     {
         if(StowSwitch.get())
         {
-            HoodSpark.setVoltage(-5);//This needs to be checked to make sure it goes the right way.
-            appliedVoltage = -5;
+            HoodSpark.setVoltage(5);//This needs to be checked to make sure it goes the right way.
+            appliedVoltage = 5;
         }
         else
         {
@@ -124,8 +124,8 @@ public class Indexer extends SubsystemBase{
     {
         if(DeployedSwitch.get())
         {
-            HoodSpark.setVoltage(5);//This needs to be checked to make sure it goes the right way.
-            appliedVoltage = 5;
+            HoodSpark.setVoltage(-5);//This needs to be checked to make sure it goes the right way.
+            appliedVoltage = -5;
         }
         else
         {
@@ -168,9 +168,9 @@ public class Indexer extends SubsystemBase{
 
         SmartDashboard.putBoolean("Hood Stow Sw", StowSwitch.get());
         SmartDashboard.putBoolean("Hood Deploy Sw", DeployedSwitch.get());
-        if(!StowSwitch.get() && appliedVoltage < 0){
+        if(!StowSwitch.get() && appliedVoltage > 0){
             HoodSpark.stopMotor();
-        } else if(!DeployedSwitch.get() && appliedVoltage > 0){
+        } else if(!DeployedSwitch.get() && appliedVoltage < 0){
             HoodSpark.stopMotor();
         }
         // SmartDashboard.putNumber("Indexer target speed", this.speed);
