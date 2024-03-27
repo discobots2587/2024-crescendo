@@ -170,17 +170,15 @@ public class RobotContainer
       arm.indexStop();
     }, intake));
     DriverIntakeBumper.whileTrue(new IntakeIndex(true));
-    DriverIntakeBumper.onFalse(new IntakeIndex(false));
     TestShooter.onTrue(new InstantCommand(() -> arm.setFlywheelVoltage(10), arm));
     TestShooter.onFalse(new InstantCommand(() -> arm.stopFlywheel(), arm));
 
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
 
-    ArmShootMode.onTrue(new InstantCommand(() -> arm.shooterMode(270), arm)); // Desired angle needs to use auto aim command
-    ArmAmpMode.onTrue(new InstantCommand(() -> arm.ampMode(), arm));
+    ArmShootMode.onTrue(new InstantCommand(() -> arm.shooterMode(10), arm)); // Desired angle needs to use auto aim command
+    ArmAmpMode.whileTrue(new InstantCommand(() -> arm.ampMode(), arm));
 
-    ArmShootMode.onFalse(new InstantCommand(() -> arm.intakeMode(), arm));
-    ArmAmpMode.onFalse(new InstantCommand(() -> arm.intakeMode(), arm));
+    ArmShootMode.and(ArmAmpMode).whileFalse(new InstantCommand(() -> arm.intakeMode(), arm));
 
     ClimbDeploy.onTrue(new InstantCommand(() -> climber.spinBoth()));
     ClimbDeploy.onFalse(new InstantCommand(() -> climber.stopBoth()));

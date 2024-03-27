@@ -66,7 +66,8 @@ public class IntakeIndex extends Command
   @Override
   public void end(boolean interrupted)
   {
-    RobotContainer.arm.intakeMode();
+    RobotContainer.intake.stop();
+    RobotContainer.arm.indexStop();
   }
 
   // Returns true when the command should end.
