@@ -65,6 +65,11 @@ public class Arm extends SubsystemBase
     }
 
     //Flywheel actions
+
+    /**
+     * Set desired flywheel velocity in degrees per second.
+     * @param velocity Angular velocity in deg per second
+     */
     public void setFlywheelVelocity(double velocity)
     {
         flywheelShooter.setDesiredVelocity(velocity);
@@ -75,9 +80,19 @@ public class Arm extends SubsystemBase
         flywheelShooter.setDesiredVoltage(voltage);
     }
 
+    /**
+     * Get the measured velocity of the flywheel in degrees per second.
+     * @return measured angular velocity
+     */
     public double getFlywheelVelocity(){
         return flywheelShooter.getVelocity();
     }
+
+    public void stopFlywheel(){
+        flywheelShooter.stop();
+    }
+
+    // pivot actions
 
     public void setPivotVoltage(double volts){
         pivot.setVoltage(volts);
@@ -88,11 +103,17 @@ public class Arm extends SubsystemBase
     }
 
     //Roller actions
+    /**
+     * Runs rollers on indexer to intake into shooter.
+     */
     public void shoot()
     {
         indexer.loadAndShoot();
     }
 
+    /**
+     * Runs rollers on indexer to outtake into amp.
+     */
     public void ampOuttake()
     {
         indexer.outtakeMode();
@@ -102,6 +123,9 @@ public class Arm extends SubsystemBase
         indexer.stop();
     }
 
+    /**
+     * Runs rollers on indexer to load note and stops when note is detected by beambreak.
+     */
     public void load()
     {
         if(indexer.getBeamBreak())
@@ -118,15 +142,6 @@ public class Arm extends SubsystemBase
     public void indexTest(double speed)
     {
         indexer.setSpeed(speed);
-    }
-
-    public void shooterTest(double velocity)
-    {
-        flywheelShooter.setDesiredVelocity(velocity);
-    }
-
-    public void stopFlywheel(){
-        flywheelShooter.stop();
     }
 
     @Override
