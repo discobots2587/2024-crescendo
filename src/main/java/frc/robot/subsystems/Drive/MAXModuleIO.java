@@ -209,8 +209,7 @@ public class MAXModuleIO implements ModuleIO{
 
     @Override
     public SwerveModuleState applyOffset(SwerveModuleState state){
-        state.angle = state.angle.minus(Rotation2d.fromRadians(m_chassisAngularOffset));
-        return state;
+        return new SwerveModuleState(state.speedMetersPerSecond, state.angle.minus(Rotation2d.fromRadians(m_chassisAngularOffset)));
     }
 
     @Override
