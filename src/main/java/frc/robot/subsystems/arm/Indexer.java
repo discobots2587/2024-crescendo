@@ -23,9 +23,9 @@ public class Indexer extends SubsystemBase{
 
     private final double angleOffset;
 
-    private DigitalInput StowSwitch;
+    private final DigitalInput StowSwitch;
 
-    private DigitalInput DeployedSwitch;
+    private final DigitalInput DeployedSwitch;
 
     private double appliedVoltage = 0.0;
 
@@ -108,32 +108,39 @@ public class Indexer extends SubsystemBase{
     //hood with the limit switches
     public void stowHood()
     {
-        if(StowSwitch.get())
-        {
-            HoodSpark.setVoltage(5);//This needs to be checked to make sure it goes the right way.
-            appliedVoltage = 5;
-        }
-        else
+        if(isStowed())
         {
             HoodSpark.stopMotor();
             appliedVoltage = 0;
+        }
+        else
+        {
+            HoodSpark.setVoltage(5);
+            appliedVoltage = 5;
         }
     }
     
     public void deployHood()
     {
-        if(DeployedSwitch.get())
-        {
-            HoodSpark.setVoltage(-5);//This needs to be checked to make sure it goes the right way.
-            appliedVoltage = -5;
-        }
-        else
+        if(isDeployed())
         {
             HoodSpark.stopMotor();
             appliedVoltage = 0;
         }
+        else
+        {
+            HoodSpark.setVoltage(-5);
+            appliedVoltage = -5;
+        }
     }
 
+    public boolean isDeployed(){
+        return !DeployedSwitch.get();
+    }
+
+    public boolean isStowed(){
+        return !StowSwitch.get();
+    }
 
     //Indexer rollers
     public void loadAndShoot()
@@ -168,9 +175,10 @@ public class Indexer extends SubsystemBase{
 
         SmartDashboard.putBoolean("Hood Stow Sw", StowSwitch.get());
         SmartDashboard.putBoolean("Hood Deploy Sw", DeployedSwitch.get());
-        if(!StowSwitch.get() && appliedVoltage > 0){
+        if(isDeployed() && appliedVoltage < 0){
             HoodSpark.stopMotor();
-        } else if(!DeployedSwitch.get() && appliedVoltage < 0){
+        }
+        if(isStowed() && appliedVoltage > 0){
             HoodSpark.stopMotor();
         }
         // SmartDashboard.putNumber("Indexer target speed", this.speed);
