@@ -320,7 +320,7 @@ public class DriveSubsystem extends SubsystemBase {
   public void setModuleStates(SwerveModuleState[] desiredStates) {
     SwerveDriveKinematics.desaturateWheelSpeeds(
         desiredStates, DriveConstants.kMaxSpeedMetersPerSecond);
-    Logger.recordOutput("SwerveStates/SetPoints", offsetAngles(desiredStates));
+    Logger.recordOutput("SwerveStates/SetPoints", (desiredStates));
     desiredStates[0] = m_frontLeft.getOptimizedState(desiredStates[0]);
     desiredStates[1] = m_frontLeft.getOptimizedState(desiredStates[1]);
     desiredStates[2] = m_frontLeft.getOptimizedState(desiredStates[2]);
@@ -329,7 +329,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight.setDesiredState(desiredStates[1]);
     m_rearLeft.setDesiredState(desiredStates[2]);
     m_rearRight.setDesiredState(desiredStates[3]);
-    Logger.recordOutput("SwerveStates/OptimizedSetPoints", offsetAngles(desiredStates));
+    Logger.recordOutput("SwerveStates/OptimizedSetPoints", (desiredStates));
   }
 
   /**
