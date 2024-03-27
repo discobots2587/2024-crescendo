@@ -89,6 +89,14 @@ public class Pivot extends SubsystemBase{
         pivotPID.setReference(turnPose, CANSparkMax.ControlType.kPosition);
     }
 
+    public void setVoltage(double volts){
+        pivotSpark.setVoltage(volts);
+    }
+
+    public double getVelocity(){
+        return absEncoder.getVelocity();
+    }
+
     @Override
     public void periodic()
     {

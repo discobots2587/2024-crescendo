@@ -79,6 +79,14 @@ public class Arm extends SubsystemBase
         return flywheelShooter.getVelocity();
     }
 
+    public void setPivotVoltage(double volts){
+        pivot.setVoltage(volts);
+    }
+
+    public double getPivotVelocity(){
+        return pivot.getVelocity();
+    }
+
     //Roller actions
     public void shoot()
     {

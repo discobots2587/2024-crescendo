@@ -134,6 +134,12 @@ public class RobotContainer
     feedForwardChooser.addOption("Flywheel FF Characterization (Reverse)", new QuasistaticFeedForwardCharacterization(arm, false,
                                                                       arm::setFlywheelVoltage,
                                                                       arm::getFlywheelVelocity));
+    // Pivot routines should be run with the robot on its side. Check which direction is forwards for the pivot.
+    feedForwardChooser.addOption("Pivot FF Characterization (Forwards)", new QuasistaticFeedForwardCharacterization(arm, true,
+                                                                      arm::setPivotVoltage,
+                                                                      arm::getPivotVelocity));
+    feedForwardChooser.addOption("Pivot FF Characterization (Reverse)", new QuasistaticFeedForwardCharacterization(arm, false, 
+                                                                      arm::setPivotVoltage, arm::getPivotVelocity));
     // feedForwardChooser.addOption("Drive Forward Quasistatic SysId", m_robotDrive.getDriveQuasistaticSysId(Direction.kForward)
     //                                                                           .beforeStarting(new SequentialCommandGroup(
     //                                                                                       new InstantCommand(() -> m_robotDrive.setFFAngles()),
