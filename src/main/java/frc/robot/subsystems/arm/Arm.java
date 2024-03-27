@@ -75,6 +75,10 @@ public class Arm extends SubsystemBase
         flywheelShooter.setDesiredVoltage(voltage);
     }
 
+    public double getFlywheelVelocity(){
+        return flywheelShooter.getVelocity();
+    }
+
     //Roller actions
     public void shoot()
     {
