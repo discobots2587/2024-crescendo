@@ -53,6 +53,8 @@ public class RobotContainer
   public static final Arm arm = new Arm();
   public static final Climber climber = new Climber(ClimberConstants.kLeftClimberCanID, ClimberConstants.kRightClimberCanID, ClimberConstants.kLeftSwitchPort, ClimberConstants.kRightSwitchPort);
 
+  private static double scaler = 1.0; // Scales the velocity of the robot
+
   //Auto chooser
   private final LoggedDashboardChooser<Command> autoChooser;
   private final LoggedDashboardChooser<Command> feedForwardChooser;
@@ -68,6 +70,7 @@ public class RobotContainer
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
   JoystickButton RobotCentric = new JoystickButton(m_driverController, Button.kA.value);
   JoystickButton FeedForwardTest = new JoystickButton(m_driverController, Button.kX.value);
+  JoystickButton SlowMode = new JoystickButton(m_driverController, Button.kRightStick.value);
 
   DoubleSupplier leftOpSup = () -> m_opController.getLeftY();
   DoubleSupplier rightOpSup = () -> m_opController.getRightY();
@@ -164,9 +167,9 @@ public class RobotContainer
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverController.getLeftY(), OIConstants.kDriveDeadband)*scaler,
+                -MathUtil.applyDeadband(m_driverController.getLeftX(), OIConstants.kDriveDeadband)*scaler,
+                -MathUtil.applyDeadband(m_driverController.getRightX(), OIConstants.kDriveDeadband)*scaler,
                 !RobotCentric.getAsBoolean(), true),//Added the robot centric button
             m_robotDrive));
 
@@ -198,6 +201,8 @@ public class RobotContainer
     DriverIntakeBumper.whileTrue(new IntakeIndex(true));
     TestShooter.onTrue(new InstantCommand(() -> arm.setFlywheelVoltage(10), arm));
     TestShooter.onFalse(new InstantCommand(() -> arm.stopFlywheel(), arm));
+
+    SlowMode.onTrue(new InstantCommand(() -> scaler = (scaler == 1.0)? 0.5 : 1.0));
 
     ZeroHeading.onTrue(new InstantCommand(() -> m_robotDrive.zeroHeading(), m_robotDrive));
 
