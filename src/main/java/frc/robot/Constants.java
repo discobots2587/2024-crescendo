@@ -61,6 +61,11 @@ public final class Constants {
         new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
     
     // Angular offsets of the modules relative to the chassis in radians
+    // public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
+    // public static final double kFrontRightChassisAngularOffset = 0;
+    // public static final double kBackLeftChassisAngularOffset = Math.PI;
+    // public static final double kBackRightChassisAngularOffset = Math.PI / 2;
+
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
     public static final double kBackLeftChassisAngularOffset = Math.PI;
@@ -151,8 +156,8 @@ public final class Constants {
     public static final IdleMode kIntakeMotorIdleMode = IdleMode.kBrake;
     public static final int kIntakeMotorCurrentLimit = 40; //50 amps
     
-    public static final double kIntakeVoltage = -12; // TUNE
-    public static final double kOuttakeVoltage = 12; // TUNE
+    public static final double kIntakeVoltage = -8; // TUNE
+    public static final double kOuttakeVoltage = 8; // TUNE
   }
 
   public static final class PivotConstants
@@ -240,8 +245,8 @@ public final class Constants {
     public static double kPivotOffset = 0; //TUNE 
     public static double kHoodOffset = 40; //TUNE
 
-    public static double PivotIntakePosition = 312; //TUNE
-    public static double PivotAmpPosition = 200; //TUNE
+    public static double PivotIntakePosition = 15; //312
+    public static double PivotAmpPosition = 212; //200
 
   public static double HoodAmpPosition = 350; //TUNE
     public static double HoodStowPosition = 235; //TUNE
