@@ -17,7 +17,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.PivotConstants;
 
 public class Pivot extends SubsystemBase{
-    private final CANSparkMax MasterSpark;
+    private final CANSparkMax pivotSpark;
     // private final CANSparkMax SlaveSpark;
 
     private final AbsoluteEncoder absEncoder;
@@ -28,20 +28,18 @@ public class Pivot extends SubsystemBase{
 
     public Pivot(int masterID, double offset)
     {
-        MasterSpark = new CANSparkMax(masterID, MotorType.kBrushless);
-        // SlaveSpark = new CANSparkMax(slaveID, MotorType.kBrushless);
+        pivotSpark = new CANSparkMax(masterID, MotorType.kBrushless);
 
         angleOffset = offset;
 
         // Factory reset, so we get the SPARKS MAX to a known state before configuring
         // them. This is useful in case a SPARK MAX is swapped out.
-        MasterSpark.restoreFactoryDefaults();
-        // SlaveSpark.restoreFactoryDefaults();
+        pivotSpark.restoreFactoryDefaults();
 
         
         // Setup encoders and PID controller for the pivot sparkmax.
-        absEncoder = MasterSpark.getAbsoluteEncoder(Type.kDutyCycle);
-        pivotPID = MasterSpark.getPIDController();
+        absEncoder = pivotSpark.getAbsoluteEncoder(Type.kDutyCycle);
+        pivotPID = pivotSpark.getPIDController();
         pivotPID.setFeedbackDevice(absEncoder);
         // pivotPID.
 
@@ -61,23 +59,16 @@ public class Pivot extends SubsystemBase{
         pivotPID.setPositionPIDWrappingEnabled(true);
         pivotPID.setPositionPIDWrappingMinInput(0);
         pivotPID.setPositionPIDWrappingMaxInput(359);
-        // MasterSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)ArmConstants.HoodStowPosition);
-        // MasterSpark.setSoftLimit(SoftLimitDirection.kForward, (float)ArmConstants.HoodAmpPosition);
+        // pivotSpark.setSoftLimit(SoftLimitDirection.kForward, (float)ArmConstants.PivotAmpPosition);
+        // pivotSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)ArmConstants.PivotIntakePosition);
         
-        // SlaveSpark.setIdleMode(PivotConstants.kPivotIdleMode);
-        MasterSpark.setIdleMode(PivotConstants.kPivotIdleMode);
+        pivotSpark.setIdleMode(PivotConstants.kPivotIdleMode);
 
-        MasterSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
-        // SlaveSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
-
-
-        // SlaveSpark.setInverted(true);
-        // SlaveSpark.follow(MasterSpark);
+        pivotSpark.setSmartCurrentLimit(PivotConstants.kMotorCurrentLimit);
 
         // Save the SPARK MAX configurations. If a SPARK MAX browns out during
         // operation, it will maintain the above configurations.
-        MasterSpark.burnFlash();
-        // SlaveSpark.burnFlash();
+        pivotSpark.burnFlash();
     }
 
     public double getRawPosition()
