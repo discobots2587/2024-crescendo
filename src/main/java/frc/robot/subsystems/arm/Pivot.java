@@ -9,9 +9,11 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkAbsoluteEncoder.Type;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.SoftLimitDirection;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.PivotConstants;
 
 public class Pivot extends SubsystemBase{
@@ -55,6 +57,12 @@ public class Pivot extends SubsystemBase{
         pivotPID.setD(PivotConstants.kD);
         pivotPID.setFF(PivotConstants.kFF);
         pivotPID.setOutputRange(PivotConstants.kTurningMinOutput, PivotConstants.kTurningMaxOutput);
+
+        pivotPID.setPositionPIDWrappingEnabled(true);
+        pivotPID.setPositionPIDWrappingMinInput(0);
+        pivotPID.setPositionPIDWrappingMaxInput(359);
+        // MasterSpark.setSoftLimit(SoftLimitDirection.kReverse, (float)ArmConstants.HoodStowPosition);
+        // MasterSpark.setSoftLimit(SoftLimitDirection.kForward, (float)ArmConstants.HoodAmpPosition);
         
         // SlaveSpark.setIdleMode(PivotConstants.kPivotIdleMode);
         MasterSpark.setIdleMode(PivotConstants.kPivotIdleMode);
