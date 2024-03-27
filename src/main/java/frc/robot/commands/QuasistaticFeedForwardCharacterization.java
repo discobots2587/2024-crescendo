@@ -32,10 +32,11 @@ public class QuasistaticFeedForwardCharacterization extends Command {
   private final Supplier<Double> v0Supplier, v1Supplier, v2Supplier, v3Supplier;
 
   private final Timer timer = new Timer();
+  private final boolean forwards;
 
   /** Creates a new FeedForwardCharacterization command. */
   public QuasistaticFeedForwardCharacterization(
-      Subsystem subsystem, 
+      Subsystem subsystem, boolean forwards, 
       Consumer<Double> voltageConsumer, 
       Supplier<Double> v0Supplier, 
       Supplier<Double> v1Supplier, 
@@ -48,9 +49,11 @@ public class QuasistaticFeedForwardCharacterization extends Command {
     this.v2Supplier = v2Supplier;
     this.v3Supplier = v3Supplier;
     numSuppliers = 4;
+    this.forwards = forwards;
   }
 
-  public QuasistaticFeedForwardCharacterization(Subsystem subsystem, Consumer<Double> voltageConsumer, Supplier<Double> velocitySupplier){
+  public QuasistaticFeedForwardCharacterization(Subsystem subsystem, boolean forwards,
+                                                Consumer<Double> voltageConsumer, Supplier<Double> velocitySupplier){
     addRequirements(subsystem);
     this.voltageConsumer = voltageConsumer;
     this.v0Supplier = velocitySupplier;
@@ -58,6 +61,7 @@ public class QuasistaticFeedForwardCharacterization extends Command {
     v2Supplier = null;
     v3Supplier = null;
     numSuppliers = 1;
+    this.forwards = forwards;
   }
 
   // Called when the command is initially scheduled.
@@ -75,7 +79,7 @@ public class QuasistaticFeedForwardCharacterization extends Command {
       voltageConsumer.accept(0.0);
     } else {
       double voltage = (timer.get() - START_DELAY_SECS) * RAMP_VOLTS_PER_SEC;
-      voltageConsumer.accept(voltage);
+      voltageConsumer.accept((forwards) ? voltage : -voltage);
       switch(numSuppliers){
         case 4:
           data[3].add(v3Supplier.get(), voltage);
