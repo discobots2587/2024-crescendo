@@ -27,6 +27,16 @@ public class Arm extends SubsystemBase
         state = ArmConstants.ArmState.INTAKE;
     }
 
+    public Pivot getPivot(){
+        return pivot;
+    }
+    public Indexer getIndexer(){
+        return indexer;
+    }
+    public Shooter getShooter(){
+        return flywheelShooter;
+    }
+
     public ArmConstants.ArmState getState()
     {
         return state;
