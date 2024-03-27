@@ -45,8 +45,8 @@ public class AutoIntake extends Command
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    //Stops command after 2 seconds have passed
-    if(Timer.getFPGATimestamp() > time + 2.0) {
+    //Stops command after 5 seconds have passed
+    if(Timer.getFPGATimestamp() > time + 5.0) {
         return true;
       } else {
         return false;

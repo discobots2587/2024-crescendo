@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2,
-        "y": 5.550936522700434
+        "x": 0.7,
+        "y": 4.4
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.1781364592485104,
-        "y": 5.550936522700434
+        "x": 1.2,
+        "y": 3.533974596215562
       },
       "isLocked": false,
-      "linkedName": "scoreLocation"
+      "linkedName": "speakerRight"
     },
     {
       "anchor": {
-        "x": 1.2,
-        "y": 5.550936522700434
+        "x": 4.0,
+        "y": 2.0
       },
       "prevControl": {
-        "x": 1.2076646987919828,
-        "y": 5.550936522700434
+        "x": 3.0,
+        "y": 2.0
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "scoreLocation"
+      "linkedName": "leaveRight"
     }
   ],
   "rotationTargets": [],
@@ -43,7 +43,15 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "score",
+<<<<<<<< HEAD:src/main/deploy/pathplanner/paths/speakerRight_leaveRight.path
+  "folder": "speakerRight",
+  "previewStartingState": {
+    "rotation": -60.0,
+    "velocity": 0
+  },
+========
+  "folder": "leave",
   "previewStartingState": null,
+>>>>>>>> main:src/main/deploy/pathplanner/paths/speaker_leaveRight.path
   "useDefaultConstraints": true
 }

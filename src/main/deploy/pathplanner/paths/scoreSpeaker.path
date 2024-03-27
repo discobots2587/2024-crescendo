@@ -8,33 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.25,
-        "y": 5.050936522700434
+        "x": 1.2281364592485104,
+        "y": 5.550936522700434
       },
       "isLocked": false,
       "linkedName": "scoreLocation"
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 4.1
+        "x": 1.25,
+        "y": 5.550936522700434
       },
       "prevControl": {
-        "x": 2.5,
-        "y": 4.1
+        "x": 1.2576646987919828,
+        "y": 5.550936522700434
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "rightNote"
+      "linkedName": "scoreLocation"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": 0.0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "speaker",
+  "folder": "score",
   "previewStartingState": null,
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
