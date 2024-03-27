@@ -18,13 +18,26 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "parallel",
                 "data": {
-                  "pathName": "speakerLeft_left"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "speakerLeft_left"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.0
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -39,7 +52,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "scoreBase"
+            "pathName": "scoreSpeaker"
           }
         },
         {

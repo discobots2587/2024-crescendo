@@ -4,6 +4,7 @@
   "holonomicMode": true,
   "pathFolders": [
     "leave",
+    "score",
     "speaker",
     "speakerLeft",
     "speakerRight"
