@@ -213,7 +213,6 @@ public class RobotContainer
     // LeftClimbDown.onFalse(new InstantCommand(() -> climber.stopLeft()));
   }
   public void configureTestModeBindings(){
-    CommandScheduler.getInstance().clearComposedCommands();;
     FeedForwardTest.whileTrue(feedForwardChooser.get());
     new JoystickButton(m_driverController, Button.kY.value).onTrue(
                       new InstantCommand(() -> m_robotDrive.setPID(), m_robotDrive));
