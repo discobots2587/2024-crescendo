@@ -70,6 +70,8 @@ public class RobotContainer
   JoystickButton ZeroHeading = new JoystickButton(m_driverController, Button.kB.value);
   JoystickButton RobotCentric = new JoystickButton(m_driverController, Button.kA.value);
   JoystickButton FeedForwardTest = new JoystickButton(m_driverController, Button.kX.value);
+  JoystickButton SetDrivePID = new JoystickButton(m_driverController, Button.kY.value);
+
   JoystickButton SlowMode = new JoystickButton(m_driverController, Button.kRightStick.value);
 
   DoubleSupplier leftOpSup = () -> m_opController.getLeftY();
@@ -190,17 +192,19 @@ public class RobotContainer
    */
   private void configureButtonBindings()
   {
-    DriverOuttake.onTrue(new InstantCommand(() -> {
-      intake.outtake();
-      arm.ampOuttake();
-    }, intake));
-    DriverOuttake.onFalse(new InstantCommand(() -> {
-      intake.stop();
-      arm.indexStop();
-    }, intake));
+    DriverOuttake
+      .onTrue(new InstantCommand(() -> {
+        intake.outtake();
+        arm.ampOuttake();
+      }, intake))
+      .onFalse(new InstantCommand(() -> {
+        intake.stop();
+        arm.indexStop();
+      }, intake));
+
     DriverIntakeBumper.whileTrue(new IntakeIndex(true));
-    TestShooter.onTrue(new InstantCommand(() -> arm.setFlywheelVoltage(10), arm));
-    TestShooter.onFalse(new InstantCommand(() -> arm.stopFlywheel(), arm));
+    TestShooter.onTrue(new InstantCommand(() -> arm.setFlywheelVoltage(10), arm))
+                .onFalse(new InstantCommand(() -> arm.stopFlywheel(), arm));
 
     SlowMode.onTrue(new InstantCommand(() -> scaler = (scaler == 1.0)? 0.5 : 1.0));
 
@@ -211,11 +215,11 @@ public class RobotContainer
 
     ArmShootMode.and(ArmAmpMode).whileFalse(new InstantCommand(() -> arm.intakeMode(), arm));
 
-    ClimbDeploy.onTrue(new InstantCommand(() -> climber.spinBoth()));
-    ClimbDeploy.onFalse(new InstantCommand(() -> climber.stopBoth()));
+    ClimbDeploy.onTrue(new InstantCommand(() -> climber.spinBoth()))
+                .onFalse(new InstantCommand(() -> climber.stopBoth()));
 
-    ClimbReverse.onTrue(new InstantCommand(() -> climber.reverseBoth()));
-    ClimbReverse.onFalse(new InstantCommand(() -> climber.stopBoth()));
+    ClimbReverse.onTrue(new InstantCommand(() -> climber.reverseBoth()))
+                .onFalse(new InstantCommand(() -> climber.stopBoth()));
 
     // RightClimbDown.whileTrue(new InstantCommand(() -> climber.setRightDesiredPosition(0)));
     // RightClimbDown.onFalse(new InstantCommand(() -> climber.stopRight()));
@@ -225,8 +229,7 @@ public class RobotContainer
   }
   public void configureTestModeBindings(){
     FeedForwardTest.whileTrue(feedForwardChooser.get());
-    new JoystickButton(m_driverController, Button.kY.value).onTrue(
-                      new InstantCommand(() -> m_robotDrive.setPID(), m_robotDrive));
+    SetDrivePID.onTrue(new InstantCommand(() -> m_robotDrive.setPID(), m_robotDrive));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
