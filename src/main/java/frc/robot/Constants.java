@@ -187,7 +187,7 @@ public final class Constants {
     public static final IdleMode kFlywheelIdleMode = IdleMode.kCoast;
     public static final int kMotorCurrentLimit = 40;//20 amps TUNE
     
-    // public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
+    public static final double kTurningEncoderVelocityFactor = 1/60.0; // degrees per second
 
     public static final double kP = 0.01;
     public static final double kI = 0;

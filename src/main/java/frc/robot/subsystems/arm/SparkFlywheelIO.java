@@ -13,6 +13,7 @@ import com.revrobotics.SparkPIDController;
 import frc.robot.Constants.FlywheelConstants;
 
 import com.revrobotics.CANSparkLowLevel.MotorType;
+import com.revrobotics.CANSparkLowLevel.PeriodicFrame;
 
 /** Add your docs here. */
 public class SparkFlywheelIO implements FlywheelIO {
@@ -32,6 +33,8 @@ public class SparkFlywheelIO implements FlywheelIO {
         MasterSpark.restoreFactoryDefaults();
         SlaveSpark.restoreFactoryDefaults();
 
+        MasterSpark.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 32767);
+        SlaveSpark.setPeriodicFramePeriod(PeriodicFrame.kStatus2, 32767);
         
         // Setup encoders and PID controller for the pivot sparkmax.
         fwEnc = MasterSpark.getEncoder();
@@ -40,7 +43,7 @@ public class SparkFlywheelIO implements FlywheelIO {
         // flywheelPID.
 
         // Apply position and velocity conversion factors for the turning encoder.
-        // fwEnc.setVelocityConversionFactor(FlywheelConstants.kTurningEncoderVelocityFactor);
+        fwEnc.setVelocityConversionFactor(FlywheelConstants.kTurningEncoderVelocityFactor);
 
         
         // Set the PID gains for the turning motor. Note these are example gains, and you
@@ -67,7 +70,6 @@ public class SparkFlywheelIO implements FlywheelIO {
 
     @Override
     public void updateInputs(FlywheelIOInputs inputs){
-        inputs.positionDeg = fwEnc.getPosition();
         inputs.velocityDeg = fwEnc.getVelocity();
         inputs.masterAppliedVolts = MasterSpark.getAppliedOutput() * MasterSpark.getBusVoltage();
         inputs.slaveAppliedVolts = SlaveSpark.getAppliedOutput() * SlaveSpark.getBusVoltage();

@@ -10,7 +10,7 @@ import org.littletonrobotics.junction.AutoLog;
 public interface FlywheelIO {
     @AutoLog
     public static class FlywheelIOInputs {
-        public double positionDeg = 0.0;
+        // public double positionDeg = 0.0;
         public double velocityDeg = 0.0;
         public double masterAppliedVolts = 0.0;
         public double slaveAppliedVolts = 0.0;
