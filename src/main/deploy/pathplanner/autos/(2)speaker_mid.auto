@@ -12,19 +12,38 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "scoreSpeaker"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Shoot"
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "parallel",
                 "data": {
-                  "pathName": "speaker_mid"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "speaker_mid"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 1.0
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -39,7 +58,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "scoreBase"
+            "pathName": "scoreSpeaker"
           }
         },
         {
