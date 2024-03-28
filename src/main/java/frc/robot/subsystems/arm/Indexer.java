@@ -23,9 +23,9 @@ public class Indexer extends SubsystemBase{
 
     private final double angleOffset;
 
-    private final DigitalInput StowSwitch;
+    private DigitalInput StowSwitch;
 
-    private final DigitalInput DeployedSwitch;
+    private DigitalInput DeployedSwitch;
 
     private double appliedVoltage = 0.0;
 
