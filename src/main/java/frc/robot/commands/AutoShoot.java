@@ -45,6 +45,7 @@ public class AutoShoot extends Command
   @Override
   public void end(boolean interrupted)
   {
+    RobotContainer.intake.intake();         //Intakes
     RobotContainer.arm.stopFlywheel();      //Stops shooter
     RobotContainer.arm.indexStop();         //Stops indexer
   }
