@@ -251,7 +251,7 @@ public final class Constants {
     public static double kPivotOffset = 0; //TUNE 
     public static double kHoodOffset = 40; //TUNE
 
-    public static double PivotIntakePosition = 15; //312
+    public static double PivotIntakePosition = 16; //312
     public static double PivotAmpPosition = 212; //200
 
   public static double HoodAmpPosition = 350; //TUNE
@@ -305,9 +305,9 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 3; //3
+    public static final double kMaxSpeedMetersPerSecond = 4.5; //3
     public static final double kMaxAccelerationMetersPerSecondSquared = 3; //3
-    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
+    public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI * 2; //Math.PI
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
     public static final double kPXController = 1; //1
