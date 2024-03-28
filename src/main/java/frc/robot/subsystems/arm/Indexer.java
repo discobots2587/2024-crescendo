@@ -23,6 +23,8 @@ public class Indexer extends SubsystemBase{
 
     private final double angleOffset;
 
+    private boolean isStowed = false, isDeployed = false;
+
     private DigitalInput StowSwitch;
 
     private DigitalInput DeployedSwitch;
@@ -73,7 +75,7 @@ public class Indexer extends SubsystemBase{
         HoodSpark.setIdleMode(IndexerConstants.kHoodIdleMode);
         IndexerSpark.setIdleMode(IndexerConstants.kIndexerIdleMode);
 
-        HoodSpark.setSmartCurrentLimit(5,10);
+        HoodSpark.setSmartCurrentLimit(20);
         IndexerSpark.setSmartCurrentLimit(IndexerConstants.kIndexerCurrentLimit);
 
         HoodSpark.setInverted(true);
@@ -112,11 +114,13 @@ public class Indexer extends SubsystemBase{
         {
             HoodSpark.stopMotor();
             appliedVoltage = 0;
+            isStowed = true;
         }
         else
         {
-            HoodSpark.setVoltage(5);
-            appliedVoltage = 5;
+            HoodSpark.setVoltage(6);
+            appliedVoltage = 6;
+            isStowed = false;
         }
     }
     
@@ -126,20 +130,22 @@ public class Indexer extends SubsystemBase{
         {
             HoodSpark.stopMotor();
             appliedVoltage = 0;
+            isDeployed = true;
         }
         else
         {
-            HoodSpark.setVoltage(-5);
-            appliedVoltage = -5;
+            HoodSpark.setVoltage(-6);
+            appliedVoltage = -6;
+            isStowed = false;
         }
     }
 
     public boolean isDeployed(){
-        return !DeployedSwitch.get();
+        return !DeployedSwitch.get() || isDeployed;
     }
 
     public boolean isStowed(){
-        return !StowSwitch.get();
+        return !StowSwitch.get() || isStowed;
     }
 
     //Indexer rollers
@@ -175,11 +181,13 @@ public class Indexer extends SubsystemBase{
 
         SmartDashboard.putBoolean("Hood Stow Sw", StowSwitch.get());
         SmartDashboard.putBoolean("Hood Deploy Sw", DeployedSwitch.get());
-        if(isDeployed() && appliedVoltage < 0){
+        if((isDeployed() || HoodSpark.getOutputCurrent() > 15) && appliedVoltage < 0){
             HoodSpark.stopMotor();
+            isDeployed = true;
         }
-        if(isStowed() && appliedVoltage > 0){
+        if((isStowed() || HoodSpark.getOutputCurrent() > 15) && appliedVoltage > 0){
             HoodSpark.stopMotor();
+            isStowed = true;
         }
         // SmartDashboard.putNumber("Indexer target speed", this.speed);
     }
