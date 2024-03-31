@@ -230,8 +230,8 @@ public final class Constants {
     public static final double kVelocityMaxOutput = 1;
 
     //Speed constant
-    public static double kIntakeVoltage = -10;
-    public static double kOuttakeVoltage = 10;
+    public static double kIntakeVoltage = -5;
+    public static double kOuttakeVoltage = 12;
     // public static double kBeamBreakThresh = 0.75;
 
     public static int kDeployedID = 4;
