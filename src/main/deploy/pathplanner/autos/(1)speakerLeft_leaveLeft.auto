@@ -3,9 +3,9 @@
   "startingPose": {
     "position": {
       "x": 0.7,
-      "y": 4.4
+      "y": 6.7
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -18,9 +18,15 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 10.0
+          }
+        },
+        {
           "type": "path",
           "data": {
-            "pathName": "speaker_leaveRight"
+            "pathName": "speaker_leaveLeft"
           }
         }
       ]

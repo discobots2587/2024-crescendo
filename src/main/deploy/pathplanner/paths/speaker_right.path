@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.25,
+        "x": 1.15,
         "y": 5.550936522700434
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.25,
-        "y": 5.050936522700434
+        "x": 1.15,
+        "y": 4.550936522700434
       },
       "isLocked": false,
       "linkedName": "scoreLocation"
@@ -20,7 +20,7 @@
         "y": 4.1
       },
       "prevControl": {
-        "x": 2.5,
+        "x": 2.75,
         "y": 4.1
       },
       "nextControl": null,
@@ -31,7 +31,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": -45.0,
+      "rotationDegrees": -25.080071000840796,
       "rotateFast": false
     }
   ],
@@ -51,5 +51,5 @@
   "reversed": false,
   "folder": "speaker",
   "previewStartingState": null,
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

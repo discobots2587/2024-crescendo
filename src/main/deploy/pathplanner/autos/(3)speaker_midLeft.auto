@@ -12,6 +12,12 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "scoreSpeaker"
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "Shoot"
@@ -34,7 +40,7 @@
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.0
+                        "waitTime": 2.0
                       }
                     }
                   ]
@@ -72,13 +78,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "speaker_right"
+                        "pathName": "speaker_left"
                       }
                     },
                     {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.0
+                        "waitTime": 2.0
                       }
                     }
                   ]
@@ -103,6 +109,12 @@
           "type": "named",
           "data": {
             "name": "Shoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "speaker_mid"
           }
         }
       ]

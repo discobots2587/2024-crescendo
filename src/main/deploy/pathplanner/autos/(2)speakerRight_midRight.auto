@@ -2,21 +2,15 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.9,
-      "y": 7.0
+      "x": 0.7,
+      "y": 4.4
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
-        {
-          "type": "path",
-          "data": {
-            "pathName": "scoreSpeaker"
-          }
-        },
         {
           "type": "named",
           "data": {
@@ -24,13 +18,26 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
-                "type": "path",
+                "type": "parallel",
                 "data": {
-                  "pathName": "speaker_mid"
+                  "commands": [
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "speakerRight_centerRight"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 2.0
+                      }
+                    }
+                  ]
                 }
               },
               {
@@ -45,7 +52,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "scoreSpeaker"
+            "pathName": "centerRight_scoreSpeakerRight"
           }
         },
         {
