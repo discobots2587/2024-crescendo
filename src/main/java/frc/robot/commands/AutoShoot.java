@@ -34,9 +34,11 @@ public class AutoShoot extends Command
   {
     //Spins up shooter
     RobotContainer.arm.setFlywheelVoltage(12);
+    //Intakes
+    RobotContainer.intake.intake();
     
     //Feeds note to shooter after 1 second has passed
-    if(Timer.getFPGATimestamp() > time + 1.0) {
+    if(Timer.getFPGATimestamp() > time + 0.5) {
       RobotContainer.arm.shoot();
     }
   }
@@ -45,7 +47,6 @@ public class AutoShoot extends Command
   @Override
   public void end(boolean interrupted)
   {
-    RobotContainer.intake.intake();         //Intakes
     RobotContainer.arm.stopFlywheel();      //Stops shooter
     RobotContainer.arm.indexStop();         //Stops indexer
   }
@@ -54,7 +55,7 @@ public class AutoShoot extends Command
   @Override
   public boolean isFinished() {
     //Stops command after 2 seconds have passed
-    if(Timer.getFPGATimestamp() > time + 2.0) {
+    if(Timer.getFPGATimestamp() > time + 2.5) {
       return true;
     } else {
       return false;
